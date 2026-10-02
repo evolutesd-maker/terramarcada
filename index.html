@@ -20,11 +20,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script>document.documentElement.classList.add("js")</script>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="progress" aria-hidden="true"></div>
 
   <!-- ================= CABEÇALHO ================= -->
   <header class="site-header" id="topo">
@@ -487,7 +489,7 @@
         </div>
 
         <aside class="contact-card" aria-label="Canais de contato">
-          <img src="assets/img/logo-terra-marcada.png" alt="Logo Terra Marcada — mapeamento territorial" class="contact-logo" width="140" height="140">
+          <img src="assets/img/logo-terra-marcada.png" alt="Logo Terra Marcada — mapeamento territorial" class="contact-logo" width="140" height="140" decoding="async">
           <ul class="contact-list">
             <li>
               <svg aria-hidden="true"><use href="#i-whatsapp"/></svg>
@@ -533,6 +535,16 @@
     </div>
   </footer>
 
+  <button class="to-top" type="button" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
+  </button>
+
+  <div class="wa-bubble" role="status" hidden>
+    <button type="button" class="wa-bubble-x" aria-label="Fechar">×</button>
+    <strong>Precisa de ajuda com seu imóvel?</strong>
+    <span>Respondemos pelo WhatsApp.</span>
+  </div>
+
   <!-- Botão flutuante do WhatsApp -->
   <a href="#" class="wa-float" data-whatsapp="Olá! Vim pelo site da Terra Marcada e gostaria de atendimento." aria-label="Conversar no WhatsApp">
     <svg aria-hidden="true"><use href="#i-whatsapp"/></svg>
@@ -557,7 +569,7 @@
     <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
   </svg>
 
-  <script src="assets/js/config.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
