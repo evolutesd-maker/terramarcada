@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 265 330" role="img" aria-label="Terra Marcada">
+  <defs>
+    <clipPath id="tm-left">
+      <polygon points="0,0 132,0 62,330 0,330"/>
+    </clipPath>
+  </defs>
+  <!-- anel externo (arco à esquerda) -->
+  <path d="M130 76 A116 116 0 0 0 83 285" fill="none" stroke="#0B2B22" stroke-width="6" stroke-linecap="round"/>
+  <!-- anel principal -->
+  <circle cx="150" cy="190" r="104" fill="none" stroke="#0B2B22" stroke-width="6"/>
+  <!-- meio disco dourado -->
+  <circle cx="150" cy="190" r="88" fill="#D0AC2C" clip-path="url(#tm-left)"/>
+  <!-- linha diagonal (meridiano) -->
+  <line x1="153" y1="10" x2="80" y2="318" stroke="#ffffff" stroke-width="17"/>
+  <line x1="153" y1="10" x2="80" y2="318" stroke="#0B2B22" stroke-width="9" stroke-linecap="square"/>
+  <!-- rotatória / marco -->
+  <g stroke="#D0AC2C" stroke-linecap="round" fill="none">
+    <line x1="182" y1="196" x2="196" y2="104" stroke-width="15"/>
+    <line x1="182" y1="196" x2="230" y2="212" stroke-width="15"/>
+    <line x1="182" y1="196" x2="170" y2="264" stroke-width="15"/>
+    <line x1="182" y1="196" x2="130" y2="179" stroke-width="15"/>
+    <circle cx="182" cy="196" r="15" stroke-width="13" fill="#ffffff"/>
+  </g>
+</svg>
