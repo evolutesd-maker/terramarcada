@@ -120,7 +120,7 @@
   }
 
   /* ---------- Revelar ao rolar, com escalonamento ---------- */
-  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .about-copy, .mvv-card, .faq details, .cta-copy, .contact-card";
+  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
   var items = $$(revealSel);
   if ("IntersectionObserver" in window && !reduce) {
     items.forEach(function (el) {

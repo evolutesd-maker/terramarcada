@@ -692,3 +692,69 @@ h1 { font-weight: 800; }
 .btn-ghost-dark:hover { background: var(--green-900); color: var(--white); }
 .legal-wrap .eyebrow::before { transform: scaleX(1); }
 .cookie-banner { max-width: 470px; padding: 14px 16px; font-size: .9rem; }
+
+/* =========================================================
+   ATENDIMENTO E TECNOLOGIA EM CAMPO
+   ========================================================= */
+.attend-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.attend-media { position: relative; margin: 0; max-width: 480px; justify-self: center; width: 100%; }
+.attend-media::before {
+  content: ""; position: absolute; inset: 22px -22px -22px 22px; border-radius: var(--radius-lg);
+  border: 2px solid var(--gold-500); z-index: 0; transition: transform .6s var(--ease);
+}
+.attend-media:hover::before { transform: translate(6px, 6px); }
+.attend-media img {
+  position: relative; z-index: 1; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 38%;
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); background: var(--green-100);
+}
+.attend-chip {
+  position: absolute; z-index: 2; left: -18px; bottom: 28px; display: flex; align-items: center; gap: 12px;
+  background: var(--white); color: var(--green-900); padding: 12px 16px; border-radius: 14px; box-shadow: var(--shadow-lg);
+  animation: float 7s ease-in-out infinite; line-height: 1.25;
+}
+.attend-chip svg { width: 36px; height: 36px; padding: 8px; border-radius: 10px; background: var(--green-100); color: var(--green-700); flex: none; }
+.attend-chip strong { display: block; font-size: .98rem; }
+.attend-chip small { color: var(--muted); font-size: .85rem; }
+.attend-copy h2 { color: var(--green-900); }
+.attend-copy > p { color: var(--muted); font-size: 1.12rem; }
+.attend-list { list-style: none; padding: 0; margin: 26px 0 32px; display: grid; gap: 14px; }
+.attend-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); }
+.attend-list li strong { color: var(--green-900); }
+.attend-list .ico { width: 22px; height: 22px; padding: 4px; border-radius: 50%; background: var(--gold-500); color: var(--green-900); margin-top: 2px; }
+.attend-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+.attend-hours { color: var(--muted); font-size: .98rem; }
+@media (max-width: 900px) {
+  .attend-grid { grid-template-columns: 1fr; }
+  .attend-media { max-width: 440px; margin-right: 22px; justify-self: start; }
+  .attend-chip { left: 12px; }
+}
+@media (max-width: 900px) { .attend-media { width: auto; } }
+@media (max-width: 560px) { .attend-actions .btn { width: 100%; } .attend-media { margin: 0 22px 22px 0; max-width: none; } }
+
+.tech-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.tech-copy h2 { color: var(--green-900); }
+.tech-copy > p { color: var(--muted); font-size: 1.12rem; }
+.tech-copy strong { color: var(--green-900); }
+.tech-chips { list-style: none; padding: 0; margin: 24px 0 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+.tech-chips li {
+  padding: 8px 16px; border-radius: 999px; background: var(--green-100); color: var(--green-800); font-weight: 600; font-size: .96rem;
+  transition: background-color .25s ease, color .25s ease, transform .25s var(--ease);
+}
+.tech-chips li:hover { background: var(--green-900); color: var(--gold-400); transform: translateY(-2px); }
+.tech-note { font-size: .95rem; color: var(--muted); border-left: 3px solid var(--gold-500); padding-left: 14px; margin: 0; }
+.tech-card {
+  position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 1; max-width: 460px; width: 100%; justify-self: center;
+  background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); display: grid; place-items: center;
+}
+.tech-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 50% at 50% 55%, rgba(208, 172, 44, .16), transparent 70%),
+    repeating-radial-gradient(circle at 50% 55%, transparent 0 34px, rgba(11, 43, 34, .05) 34px 35px);
+}
+.tech-card img { position: relative; width: 92%; height: auto; mix-blend-mode: multiply; animation: hover-drone 6s ease-in-out infinite; }
+@keyframes hover-drone { 0%, 100% { transform: translateY(0) rotate(-.6deg); } 50% { transform: translateY(-10px) rotate(.6deg); } }
+.tech-tag {
+  position: absolute; left: 16px; bottom: 16px; background: var(--green-900); color: var(--gold-400); font-weight: 700;
+  letter-spacing: .06em; font-size: .85rem; padding: 7px 14px; border-radius: 999px;
+}
+@media (max-width: 900px) { .tech-grid { grid-template-columns: 1fr; } .tech-card { max-width: 420px; justify-self: start; } }
