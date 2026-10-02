@@ -284,6 +284,18 @@
     try { history.replaceState(null, "", "#" + id); } catch (err) {}
   });
 
+  /* ---------- Aviso de privacidade ---------- */
+  var cookie = $("#cookieBanner");
+  if (cookie) {
+    var seen = false;
+    try { seen = localStorage.getItem("tm-privacy") === "1"; } catch (e) {}
+    if (!seen) setTimeout(function () { cookie.hidden = false; }, 1200);
+    $("#cookieAccept").addEventListener("click", function () {
+      cookie.hidden = true;
+      try { localStorage.setItem("tm-privacy", "1"); } catch (e) {}
+    });
+  }
+
   var ano = $("#ano");
   if (ano) ano.textContent = new Date().getFullYear();
 })();

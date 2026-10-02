@@ -18,7 +18,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script>document.documentElement.classList.add("js")</script>
   <link rel="stylesheet" href="assets/css/style.css">
@@ -146,6 +146,8 @@
           </div>
         </div>
       </div>
+
+      <a href="#servicos" class="scroll-cue" aria-label="Rolar para os serviços"><span></span></a>
     </section>
 
     <!-- ================= FAIXA DE CONFIANÇA ================= -->
@@ -484,7 +486,7 @@
               <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
               Enviar pelo WhatsApp
             </button>
-            <p class="form-note">Você será direcionado ao WhatsApp com a mensagem pronta.</p>
+            <p class="form-note">Você será direcionado ao WhatsApp com a mensagem pronta. Não pedimos senhas nem dados bancários. <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
           </form>
         </div>
 
@@ -508,6 +510,10 @@
               <div><small>Horário</small><span data-fill="hours">Seg. a sex., 8h às 18h</span></div>
             </li>
           </ul>
+          <p class="official-note">
+            <svg aria-hidden="true"><use href="#i-shield"/></svg>
+            <span>Este é o <strong>único canal oficial</strong> da Terra Marcada. Desconfie de mensagens vindas de outros números ou perfis, mesmo que usem nosso nome ou logo.</span>
+          </p>
         </aside>
       </div>
     </section>
@@ -530,6 +536,7 @@
         <a href="#portfolio">Portfólio</a>
         <a href="#sobre">Quem somos</a>
         <a href="#contato">Contato</a>
+        <a href="politica-privacidade.html">Política de Privacidade</a>
       </nav>
       <p class="footer-copy">© <span id="ano">2026</span> Terra Marcada · <span data-fill="cnpj">CNPJ 00.000.000/0000-00</span></p>
     </div>
@@ -566,8 +573,14 @@
     <symbol id="i-bank" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-5 9 5"/><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/></g></symbol>
     <symbol id="i-family" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7" r="2.5"/><circle cx="16" cy="7" r="2.5"/><circle cx="12" cy="13" r="2"/><path d="M3.5 20v-3a4 4 0 0 1 4-4h1M20.5 20v-3a4 4 0 0 0-4-4h-1M8.5 20v-1.5a3.5 3.5 0 0 1 7 0V20"/></g></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v5c0 5.2 3.4 9.4 8 10.5 4.6-1.1 8-5.3 8-10.5V6l-8-3Z"/><path d="m9 12 2 2 4-4.5"/></g></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
   </svg>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Aviso de privacidade" hidden>
+    <p>Este site não usa cookies de rastreamento nem de publicidade. Guardamos apenas preferências essenciais no seu navegador. Saiba mais na <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
+    <button class="btn btn-gold btn-sm" id="cookieAccept" type="button">Entendi</button>
+  </div>
 
   <script src="assets/js/config.js" defer></script>
   <script src="assets/js/main.js" defer></script>
