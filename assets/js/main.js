@@ -55,6 +55,14 @@
         "Gostaria de agendar um atendimento.";
       window.open(waLink(msg), "_blank", "noopener");
     });
+    var prev = $("#waPreview");
+    function msgText() {
+      var nome = form.nome.value.trim();
+      return "Olá! Meu nome é " + (nome || "[seu nome]") + ".\n" + "Assunto: " + form.assunto.value + "\n" +
+        (form.cidade.value.trim() ? "Cidade do imóvel: " + form.cidade.value.trim() + "\n" : "") + "Gostaria de agendar um atendimento.";
+    }
+    function paintPreview() { if (prev) prev.textContent = msgText(); }
+    form.addEventListener("input", paintPreview); form.addEventListener("change", paintPreview); paintPreview();
     form.nome.addEventListener("input", function () { form.nome.removeAttribute("aria-invalid"); var e = $("#err-nome"); if (e) e.hidden = true; });
   }
 
@@ -93,6 +101,7 @@
   function onScroll() {
     var y = window.scrollY;
     var max = root.scrollHeight - window.innerHeight;
+    root.style.setProperty("--sp", max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
     if (progress) progress.style.setProperty("--p", max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
     header.classList.toggle("is-scrolled", y > 8);
     // esconde ao descer, mostra ao subir
@@ -149,7 +158,7 @@
   }
 
   /* ---------- Revelar ao rolar, com escalonamento ---------- */
-  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
+  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .contour-divider, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
   var items = $$(revealSel);
   if ("IntersectionObserver" in window && !reduce) {
     items.forEach(function (el) {
@@ -451,6 +460,66 @@
     go(0, true);
     play();
   })();
+
+
+  /* ---------- Detalhes temáticos ---------- */
+  // ondulação ao clicar nos botões
+  doc.addEventListener("pointerdown", function (e) {
+    var b = e.target.closest(".btn");
+    if (!b || reduce) return;
+    var r = b.getBoundingClientRect(), d = doc.createElement("span");
+    d.className = "ripple"; d.style.left = (e.clientX - r.left) + "px"; d.style.top = (e.clientY - r.top) + "px";
+    b.appendChild(d); setTimeout(function () { d.remove(); }, 650);
+  });
+
+  // lotes do mapa: o cartão mostra o lote sob o cursor
+  var lotName = $("#lotName"), lotArea = $("#lotArea"), mapSvg = $(".map-svg");
+  if (mapSvg && lotName) {
+    var defName = lotName.textContent, defArea = lotArea.textContent, swapT = 0;
+    var showLot = function (name, area) {
+      if (lotName.textContent === name) return;
+      var tag = lotName.closest(".map-tag"); tag.classList.add("is-swap");
+      clearTimeout(swapT);
+      swapT = setTimeout(function () { lotName.textContent = name; lotArea.textContent = area; tag.classList.remove("is-swap"); }, 130);
+    };
+    mapSvg.addEventListener("pointerover", function (e) {
+      var p = e.target.closest("path[data-lot]");
+      if (p) showLot("Lote " + p.getAttribute("data-lot") + " · Quadra " + p.getAttribute("data-q"), "Área: " + p.getAttribute("data-area") + " m²");
+    });
+    mapSvg.addEventListener("pointerleave", function () { showLot(defName, defArea); });
+  }
+
+  // marcos plantados com clique no início da página
+  var heroEl = $(".hero");
+  if (heroEl) {
+    var planted = 0;
+    heroEl.addEventListener("pointerdown", function (e) {
+      if (e.button > 0 || e.target.closest("a, button, input, select, .map-card, .scroll-cue")) return;
+      var r = heroEl.getBoundingClientRect();
+      var el = doc.createElement("div");
+      planted += 1;
+      el.className = "plant";
+      el.style.left = (e.clientX - r.left) + "px"; el.style.top = (e.clientY - r.top) + "px";
+      el.innerHTML = '<span>Marco ' + (planted < 10 ? "0" : "") + planted + '</span><svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C7 1 2 6 2 13c0 9 12 21 12 21s12-12 12-21C26 6 21 1 14 1Z" fill="#D0AC2C"/><circle cx="14" cy="13" r="4.5" fill="#0B2B22"/></svg>';
+      heroEl.appendChild(el);
+      var all = heroEl.querySelectorAll(".plant");
+      if (all.length > 10) all[0].remove();
+      setTimeout(function () { el.classList.add("is-out"); }, 2600);
+      setTimeout(function () { el.remove(); }, 3300);
+    });
+  }
+
+  // altitude do visor do drone
+  var alt = $("#hudAlt");
+  if (alt && !reduce) {
+    var a = 86, hudOn = false;
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { hudOn = en[0].isIntersecting; }).observe(alt.closest(".tech-card"));
+    setInterval(function () {
+      if (!hudOn || doc.hidden) return;
+      a = Math.max(62, Math.min(118, a + Math.round((Math.random() - 0.5) * 6)));
+      alt.textContent = a;
+    }, 900);
+  }
 
   /* ---------- Aviso de privacidade ---------- */
   var cookie = $("#cookieBanner");

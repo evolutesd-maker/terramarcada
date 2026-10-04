@@ -69,6 +69,7 @@
               <path d="M-9 -9 L9 9 M9 -9 L-9 9"/>
               <circle cx="-11" cy="-11" r="4.5"/><circle cx="11" cy="-11" r="4.5"/><circle cx="-11" cy="11" r="4.5"/><circle cx="11" cy="11" r="4.5"/>
             </g>
+            <g class="props" stroke="#ddbf52" stroke-width="1.6" stroke-linecap="round"><path class="prop" d="M-15.5 -11 H-6.5" transform="translate(0 0)"/><path class="prop" d="M6.5 -11 H15.5"/><path class="prop" d="M-15.5 11 H-6.5"/><path class="prop" d="M6.5 11 H15.5"/></g>
             <rect x="-5" y="-5" width="10" height="10" rx="3" fill="#ddbf52"/>
             <animateMotion dur="34s" repeatCount="indefinite" rotate="0"><mpath href="#flight-path"/></animateMotion>
           </g>
@@ -124,18 +125,18 @@
               <path d="M200 -10 C 190 120 230 260 205 430" stroke="#F4EFDF" stroke-opacity=".14" stroke-width="22" fill="none"/>
               <!-- lotes -->
               <g fill="#D0AC2C" fill-opacity=".14" stroke="#D0AC2C" stroke-width="1.6">
-                <path d="M30 40 L120 32 L128 110 L36 118 Z"/>
-                <path d="M120 32 L178 28 L182 104 L128 110 Z"/>
-                <path d="M36 118 L128 110 L134 214 L42 224 Z"/>
-                <path d="M128 110 L182 104 L186 206 L134 214 Z"/>
-                <path d="M232 30 L300 26 L306 96 L236 100 Z"/>
-                <path d="M300 26 L392 22 L396 92 L306 96 Z"/>
-                <path d="M236 100 L306 96 L310 200 L238 206 Z"/>
-                <path d="M306 96 L396 92 L398 196 L310 200 Z" class="lot-hl"/>
-                <path d="M34 282 L124 272 L128 384 L38 394 Z"/>
-                <path d="M124 272 L184 266 L186 380 L128 384 Z"/>
-                <path d="M236 262 L320 252 L324 384 L238 392 Z"/>
-                <path d="M320 252 L396 244 L398 380 L324 384 Z"/>
+                <path data-lot="01" data-q="A" data-area="298,60" d="M30 40 L120 32 L128 110 L36 118 Z"/>
+                <path data-lot="02" data-q="A" data-area="305,15" d="M120 32 L178 28 L182 104 L128 110 Z"/>
+                <path data-lot="03" data-q="A" data-area="287,10" d="M36 118 L128 110 L134 214 L42 224 Z"/>
+                <path data-lot="04" data-q="A" data-area="301,85" d="M128 110 L182 104 L186 206 L134 214 Z"/>
+                <path data-lot="05" data-q="B" data-area="318,25" d="M232 30 L300 26 L306 96 L236 100 Z"/>
+                <path data-lot="06" data-q="B" data-area="296,40" d="M300 26 L392 22 L396 92 L306 96 Z"/>
+                <path data-lot="07" data-q="B" data-area="309,70" d="M236 100 L306 96 L310 200 L238 206 Z"/>
+                <path data-lot="08" data-q="B" data-area="312,40" d="M306 96 L396 92 L398 196 L310 200 Z" class="lot-hl"/>
+                <path data-lot="09" data-q="C" data-area="284,95" d="M34 282 L124 272 L128 384 L38 394 Z"/>
+                <path data-lot="10" data-q="C" data-area="322,10" d="M124 272 L184 266 L186 380 L128 384 Z"/>
+                <path data-lot="11" data-q="C" data-area="291,35" d="M236 262 L320 252 L324 384 L238 392 Z"/>
+                <path data-lot="12" data-q="C" data-area="307,50" d="M320 252 L396 244 L398 380 L324 384 Z"/>
               </g>
               <!-- marcos -->
               <g fill="#F4EFDF">
@@ -150,7 +151,7 @@
             </svg>
             <div class="map-tag map-tag-a">
               <span class="dot"></span>
-              <div><strong>Lote 08 · Quadra C</strong><small>Área: 312,40 m²</small></div>
+              <div><strong id="lotName">Lote 08 · Quadra B</strong><small id="lotArea">Área: 312,40 m²</small></div>
             </div>
             <div class="map-tag map-tag-b">
               <svg class="ico" aria-hidden="true"><use href="#i-doc"/></svg>
@@ -338,6 +339,11 @@
           <div class="tech-glow" aria-hidden="true"></div>
           <img src="assets/img/drone-dji-air-3s.webp" width="720" height="720" loading="lazy" decoding="async"
                alt="Drone DJI Air 3S utilizado pela Terra Marcada em mapeamentos aéreos">
+          <div class="tech-hud" aria-hidden="true">
+            <i class="hc tl"></i><i class="hc tr"></i><i class="hc bl"></i><i class="hc br"></i>
+            <span class="hud-rec"><i></i>REC</span>
+            <span class="hud-alt">ALT <b id="hudAlt">86</b> m</span>
+          </div>
           <span class="tech-tag">DJI Air 3S</span>
         </div>
       </div>
@@ -411,6 +417,10 @@
         </div>
       </div>
     </section>
+
+    <div class="contour-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40 C 150 5 300 70 450 38 S 750 4 900 36 S 1100 62 1200 30"/><path d="M0 52 C 160 20 310 80 470 50 S 760 18 910 48 S 1110 72 1200 44" class="b"/></svg>
+    </div>
 
     <!-- ================= PORTFÓLIO =================
          TODO: substituir pelos projetos reais da Terra Marcada.
@@ -560,6 +570,10 @@
       </div>
     </section>
 
+    <div class="contour-divider" aria-hidden="true">
+      <svg viewBox="0 0 1200 70" preserveAspectRatio="none"><path d="M0 40 C 150 5 300 70 450 38 S 750 4 900 36 S 1100 62 1200 30"/><path d="M0 52 C 160 20 310 80 470 50 S 760 18 910 48 S 1110 72 1200 44" class="b"/></svg>
+    </div>
+
     <!-- ================= FAQ ================= -->
     <section class="section" id="duvidas">
       <div class="container faq-wrap">
@@ -625,6 +639,10 @@
             <div class="field">
               <label for="f-cidade">Cidade do imóvel</label>
               <input id="f-cidade" name="cidade" type="text" placeholder="Ex.: Nome da cidade – UF">
+            </div>
+            <div class="wa-preview" aria-live="polite">
+              <span class="wa-preview-label">Prévia da mensagem</span>
+              <p class="wa-preview-msg" id="waPreview"></p>
             </div>
             <button type="submit" class="btn btn-gold btn-lg btn-block">
               <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
