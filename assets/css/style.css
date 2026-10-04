@@ -175,13 +175,11 @@ p { margin: 0 0 1em; }
 .map-tag .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gold-500); box-shadow: 0 0 0 5px var(--gold-100); }
 .map-tag .ico { width: 30px; height: 30px; padding: 6px; border-radius: 9px; background: var(--green-100); color: var(--green-700); }
 .map-tag-a { left: -36px; top: 26%; }
-.map-tag-b { right: -18px; bottom: -22px; }
 
 @media (max-width: 980px) {
   .hero-grid { grid-template-columns: 1fr; gap: 64px; }
   .map-card { margin: 0 auto; max-width: 420px; }
   .map-tag-a { left: -8px; }
-  .map-tag-b { right: -8px; }
 }
 @media (max-width: 560px) {
   .hero-actions .btn { width: 100%; }
@@ -190,11 +188,6 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- Faixa ---------- */
-.strip { background: var(--gold-500); color: var(--green-900); }
-.strip-inner { display: flex; align-items: center; gap: 22px; padding-top: 16px; padding-bottom: 16px; flex-wrap: wrap; }
-.strip-inner > span { font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; }
-.strip ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 24px; font-weight: 600; }
-.strip li::before { content: "◆"; font-size: .55rem; margin-right: 10px; vertical-align: middle; opacity: .55; }
 
 /* ---------- Seções ---------- */
 .section { padding: clamp(72px, 9vw, 120px) 0; }
@@ -554,7 +547,6 @@ body { overflow-x: clip; }
 .map-card { transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s var(--ease); will-change: transform; }
 .map-card.is-tilting { transition: transform .08s linear; }
 .map-tag { animation: float 6s ease-in-out infinite; transform: translateZ(40px); }
-.map-tag-b { animation-duration: 7.5s; animation-delay: -2s; }
 @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
 .map-svg g[transform] { transform-box: fill-box; transform-origin: 50% 100%; animation: pin 3.2s ease-in-out infinite; }
 @keyframes pin { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
@@ -564,8 +556,6 @@ body { overflow-x: clip; }
 .hero-points li:hover .ico { transform: scale(1.25); }
 
 /* faixa de públicos */
-.strip li { transition: transform .25s var(--ease); cursor: default; }
-.strip li:hover { transform: translateY(-2px); }
 
 /* revelar ao rolar (só com JS; conteúdo continua legível sem ele) */
 .js .reveal { opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: var(--d, 0ms); }
@@ -953,7 +943,7 @@ a, button, summary, .chip { touch-action: manipulation; }
 
 /* toque: sem estados de hover presos */
 @media (hover: none) {
-  .card:hover, .pf-card:hover, .type-card:hover, .benefit:hover, .mvv-card:hover, .chip:hover, .contact-list li:hover, .fc-btn:hover, .to-top:hover, .tech-chips li:hover, .strip li:hover, .brand:hover img { transform: none; }
+  .card:hover, .pf-card:hover, .type-card:hover, .benefit:hover, .mvv-card:hover, .chip:hover, .contact-list li:hover, .fc-btn:hover, .to-top:hover, .tech-chips li:hover, .brand:hover img { transform: none; }
   .pf-card:hover .pf-media { transform: none; }
   .card:hover { background: var(--cream); box-shadow: none; }
 }
@@ -992,7 +982,6 @@ a, button, summary, .chip { touch-action: manipulation; }
 .hero-pin.p4 { left: 58%; top: 84%; animation-delay: -1s; } .hero-pin.p4::after { animation-delay: -.4s; }
 @keyframes sonar { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(3.4); opacity: 0; } }
 .map-tag { animation: float 6.5s ease-in-out infinite; }
-.map-tag-b { animation-duration: 8s; }
 .map-svg g[transform] { animation: pin 2.8s ease-in-out infinite; }
 
 /* botões: brilho e ímã discretos */
@@ -1007,14 +996,6 @@ a, button, summary, .chip { touch-action: manipulation; }
 @keyframes icon-pop { 40% { transform: scale(1.18) rotate(-6deg); } 100% { transform: none; } }
 
 /* faixa de públicos em movimento contínuo */
-.strip-inner { flex-wrap: nowrap; gap: 28px; }
-.strip-inner > span { flex: none; }
-.strip .marquee { flex: 1; min-width: 0; display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
-.strip .marquee-track { flex: none; flex-wrap: nowrap; min-width: 100%; justify-content: space-around; gap: 0 40px; padding-right: 40px; white-space: nowrap; animation: marquee 34s linear infinite; }
-.strip .marquee:hover .marquee-track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-100%); } }
-@media (max-width: 640px) { .strip-inner { gap: 14px; flex-direction: column; align-items: flex-start; } .strip .marquee { width: 100%; } }
-@media (prefers-reduced-motion: reduce) { .strip .marquee-track { animation: none; } .strip .marquee-track[aria-hidden="true"] { display: none; } .strip .marquee { overflow-x: auto; } }
 
 /* fotos e drone reagem ao cursor e à rolagem */
 .attend-media img { object-position: 50% calc(38% + var(--pp, 0) * 1%); }
@@ -1202,8 +1183,6 @@ a, button, summary, .chip { touch-action: manipulation; }
 }
 .map-tag.map-tag-a.is-on { opacity: 1; transform: translate(-50%, -100%); }
 .map-tag.map-tag-a::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 12px; height: 12px; margin-left: -6px; background: var(--white); transform: rotate(45deg); border-radius: 2px; }
-.map-tag-b { right: -14px; bottom: -20px; }
-@media (max-width: 980px) { .map-tag-b { right: -6px; } }
 
 /* WhatsApp flutuante: bola perfeita, ícone centralizado, animação ao passar o mouse */
 .wa-float {
@@ -1236,3 +1215,64 @@ a, button, summary, .chip { touch-action: manipulation; }
 @keyframes wa-burst { 0% { transform: scale(1); opacity: .75; } 100% { transform: scale(1.9); opacity: 0; } }
 @media (max-width: 560px) { .wa-float .wa-float-label { display: none; } }
 @media (prefers-reduced-motion: reduce) { .wa-float:hover svg, .wa-float:hover::after, .map-svg .map-pin { animation: none; } }
+
+/* =========================================================
+   AJUSTES DE ACABAMENTO — ícones com mola, linha do tempo limpa,
+   botões flutuantes lado a lado e "para quem trabalhamos"
+   ========================================================= */
+:root { --spring: cubic-bezier(.34, 1.56, .64, 1); }
+
+/* para quem trabalhamos (dentro de Serviços) */
+.audience { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 16px; margin: -12px auto 44px; max-width: 920px; }
+.audience-label { font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-600); }
+.audience ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.audience li {
+  padding: 8px 16px; border-radius: 999px; background: var(--green-100); color: var(--green-800); font-weight: 600; font-size: .95rem;
+  transition: background-color .25s var(--ease), color .25s var(--ease), translate .3s var(--spring);
+}
+@media (hover: hover) and (pointer: fine) { .audience li:hover { background: var(--green-900); color: var(--gold-400); translate: 0 -2px; } }
+
+/* ícones: crescem com mola (overshoot) e balançam, em vez de só aumentar */
+.card-ico, .benefit svg, .contact-list svg, .fc-icon svg, .attend-list .ico, .hero-points .ico, .step-n {
+  transition: scale .55s var(--spring), translate .55s var(--spring), background-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.card-ico { position: relative; }
+.card-ico::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--gold-500); opacity: 0; pointer-events: none; }
+@keyframes icon-wiggle { 0% { rotate: 0deg; } 20% { rotate: -14deg; } 45% { rotate: 10deg; } 70% { rotate: -5deg; } 100% { rotate: 0deg; } }
+@keyframes icon-ping { 0% { opacity: .7; scale: 1; } 100% { opacity: 0; scale: 1.9; } }
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .card-ico { transform: none; scale: 1.16; translate: 0 -3px; animation: icon-wiggle .75s var(--ease); }
+  .card:hover .card-ico svg { animation: none; }
+  .card:hover .card-ico::after { animation: icon-ping .8s ease-out; }
+  .benefit:hover svg { transform: none; scale: 1.24; translate: 0 -4px; animation: icon-wiggle .75s var(--ease); }
+  .contact-list li:hover svg { scale: 1.16; translate: 0 -2px; animation: icon-wiggle .75s var(--ease); }
+  .fc-slide.is-active:hover .fc-icon svg { transform: none; scale: 1.14; animation: icon-wiggle .75s var(--ease); }
+  .attend-list li:hover .ico { scale: 1.3; animation: icon-wiggle .75s var(--ease); }
+  .hero-points li:hover .ico { transform: none; scale: 1.35; animation: icon-wiggle .75s var(--ease); }
+  .step-list li:hover .step-n { transform: none; scale: 1.16; animation: icon-wiggle .75s var(--ease); }
+}
+
+/* linha do tempo: o traço liga uma bolinha à próxima e nunca passa por cima dos números */
+.step-list::before, .step-list::after { display: none; }
+.step-list li::before, .step-list li::after { content: ""; position: absolute; left: 18px; top: 50px; bottom: 10px; width: 2px; border-radius: 2px; }
+.step-list li::before { background: rgba(208, 172, 44, .26); }
+.step-list li::after { background: var(--gold-400); box-shadow: 0 0 10px rgba(221, 191, 82, .5); transform: scaleY(0); transform-origin: top; transition: transform .6s var(--ease-in-out); }
+.step-list li.is-link-done::after { transform: scaleY(1); }
+.step-list li:last-child::before, .step-list li:last-child::after { display: none; }
+.step-n { z-index: 1; }
+
+/* botões flutuantes lado a lado: voltar ao topo + WhatsApp menor */
+.wa-float { width: 52px; height: 52px; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+.wa-float svg { width: 28px; height: 28px; }
+.to-top { right: 84px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); width: 44px; height: 44px; }
+.wa-float .wa-float-label { top: auto; right: 0; bottom: calc(100% + 12px); transform: translateY(8px) scale(.92); transform-origin: 100% 100%; }
+.wa-float:hover .wa-float-label, .wa-float:focus-visible .wa-float-label { transform: translateY(0) scale(1); }
+.wa-float .wa-float-label::after { right: 18px; top: auto; bottom: -5px; margin-top: 0; }
+.wa-bubble { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+@media (max-width: 560px) {
+  .wa-float { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .to-top { right: 78px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+  .wa-bubble { right: 16px; bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  .cookie-banner { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) { .card:hover .card-ico, .benefit:hover svg, .attend-list li:hover .ico, .hero-points li:hover .ico, .step-list li:hover .step-n, .contact-list li:hover svg { animation: none; } .card:hover .card-ico::after { animation: none; } }

@@ -133,9 +133,13 @@
       var tr = timeline.getBoundingClientRect();
       var tp = Math.max(0, Math.min(1, (vh * 0.62 - tr.top) / tr.height));
       timeline.style.setProperty("--tp", tp.toFixed(3));
-      stepItems.forEach(function (li) {
+      var done = stepItems.map(function (li) {
         var n = li.firstElementChild.getBoundingClientRect();
-        li.classList.toggle("is-done", n.top + n.height / 2 < vh * 0.62);
+        return n.top + n.height / 2 < vh * 0.62;
+      });
+      stepItems.forEach(function (li, i) {
+        li.classList.toggle("is-done", done[i]);
+        li.classList.toggle("is-link-done", !!done[i + 1]); // o trecho de linha só acende quando a próxima etapa é alcançada
       });
     }
     if (attendImg && !reduce) {
@@ -178,7 +182,7 @@
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     Object.keys(map).forEach(function (id) { var s = doc.getElementById(id); if (s) spy.observe(s); });
-    $$(".hero, .float-showcase, .strip").forEach(function (s) { spy.observe(s); });
+    $$(".hero, .float-showcase").forEach(function (s) { spy.observe(s); });
   }
 
   /* ---------- Indicador deslizante do menu (desktop) ---------- */
