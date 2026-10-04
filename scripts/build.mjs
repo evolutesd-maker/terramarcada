@@ -20,7 +20,7 @@ mkdirSync(join(out, "assets/css"), { recursive: true });
 mkdirSync(join(out, "assets/js"), { recursive: true });
 
 // imagens e fontes
-cpSync(join(root, "assets/img"), join(out, "assets/img"), { recursive: true });
+cpSync(join(root, "assets/img"), join(out, "assets/img"), { recursive: true, filter: (src) => !src.endsWith("logo-terra-marcada.png") }); // o PNG grande é só a matriz do og-image
 cpSync(join(root, "assets/fonts"), join(out, "assets/fonts"), { recursive: true });
 
 // CSS e JS: minifica e coloca o hash do conteúdo no nome (cache eterno e seguro)

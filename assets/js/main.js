@@ -9,7 +9,6 @@
 
   function $(s, c) { return (c || doc).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || doc).querySelectorAll(s)); }
-  function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) {} return null; }
 
   /* ---------- Segurança: validação e limpeza de tudo que vem de configuração ou de campos ---------- */
   // remove caracteres de controle e de direção de texto (usados em golpes de "texto invertido"), limita o tamanho
@@ -176,9 +175,10 @@
   onScroll();
   /* ---------- Rolagem animada: o clique "leva" a página até o destino ---------- */
   var glideCancel = null;
-  function glideTo(targetY, fallbackEl, trigger) {
-    var max = Math.max(0, root.scrollHeight - window.innerHeight);
-    targetY = Math.max(0, Math.min(max, Math.round(targetY)));
+  function glideTo(getY, fallbackEl, trigger) {
+    var max = function () { return Math.max(0, root.scrollHeight - window.innerHeight); };
+    var clampY = function (y) { return Math.max(0, Math.min(max(), Math.round(y))); };
+    var targetY = clampY(typeof getY === "function" ? getY() : getY);
     var startY = window.scrollY, dist = targetY - startY;
     if (glideCancel) glideCancel();
     if (Math.abs(dist) < 3) return;
@@ -198,7 +198,8 @@
     function step(ts) {
       if (t0 === null) t0 = ts;
       var p = Math.min(1, (ts - t0) / dur);
-      window.scrollTo(0, startY + dist * ease(p));
+      if (typeof getY === "function") targetY = clampY(getY());   // acompanha mudanças de layout durante a viagem
+      window.scrollTo(0, startY + (targetY - startY) * ease(p));
       // quadros incorporados (ex.: prévia) podem não deixar a janela rolar: usa a rolagem nativa do navegador
       if (ts - t0 > 120 && Math.abs(window.scrollY - startY) < 1) {
         stop();
@@ -234,7 +235,7 @@
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     Object.keys(map).forEach(function (id) { var s = doc.getElementById(id); if (s) spy.observe(s); });
-    $$(".hero").forEach(function (s) { spy.observe(s); });
+    $$(".hero, main section[id]").forEach(function (s) { spy.observe(s); });
   }
 
   /* ---------- Indicador deslizante do menu (desktop) ---------- */
@@ -410,21 +411,6 @@
     });
   });
 
-  /* ---------- Balão do WhatsApp (uma vez por sessão) ---------- */
-  var bubble = $(".wa-bubble");
-  if (bubble && !store("tm-bubble")) {
-    var shown = false;
-    var showBubble = function () {
-      if (shown) return; shown = true;
-      bubble.hidden = false;
-      store("tm-bubble", "1");
-      setTimeout(function () { bubble.hidden = true; }, 12000);
-    };
-    setTimeout(function () { if (window.scrollY > 300) showBubble(); else window.addEventListener("scroll", function once() { if (window.scrollY > 300) { window.removeEventListener("scroll", once); setTimeout(showBubble, 1500); } }, { passive: true }); }, 6000);
-    $(".wa-bubble-x", bubble).addEventListener("click", function () { bubble.hidden = true; });
-    bubble.addEventListener("click", function (e) { if (!e.target.closest(".wa-bubble-x")) { var f = $(".wa-float"); if (f) f.click(); } });
-  }
-
   /* ---------- Âncoras da página: levam até a seção com animação e foco acessível ---------- */
   doc.addEventListener("click", function (e) {
     if (e.defaultPrevented) return;
@@ -435,8 +421,7 @@
     if (!target) return;
     e.preventDefault();
     var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
-    var y = id === "topo" ? 0 : target.getBoundingClientRect().top + window.scrollY - pad;
-    glideTo(y, target, a);
+    glideTo(id === "topo" ? 0 : function () { return target.getBoundingClientRect().top + window.scrollY - pad; }, target, a);
     try { history.replaceState(null, "", "#" + id); } catch (err) {}
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
     try { target.focus({ preventScroll: true }); } catch (err2) {}
