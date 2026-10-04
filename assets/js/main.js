@@ -507,21 +507,29 @@
     b.appendChild(d); setTimeout(function () { d.remove(); }, 650);
   });
 
-  // lotes do mapa: o cartão mostra o lote sob o cursor
-  var lotName = $("#lotName"), lotArea = $("#lotArea"), mapSvg = $(".map-svg");
-  if (mapSvg && lotName) {
-    var defName = lotName.textContent, defArea = lotArea.textContent, swapT = 0;
-    var showLot = function (name, area) {
-      if (lotName.textContent === name) return;
-      var tag = lotName.closest(".map-tag"); tag.classList.add("is-swap");
-      clearTimeout(swapT);
-      swapT = setTimeout(function () { lotName.textContent = name; lotArea.textContent = area; tag.classList.remove("is-swap"); }, 130);
+  // lotes do mapa: o cartão aparece só enquanto o cursor está sobre um lote
+  var tagA = $(".map-tag-a"), lotName = $("#lotName"), lotArea = $("#lotArea"), mapSvg = $(".map-svg"), mapCard = $(".map-card");
+  if (mapSvg && tagA && mapCard) {
+    var hideT = 0;
+    var showLot = function (p, touch) {
+      clearTimeout(hideT);
+      lotName.textContent = "Lote " + p.getAttribute("data-lot") + " · Quadra " + p.getAttribute("data-q");
+      lotArea.textContent = "Área: " + p.getAttribute("data-area") + " m²";
+      var cr = mapCard.getBoundingClientRect(), pr = p.getBoundingClientRect();
+      var half = tagA.offsetWidth / 2, h = tagA.offsetHeight;
+      var x = Math.max(half + 8, Math.min(cr.width - half - 8, pr.left + pr.width / 2 - cr.left));
+      var y = pr.top - cr.top - 10;
+      if (y - h < 6) y = pr.bottom - cr.top + h + 10; // lote na borda de cima: o cartão vai abaixo
+      tagA.style.left = x + "px"; tagA.style.top = y + "px";
+      tagA.classList.add("is-on");
+      if (touch) hideT = setTimeout(hideLot, 2200);
     };
+    var hideLot = function () { clearTimeout(hideT); hideT = setTimeout(function () { tagA.classList.remove("is-on"); }, 90); };
     mapSvg.addEventListener("pointerover", function (e) {
       var p = e.target.closest("path[data-lot]");
-      if (p) showLot("Lote " + p.getAttribute("data-lot") + " · Quadra " + p.getAttribute("data-q"), "Área: " + p.getAttribute("data-area") + " m²");
+      if (p) showLot(p, e.pointerType === "touch"); else hideLot();
     });
-    mapSvg.addEventListener("pointerleave", function () { showLot(defName, defArea); });
+    mapSvg.addEventListener("pointerleave", hideLot);
   }
 
   // altitude do visor do drone
