@@ -427,33 +427,22 @@
     track.addEventListener("pointercancel", endDrag);
     window.addEventListener("resize", function () { go(idx, true); });
 
-    // cursor "Arraste" e leve parallax da mídia do card ativo (mouse)
+    // leve parallax da mídia do card ativo (mouse)
     if (finePointer && !reduce) {
-      var chip = $(".fc-cursor", fc), cx = 0, cy = 0, craf = 0;
-      function placeChip() { craf = 0; chip.style.transform = "translate3d(" + (cx + 16) + "px," + (cy + 18) + "px,0)"; }
       track.addEventListener("pointermove", function (e) {
         if (e.pointerType !== "mouse") return;
-        cx = e.clientX; cy = e.clientY;
-        if (!craf) craf = requestAnimationFrame(placeChip);
-        var over = e.target.closest(".fc-btn");
-        chip.classList.toggle("is-on", !over);
         var act = $(".fc-slide.is-active", track);
-        if (act) {
-          var r = act.getBoundingClientRect();
-          var inside = e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom;
-          var img = $(".fc-media img, .fc-media svg", act);
-          if (img && inside) {
-            img.style.setProperty("--ix", (((e.clientX - r.left) / r.width - 0.5) * -14).toFixed(1) + "px");
-            img.style.setProperty("--iy", (((e.clientY - r.top) / r.height - 0.5) * -10).toFixed(1) + "px");
-          }
-        }
+        if (!act) return;
+        var r = act.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
+        var img = $(".fc-media img, .fc-media svg", act);
+        if (!img) return;
+        img.style.setProperty("--ix", (((e.clientX - r.left) / r.width - 0.5) * -14).toFixed(1) + "px");
+        img.style.setProperty("--iy", (((e.clientY - r.top) / r.height - 0.5) * -10).toFixed(1) + "px");
       }, { passive: true });
       track.addEventListener("pointerleave", function () {
-        chip.classList.remove("is-on");
         $$(".fc-media img", track).forEach(function (im) { im.style.setProperty("--ix", "0px"); im.style.setProperty("--iy", "0px"); });
       });
-      track.addEventListener("pointerdown", function (e) { if (e.pointerType === "mouse") { chip.classList.add("is-down"); chip.textContent = "Solte"; } });
-      doc.addEventListener("pointerup", function () { chip.classList.remove("is-down"); chip.textContent = "Arraste"; });
     }
 
     setActive(0);
@@ -487,26 +476,6 @@
       if (p) showLot("Lote " + p.getAttribute("data-lot") + " · Quadra " + p.getAttribute("data-q"), "Área: " + p.getAttribute("data-area") + " m²");
     });
     mapSvg.addEventListener("pointerleave", function () { showLot(defName, defArea); });
-  }
-
-  // marcos plantados com clique no início da página
-  var heroEl = $(".hero");
-  if (heroEl) {
-    var planted = 0;
-    heroEl.addEventListener("pointerdown", function (e) {
-      if (e.button > 0 || e.target.closest("a, button, input, select, .map-card, .scroll-cue")) return;
-      var r = heroEl.getBoundingClientRect();
-      var el = doc.createElement("div");
-      planted += 1;
-      el.className = "plant";
-      el.style.left = (e.clientX - r.left) + "px"; el.style.top = (e.clientY - r.top) + "px";
-      el.innerHTML = '<span>Marco ' + (planted < 10 ? "0" : "") + planted + '</span><svg viewBox="0 0 28 36" aria-hidden="true"><path d="M14 1C7 1 2 6 2 13c0 9 12 21 12 21s12-12 12-21C26 6 21 1 14 1Z" fill="#D0AC2C"/><circle cx="14" cy="13" r="4.5" fill="#0B2B22"/></svg>';
-      heroEl.appendChild(el);
-      var all = heroEl.querySelectorAll(".plant");
-      if (all.length > 10) all[0].remove();
-      setTimeout(function () { el.classList.add("is-out"); }, 2600);
-      setTimeout(function () { el.remove(); }, 3300);
-    });
   }
 
   // altitude do visor do drone
