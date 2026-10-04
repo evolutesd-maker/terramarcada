@@ -1276,3 +1276,129 @@ a, button, summary, .chip { touch-action: manipulation; }
   .cookie-banner { bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) { .card:hover .card-ico, .benefit:hover svg, .attend-list li:hover .ico, .hero-points li:hover .ico, .step-list li:hover .step-n, .contact-list li:hover svg { animation: none; } .card:hover .card-ico::after { animation: none; } }
+
+/* =========================================================
+   MAIS HOVERS E FLOATS — profundidade e vida com acabamento
+   ========================================================= */
+
+/* ---------- floats ---------- */
+.attend-badge {
+  position: absolute; z-index: 3; top: 22px; right: -26px; display: flex; align-items: center; gap: 8px;
+  background: var(--green-900); color: var(--gold-400); font-weight: 700; font-size: .88rem; padding: 9px 16px 9px 12px; border-radius: 999px;
+  box-shadow: 0 14px 28px -12px rgba(7, 29, 23, .6); animation: float-soft 8s ease-in-out -3s infinite;
+}
+.attend-badge .ico { width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: var(--gold-500); color: var(--green-900); }
+@media (max-width: 900px) { .attend-badge { right: 8px; top: 14px; } }
+
+.tech-visual { position: relative; justify-self: center; width: 100%; max-width: 460px; }
+.tech-visual .tech-card { max-width: none; }
+.tech-float {
+  position: absolute; z-index: 2; background: var(--white); color: var(--green-900); border: 1px solid var(--line); border-radius: 999px;
+  font-weight: 700; font-size: .86rem; padding: 8px 16px; box-shadow: 0 14px 28px -14px rgba(7, 29, 23, .45); white-space: nowrap;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+.tech-float::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--gold-500); vertical-align: 1px; box-shadow: 0 0 0 4px rgba(208, 172, 44, .2); }
+.tf1 { top: 22%; left: -34px; animation: float-soft 7s ease-in-out infinite; }
+.tf2 { bottom: 16%; right: -30px; animation: float-soft 9s ease-in-out -4s infinite; }
+@media (hover: hover) and (pointer: fine) { .tech-visual:hover .tech-float { background: var(--green-900); color: var(--gold-400); border-color: var(--green-900); } }
+@media (max-width: 900px) { .tech-visual { justify-self: start; max-width: 420px; } .tf1 { left: -6px; } .tf2 { right: -6px; } }
+
+/* ícones dos serviços flutuam de leve, cada um num ritmo */
+.card-ico svg { animation: float-soft 6s ease-in-out infinite; }
+.card:nth-child(2) .card-ico svg { animation-delay: -1s; } .card:nth-child(3) .card-ico svg { animation-delay: -2.2s; }
+.card:nth-child(4) .card-ico svg { animation-delay: -3.4s; } .card:nth-child(5) .card-ico svg { animation-delay: -4.6s; }
+.card:nth-child(6) .card-ico svg { animation-delay: -5.4s; }
+@media (hover: hover) and (pointer: fine) { .card:hover .card-ico svg { animation: float-soft 6s ease-in-out infinite; } }
+
+/* poeira dourada subindo nas áreas escuras */
+.dust { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.dust i { position: absolute; bottom: -12px; width: var(--s, 4px); height: var(--s, 4px); border-radius: 50%; background: var(--gold-400); opacity: 0; left: var(--x, 50%); animation: dust var(--t, 18s) linear var(--d, 0s) infinite; }
+@keyframes dust { 0% { transform: translate3d(0, 0, 0); opacity: 0; } 12% { opacity: .55; } 80% { opacity: .35; } 100% { transform: translate3d(var(--dx, 20px), -110vh, 0); opacity: 0; } }
+
+/* profundidade com a rolagem */
+.attend-media, .tech-visual { translate: 0 var(--fy, 0px); }
+
+/* pinos do início acompanham o mouse em camadas */
+.hero-pin { transform: translate3d(calc(var(--hx, 0) * var(--k, 14) * 1px), calc(var(--hy, 0) * var(--k, 14) * 1px), 0); transition: transform .8s var(--ease); }
+.hero-pin.p1 { --k: 22; } .hero-pin.p2 { --k: -16; } .hero-pin.p3 { --k: 28; } .hero-pin.p4 { --k: -24; }
+
+/* ---------- hovers ---------- */
+/* tipos de REURB: itens avançam em cascata */
+.checklist li { transition: translate .35s var(--spring), color .25s ease; }
+.checklist li::before { transition: scale .4s var(--spring), rotate .4s var(--spring); }
+@media (hover: hover) and (pointer: fine) {
+  .type-card:hover .checklist li { translate: 6px 0; }
+  .type-card:hover .checklist li:nth-child(2) { transition-delay: 50ms; } .type-card:hover .checklist li:nth-child(3) { transition-delay: 100ms; }
+  .type-card:hover .checklist li::before { scale: 1.15; rotate: -8deg; }
+  .type-card:hover .type-badge { box-shadow: 0 0 0 6px rgba(208, 172, 44, .18); }
+}
+.type-badge { transition: box-shadow .3s var(--ease); }
+
+/* etapas do processo */
+.step-list li strong, .step-list li p { transition: translate .35s var(--ease), color .25s ease, opacity .35s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .step-list li:hover strong { color: var(--gold-400); translate: 6px 0; }
+  .step-list li:hover p { color: rgba(255, 255, 255, .92); opacity: 1; translate: 6px 0; }
+}
+
+/* missão, visão e valores */
+.values li { transition: translate .3s var(--spring); }
+.values li::before { display: inline-block; transition: rotate .4s var(--spring), scale .4s var(--spring); }
+@media (hover: hover) and (pointer: fine) {
+  .mvv-card:hover .values li { translate: 6px 0; }
+  .mvv-card:hover .values li:nth-child(2) { transition-delay: 40ms; } .mvv-card:hover .values li:nth-child(3) { transition-delay: 80ms; }
+  .mvv-card:hover .values li:nth-child(4) { transition-delay: 120ms; } .mvv-card:hover .values li:nth-child(5) { transition-delay: 160ms; }
+  .mvv-card:hover .values li::before { rotate: 135deg; scale: 1.4; }
+}
+
+/* dúvidas frequentes: barra de destaque */
+.faq details { position: relative; }
+.faq details::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 3px; background: var(--gold-500); transform: scaleY(0); transition: transform .35s var(--spring); }
+.faq details[open]::before { transform: scaleY(1); }
+@media (hover: hover) and (pointer: fine) { .faq details:hover::before { transform: scaleY(1); } .faq details:hover { border-color: rgba(208, 172, 44, .55); } }
+
+/* portfólio: linha dourada que se desenha no topo do cartão */
+.pf-card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; z-index: 3; background: linear-gradient(90deg, var(--gold-500), rgba(208, 172, 44, 0)); transform: scaleX(0); transform-origin: left; transition: transform .55s var(--ease); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) { .pf-card:hover::after { transform: scaleX(1); } .pf-card:hover .pf-meta dd { color: var(--green-700); } }
+.pf-meta dd { transition: color .25s ease; }
+
+/* foto do atendimento: marcas de registro se afastam, imagem respira */
+.attend-media img { transition: scale .8s var(--ease), box-shadow .5s var(--ease); }
+.attend-media .reg { transition: scale .5s var(--spring); }
+@media (hover: hover) and (pointer: fine) {
+  .attend-media:hover img { scale: 1.02; }
+  .attend-media:hover .reg { scale: 1.35; }
+  .attend-chip { transition: background-color .25s ease, color .25s ease; }
+}
+
+/* campos do formulário */
+.field label { transition: color .2s ease; }
+.field:focus-within label { color: var(--green-700); }
+@media (hover: hover) and (pointer: fine) { .field input:hover, .field select:hover { border-color: #b7c5be; } }
+
+/* links de texto com sublinhado que se desenha */
+.form-note a, .legal-content a, .cookie-banner a {
+  text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .3s var(--ease);
+}
+.form-note a, .legal-content a { background-size: 100% 1px; }
+@media (hover: hover) and (pointer: fine) { .form-note a:hover, .legal-content a:hover { background-size: 100% 2px; } .cookie-banner a:hover { background-size: 100% 1.5px; } }
+.cookie-banner a { background-size: 100% 1px; }
+
+/* rodapé e detalhes pequenos */
+.footer-brand img { transition: rotate .7s var(--spring), scale .4s var(--spring); }
+.footer-brand:hover img { rotate: 14deg; scale: 1.08; }
+.hero-points li { transition: translate .3s var(--ease); }
+@media (hover: hover) and (pointer: fine) { .hero-points li:hover { translate: 5px 0; } .fc-dot:hover i { height: 7px; } }
+.fc-dot i { transition: height .25s var(--ease), background-color .25s ease; }
+.brand-text strong { transition: color .25s ease; }
+@media (hover: hover) and (pointer: fine) { .brand:hover .brand-text strong { color: var(--green-700); } }
+.chip { transition: all .25s var(--ease); }
+
+@media (hover: none) {
+  .type-card:hover .checklist li, .step-list li:hover strong, .step-list li:hover p, .mvv-card:hover .values li, .hero-points li:hover { translate: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .attend-badge, .tech-float, .card-ico svg, .dust i { animation: none; }
+  .attend-media, .tech-visual { translate: none; }
+  .hero-pin { transform: none; }
+}

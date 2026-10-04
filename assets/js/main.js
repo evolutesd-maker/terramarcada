@@ -112,6 +112,7 @@
   var timeline = $(".step-list");
   var stepItems = $$(".step-list li");
   var attendImg = $(".attend-media img");
+  var floaters = $$(".attend-media, .tech-visual");
 
   function onScroll() {
     var y = window.scrollY;
@@ -141,6 +142,12 @@
         li.classList.toggle("is-done", done[i]);
         li.classList.toggle("is-link-done", !!done[i + 1]); // o trecho de linha só acende quando a próxima etapa é alcançada
       });
+    }
+    if (!reduce) {
+      for (var fi = 0; fi < floaters.length; fi++) {
+        var fr = floaters[fi].getBoundingClientRect();
+        if (fr.bottom > -100 && fr.top < vh + 100) floaters[fi].style.setProperty("--fy", ((((fr.top + fr.height / 2) - vh / 2) / vh) * -22).toFixed(1) + "px");
+      }
     }
     if (attendImg && !reduce) {
       var ar = attendImg.getBoundingClientRect();
@@ -546,6 +553,39 @@
       a = Math.max(62, Math.min(118, a + Math.round((Math.random() - 0.5) * 6)));
       alt.textContent = a;
     }, 900);
+  }
+
+
+  /* ---------- Floats: poeira dourada e pinos em camadas ---------- */
+  if (!reduce) {
+    $$(".section-dark, .cta-final").forEach(function (sec, si) {
+      var d = doc.createElement("div");
+      d.className = "dust"; d.setAttribute("aria-hidden", "true");
+      for (var i = 0; i < 9; i++) {
+        var p = doc.createElement("i");
+        p.style.setProperty("--x", ((i * 11 + si * 7 + 6) % 96) + "%");
+        p.style.setProperty("--s", (2 + (i % 3)) + "px");
+        p.style.setProperty("--t", (16 + (i * 3) % 11) + "s");
+        p.style.setProperty("--d", "-" + ((i * 2.3 + si) % 14).toFixed(1) + "s");
+        p.style.setProperty("--dx", ((i % 2 ? 1 : -1) * (14 + i * 4)) + "px");
+        d.appendChild(p);
+      }
+      sec.insertBefore(d, sec.firstChild);
+    });
+    var heroEl2 = $(".hero");
+    if (heroEl2 && finePointer) {
+      var hraf = 0;
+      heroEl2.addEventListener("pointermove", function (e) {
+        if (hraf) return;
+        hraf = requestAnimationFrame(function () {
+          var r = heroEl2.getBoundingClientRect();
+          heroEl2.style.setProperty("--hx", (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3));
+          heroEl2.style.setProperty("--hy", (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3));
+          hraf = 0;
+        });
+      }, { passive: true });
+      heroEl2.addEventListener("pointerleave", function () { heroEl2.style.setProperty("--hx", "0"); heroEl2.style.setProperty("--hy", "0"); });
+    }
   }
 
   /* ---------- Aviso de privacidade ---------- */
