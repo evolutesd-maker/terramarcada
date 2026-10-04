@@ -40,19 +40,22 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var nome = form.nome.value.trim();
+      var err = $("#err-nome");
       if (!nome) {
         form.nome.focus();
         form.nome.setAttribute("aria-invalid", "true");
+        if (err) err.hidden = false;
         return;
       }
       form.nome.removeAttribute("aria-invalid");
+      if (err) err.hidden = true;
       var msg = "Olá! Meu nome é " + nome + ".\n" +
         "Assunto: " + form.assunto.value + "\n" +
         (form.cidade.value.trim() ? "Cidade do imóvel: " + form.cidade.value.trim() + "\n" : "") +
         "Gostaria de agendar um atendimento.";
       window.open(waLink(msg), "_blank", "noopener");
     });
-    form.nome.addEventListener("input", function () { form.nome.removeAttribute("aria-invalid"); });
+    form.nome.addEventListener("input", function () { form.nome.removeAttribute("aria-invalid"); var e = $("#err-nome"); if (e) e.hidden = true; });
   }
 
   /* ---------- Menu mobile ---------- */
@@ -127,7 +130,7 @@
       el.classList.add("reveal");
       var sib = el.parentElement ? $$(":scope > " + (el.tagName.toLowerCase()), el.parentElement) : [];
       var i = sib.indexOf(el);
-      if (i > 0) el.style.setProperty("--d", Math.min(i, 5) * 70 + "ms");
+      if (i > 0) el.style.setProperty("--d", Math.min(i, 4) * 60 + "ms");
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -136,13 +139,13 @@
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
     items.forEach(function (el) { io.observe(el); });
     // rede de segurança: nada fica escondido se o observador falhar
-    setTimeout(function () { items.forEach(function (el) { el.classList.add("is-visible"); }); }, 4000);
+    setTimeout(function () { items.forEach(function (el) { el.classList.add("is-visible"); }); }, 3500);
   }
 
   /* ---------- Interações de ponteiro (somente mouse/trackpad) ---------- */
   if (finePointer && !reduce) {
     // destaque que segue o cursor nos cartões
-    var spots = $$(".card, .type-card, .benefit, .step-list li, .pf-card, .mvv-card");
+    var spots = $$(".card, .type-card, .benefit, .pf-card, .mvv-card");
     spots.forEach(function (el) {
       el.setAttribute("data-spot", "");
       var raf = 0;
@@ -156,41 +159,6 @@
         });
       }, { passive: true });
     });
-
-    // botões "magnéticos"
-    $$(".btn-lg, .btn-gold").forEach(function (b) {
-      b.addEventListener("pointermove", function (e) {
-        var r = b.getBoundingClientRect();
-        var x = (e.clientX - (r.left + r.width / 2)) / r.width;
-        var y = (e.clientY - (r.top + r.height / 2)) / r.height;
-        b.style.setProperty("--mx", (x * 8).toFixed(1) + "px");
-        b.style.setProperty("--my", (y * 6).toFixed(1) + "px");
-      }, { passive: true });
-      b.addEventListener("pointerleave", function () { b.style.removeProperty("--mx"); b.style.removeProperty("--my"); });
-    });
-
-    // inclinação suave do mapa do hero
-    var art = $(".hero-art"), card = $(".map-card");
-    if (art && card) {
-      var tilt = 0;
-      art.addEventListener("pointermove", function (e) {
-        card.classList.add("is-tilting");
-        if (tilt) return;
-        tilt = requestAnimationFrame(function () {
-          var r = art.getBoundingClientRect();
-          var x = (e.clientX - r.left) / r.width - 0.5;
-          var y = (e.clientY - r.top) / r.height - 0.5;
-          card.style.setProperty("--ry", (x * 9).toFixed(2) + "deg");
-          card.style.setProperty("--rx", (-y * 7).toFixed(2) + "deg");
-          tilt = 0;
-        });
-      }, { passive: true });
-      art.addEventListener("pointerleave", function () {
-        card.classList.remove("is-tilting");
-        card.style.setProperty("--rx", "0deg");
-        card.style.setProperty("--ry", "0deg");
-      });
-    }
   }
 
   /* ---------- Filtro do portfólio com animação FLIP ---------- */

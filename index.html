@@ -259,10 +259,10 @@
             <h3>Georreferenciamento de imóveis rurais</h3>
             <p>Georreferenciamento conforme as normas do INCRA, certificação no SIGEF e apoio ao CAR e demais cadastros rurais.</p>
           </article>
-          <article class="card">
+          <article class="card card-wide">
             <div class="card-ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></div>
-            <h3>Documentação técnica de imóveis</h3>
-            <p>Plantas, memoriais descritivos, desmembramento, unificação, retificação de área e peças técnicas para usucapião.</p>
+            <div><h3>Documentação técnica de imóveis</h3>
+            <p>Plantas, memoriais descritivos, desmembramento, unificação, retificação de área e peças técnicas para usucapião.</p></div>
           </article>
         </div>
       </div>
@@ -427,17 +427,18 @@
           <article class="pf-card" data-cat="reurb">
             <div class="pf-media pf-art-1" aria-hidden="true"></div>
             <div class="pf-body">
-              <span class="pf-tag">REURB-S</span>
-              <h3>Regularização de núcleo urbano</h3>
-              <p>Levantamento, cadastro social e projeto de regularização de bairro consolidado.</p>
+              <span class="pf-tag">REURB</span>
+              <h3>Bairro Frigorífico</h3>
+              <p>Projeto de regularização fundiária urbana, com levantamento, cadastro e plantas do bairro.</p>
               <dl class="pf-meta">
-                <div><dt>Local</dt><dd>Município – UF</dd></div>
-                <div><dt>Escopo</dt><dd>000 lotes</dd></div>
+                <div><dt>Local</dt><dd>Tupanciretã – RS</dd></div>
+                <div><dt>Serviço</dt><dd>Regularização</dd></div>
               </dl>
             </div>
           </article>
 
           <article class="pf-card" data-cat="topografia">
+            <span class="pf-sample">Exemplo ilustrativo</span>
             <div class="pf-media pf-art-2" aria-hidden="true"></div>
             <div class="pf-body">
               <span class="pf-tag">Aerolevantamento</span>
@@ -451,6 +452,7 @@
           </article>
 
           <article class="pf-card" data-cat="rural">
+            <span class="pf-sample">Exemplo ilustrativo</span>
             <div class="pf-media pf-art-3" aria-hidden="true"></div>
             <div class="pf-body">
               <span class="pf-tag">Georreferenciamento</span>
@@ -464,6 +466,7 @@
           </article>
 
           <article class="pf-card" data-cat="reurb">
+            <span class="pf-sample">Exemplo ilustrativo</span>
             <div class="pf-media pf-art-4" aria-hidden="true"></div>
             <div class="pf-body">
               <span class="pf-tag">REURB-E</span>
@@ -477,6 +480,7 @@
           </article>
 
           <article class="pf-card" data-cat="topografia">
+            <span class="pf-sample">Exemplo ilustrativo</span>
             <div class="pf-media pf-art-5" aria-hidden="true"></div>
             <div class="pf-body">
               <span class="pf-tag">Topografia</span>
@@ -490,6 +494,7 @@
           </article>
 
           <article class="pf-card" data-cat="reurb">
+            <span class="pf-sample">Exemplo ilustrativo</span>
             <div class="pf-media pf-art-6" aria-hidden="true"></div>
             <div class="pf-body">
               <span class="pf-tag">Cadastro territorial</span>
@@ -549,9 +554,13 @@
     <!-- ================= FAQ ================= -->
     <section class="section" id="duvidas">
       <div class="container faq-wrap">
-        <header class="section-head">
+        <header class="faq-intro">
           <p class="eyebrow">Dúvidas frequentes</p>
           <h2>Perguntas que sempre ouvimos</h2>
+          <p>Não encontrou o que procurava? Conte seu caso e respondemos sem compromisso.</p>
+          <a href="#" class="btn btn-gold" data-whatsapp="Olá! Tenho uma dúvida sobre regularização de imóvel.">
+            <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg> Tirar uma dúvida
+          </a>
         </header>
 
         <div class="faq">
@@ -590,7 +599,8 @@
           <form class="wa-form" id="wa-form" novalidate>
             <div class="field">
               <label for="f-nome">Seu nome</label>
-              <input id="f-nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required>
+              <input id="f-nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required aria-describedby="err-nome">
+              <p class="field-error" id="err-nome" role="alert" hidden>Informe seu nome para continuar.</p>
             </div>
             <div class="field">
               <label for="f-assunto">Assunto</label>
