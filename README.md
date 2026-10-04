@@ -6,8 +6,16 @@ Objetivo: levar o visitante a chamar no WhatsApp ou agendar atendimento.
 ## Como visualizar
 Abra `index.html` no navegador ou rode `python3 -m http.server` na pasta.
 
+## Publicar (versão otimizada e segura)
+```bash
+npm install
+SITE_URL=https://www.seudominio.com.br npm run build   # gera dist/
+npm run serve                                           # confere em http://localhost:8080
+```
+Publique **só a pasta `dist/`**. Detalhes de segurança, cabeçalhos e checklist em [`docs/SEGURANCA.md`](docs/SEGURANCA.md).
+
 ## Preencher os dados de contato
-Edite **apenas** `assets/js/config.js`:
+Edite **apenas** `assets/js/config.js` (e rode o build de novo):
 
 | Campo | Exemplo |
 |---|---|
@@ -26,4 +34,4 @@ e troque a `div.pf-media` por `<img class="pf-media" src="assets/img/portfolio/f
 Verde `#0B2B22` e amarelo `#D0AC2C` (variáveis no topo de `assets/css/style.css`).
 
 ## Publicação
-Qualquer hospedagem estática serve (GitHub Pages, Netlify, Cloudflare Pages, etc.).
+Cloudflare Pages ou Netlify são as melhores opções (aceitam cabeçalhos de segurança). Veja `docs/SEGURANCA.md`.

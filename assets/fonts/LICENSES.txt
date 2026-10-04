@@ -1,0 +1,4 @@
+Playfair Display — Copyright 2017 The Playfair Display Project Authors.
+Source Sans 3 — Copyright Adobe (Source Sans is a trademark of Adobe).
+Ambas licenciadas sob a SIL Open Font License 1.1: https://openfontlicense.org
+Arquivos obtidos dos pacotes @fontsource-variable (subconjunto latino).

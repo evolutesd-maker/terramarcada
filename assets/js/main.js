@@ -4,7 +4,6 @@
   var doc = document;
   var root = doc.documentElement;
   var cfg = window.TERRA_MARCADA || {};
-  var waNumber = String(cfg.whatsapp || "").replace(/\D/g, "");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
@@ -12,36 +11,60 @@
   function $$(s, c) { return Array.prototype.slice.call((c || doc).querySelectorAll(s)); }
   function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) {} return null; }
 
+  /* ---------- Segurança: validação e limpeza de tudo que vem de configuração ou de campos ---------- */
+  // remove caracteres de controle e de direção de texto (usados em golpes de "texto invertido"), limita o tamanho
+  function clean(v, max) {
+    return String(v == null ? "" : v)
+      .replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u202a-\u202e\u2060-\u2069\ufeff]/g, " ")
+      .replace(/\s+/g, " ").trim().slice(0, max || 80);
+  }
+  var waNumber = String(cfg.whatsapp || "").replace(/\D/g, "");
+  if (!/^\d{10,15}$/.test(waNumber)) waNumber = "";
+  var email = String(cfg.email || "").trim();
+  if (!/^[^\s@<>"'()\[\]\\,;:]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email) || email.length > 120) email = "";
+
   /* ---------- WhatsApp e dados de contato ---------- */
   function waLink(message) {
-    var text = encodeURIComponent(message || "Olá! Vim pelo site da Terra Marcada.");
+    var text = encodeURIComponent(clean(message || "Olá! Vim pelo site da Terra Marcada.", 600).replace(/ ?\|\| ?/g, "\n"));
     return waNumber ? "https://wa.me/" + waNumber + "?text=" + text : "https://wa.me/?text=" + text;
   }
   $$("[data-whatsapp]").forEach(function (el) {
     el.href = waLink(el.getAttribute("data-whatsapp"));
     el.target = "_blank";
-    el.rel = "noopener";
+    el.rel = "noopener noreferrer";
   });
-  function fill(key, value) {
+  function fill(key, value, max) {
+    value = clean(value, max || 120);
     if (!value) return;
     $$('[data-fill="' + key + '"]').forEach(function (el) { el.textContent = value; });
   }
-  fill("phone", waNumber ? cfg.whatsappDisplay : "");
-  fill("address", cfg.address);
-  fill("hours", cfg.hours);
-  fill("cnpj", cfg.cnpj);
-  if (cfg.email) {
-    $$('[data-fill="email"]').forEach(function (el) { el.textContent = cfg.email; el.href = "mailto:" + cfg.email; });
+  fill("phone", waNumber ? cfg.whatsappDisplay : "", 30);
+  fill("address", cfg.address, 140);
+  fill("hours", cfg.hours, 80);
+  fill("cnpj", cfg.cnpj, 40);
+  if (email) {
+    $$('[data-fill="email"]').forEach(function (el) { el.textContent = email; el.href = "mailto:" + email; });
   }
 
   /* ---------- Formulário -> mensagem pronta no WhatsApp ---------- */
   var form = $("#wa-form");
   if (form) {
+    // o assunto só pode ser uma das opções existentes
+    function assunto() {
+      var ok = $$("option", form.assunto).map(function (o) { return o.value; });
+      return ok.indexOf(form.assunto.value) > -1 ? form.assunto.value : ok[0];
+    }
+    function msgText(placeholder) {
+      var nome = clean(form.nome.value, 80), cidade = clean(form.cidade.value, 80);
+      return "Olá! Meu nome é " + (nome || (placeholder ? "[seu nome]" : "")) + ".\n" + "Assunto: " + assunto() + "\n" +
+        (cidade ? "Cidade do imóvel: " + cidade + "\n" : "") + "Gostaria de agendar um atendimento.";
+    }
+    var prev = $("#waPreview");
+    function paintPreview() { if (prev) prev.textContent = msgText(true); }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      var nome = form.nome.value.trim();
       var err = $("#err-nome");
-      if (!nome) {
+      if (!clean(form.nome.value, 80)) {
         form.nome.focus();
         form.nome.setAttribute("aria-invalid", "true");
         if (err) err.hidden = false;
@@ -49,19 +72,11 @@
       }
       form.nome.removeAttribute("aria-invalid");
       if (err) err.hidden = true;
-      var msg = "Olá! Meu nome é " + nome + ".\n" +
-        "Assunto: " + form.assunto.value + "\n" +
-        (form.cidade.value.trim() ? "Cidade do imóvel: " + form.cidade.value.trim() + "\n" : "") +
-        "Gostaria de agendar um atendimento.";
-      window.open(waLink(msg), "_blank", "noopener");
+      var msg = msgText(false);
+      // waLink limpa o texto; as quebras de linha são preservadas separadamente
+      var url = (waNumber ? "https://wa.me/" + waNumber : "https://wa.me/") + "?text=" + encodeURIComponent(msg);
+      window.open(url, "_blank", "noopener,noreferrer");
     });
-    var prev = $("#waPreview");
-    function msgText() {
-      var nome = form.nome.value.trim();
-      return "Olá! Meu nome é " + (nome || "[seu nome]") + ".\n" + "Assunto: " + form.assunto.value + "\n" +
-        (form.cidade.value.trim() ? "Cidade do imóvel: " + form.cidade.value.trim() + "\n" : "") + "Gostaria de agendar um atendimento.";
-    }
-    function paintPreview() { if (prev) prev.textContent = msgText(); }
     form.addEventListener("input", paintPreview); form.addEventListener("change", paintPreview); paintPreview();
     form.nome.addEventListener("input", function () { form.nome.removeAttribute("aria-invalid"); var e = $("#err-nome"); if (e) e.hidden = true; });
   }
@@ -103,12 +118,14 @@
     var max = root.scrollHeight - window.innerHeight;
     root.style.setProperty("--sp", max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
     if (progress) progress.style.setProperty("--p", max > 0 ? Math.min(1, y / max).toFixed(4) : 0);
-    header.classList.toggle("is-scrolled", y > 8);
+    if (header) header.classList.toggle("is-scrolled", y > 8);
     // esconde ao descer, mostra ao subir
-    if (y > 240 && y > lastY + 4) header.classList.add("is-hidden");
-    else if (y < lastY - 4 || y <= 240) header.classList.remove("is-hidden");
+    if (header) {
+      if (y > 240 && y > lastY + 4) header.classList.add("is-hidden");
+      else if (y < lastY - 4 || y <= 240) header.classList.remove("is-hidden");
+    }
     if (toTop) {
-      toTop.classList.toggle("is-on", y > 900);
+      applyTop();
       toTop.style.setProperty("--tp", max > 0 ? Math.min(1, y / max).toFixed(3) : 0);
     }
     var vh = window.innerHeight;
@@ -139,7 +156,12 @@
     if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ behavior: behavior, block: "start" });
     try { window.scrollTo({ top: 0, behavior: behavior }); } catch (e) { window.scrollTo(0, 0); }
   }
-  if (toTop) toTop.addEventListener("click", scrollToTop);
+  doc.addEventListener("click", function (e) { if (e.target.closest("[data-top]")) { e.preventDefault(); scrollToTop(); } });
+  var heroOut = false;
+  function applyTop() { if (toTop) toTop.classList.toggle("is-on", heroOut || window.scrollY > 900); }
+  if (hero && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { heroOut = !en[0].isIntersecting; applyTop(); }, { threshold: 0 }).observe(hero);
+  }
 
   /* ---------- Menu ativo conforme a seção (scrollspy) ---------- */
   var links = $$('.nav a[href^="#"]:not(.btn)');
@@ -151,10 +173,34 @@
         if (!en.isIntersecting) return;
         links.forEach(function (a) { a.classList.remove("is-active"); a.removeAttribute("aria-current"); });
         var a = map[en.target.id];
-        if (a) { a.classList.add("is-active"); a.setAttribute("aria-current", "true"); }
+        if (!a && typeof moveIndicator === "function") moveIndicator(null);
+        if (a) { a.classList.add("is-active"); a.setAttribute("aria-current", "true"); if (typeof moveIndicator === "function") moveIndicator(a); }
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     Object.keys(map).forEach(function (id) { var s = doc.getElementById(id); if (s) spy.observe(s); });
+    $$(".hero, .float-showcase, .strip").forEach(function (s) { spy.observe(s); });
+  }
+
+  /* ---------- Indicador deslizante do menu (desktop) ---------- */
+  var indicator = $(".nav-indicator");
+  var desk = window.matchMedia("(min-width: 981px)");
+  function moveIndicator(el) {
+    if (!indicator) return;
+    if (!el || !desk.matches) { indicator.style.opacity = "0"; return; }
+    indicator.style.setProperty("--x", el.offsetLeft + "px");
+    indicator.style.setProperty("--w", el.offsetWidth + "px");
+    indicator.style.opacity = "1";
+  }
+  function currentLink() { return $(".nav a.is-active:not(.btn)") || null; }
+  if (indicator) {
+    links.forEach(function (a) {
+      a.addEventListener("pointerenter", function () { moveIndicator(a); });
+      a.addEventListener("focus", function () { moveIndicator(a); });
+      a.addEventListener("pointerleave", function () { moveIndicator(currentLink()); });
+      a.addEventListener("blur", function () { moveIndicator(currentLink()); });
+    });
+    window.addEventListener("resize", function () { moveIndicator(currentLink()); });
+    moveIndicator(currentLink());
   }
 
   /* ---------- Revelar ao rolar, com escalonamento ---------- */

@@ -1,0 +1,15 @@
+{
+  "name": "terra-marcada-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site institucional estático da Terra Marcada mapeamento territorial",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "python3 -m http.server 8080 --directory dist"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "html-minifier-terser": "^7.2.0"
+  }
+}

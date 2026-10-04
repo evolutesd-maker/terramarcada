@@ -1,0 +1,6 @@
+# Contato para relatar falhas de segurança neste site.
+# Preencha com um e-mail real e renove a data de expiração a cada ano.
+Contact: mailto:[seguranca@seudominio.com.br]
+Expires: 2027-10-01T00:00:00.000Z
+Preferred-Languages: pt, en
+Canonical: __SITE_URL__/.well-known/security.txt

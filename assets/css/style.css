@@ -1,3 +1,8 @@
+/* Fontes hospedadas no próprio site (sem requisições a terceiros) */
+@font-face { font-family: "Source Sans 3"; font-style: normal; font-weight: 200 900; font-display: swap; src: url("../fonts/source-sans-3-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("../fonts/playfair-display-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("../fonts/playfair-display-latin-wght-italic.woff2") format("woff2"); }
+
 /* =========================================================
    Terra Marcada — mapeamento territorial
    ========================================================= */
@@ -1103,3 +1108,76 @@ a, button, summary, .chip { touch-action: manipulation; }
 .btn-ghost .ripple, .btn-ghost-dark .ripple { background: rgba(208, 172, 44, .35); }
 @keyframes ripple { to { transform: scale(28); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .hud-rec i, .hero-bg .flight .prop, .btn .ripple { animation: none; } .js .contour-divider path { stroke-dashoffset: 0; transition: none; } .brand img { rotate: none; } }
+
+/* =========================================================
+   RODADA FINAL — navegação viva, rodapé com voo, desempenho
+   ========================================================= */
+.sprite { display: none; }
+
+/* menu: indicador que desliza entre os itens (desktop) */
+@media (min-width: 981px) {
+  .nav { position: relative; }
+  .nav a:not(.btn)::after { display: none; }
+  .nav a:not(.btn).is-active { color: var(--green-700); }
+  .nav-indicator {
+    position: absolute; left: 0; bottom: -7px; height: 3px; border-radius: 3px; width: var(--w, 0px);
+    background: linear-gradient(90deg, var(--gold-600), var(--gold-400)); opacity: 0; pointer-events: none;
+    transform: translateX(var(--x, 0px)); transition: transform .4s var(--ease), width .4s var(--ease), opacity .25s ease;
+  }
+}
+@media (max-width: 980px) { .nav-indicator { display: none; } }
+
+/* clique de câmera do drone */
+.hero-bg .flight .shot { transform-box: fill-box; transform-origin: center; opacity: 0; animation: shutter 9s ease-out 3s infinite; }
+@keyframes shutter { 0%, 80% { opacity: 0; transform: scale(.5); } 84% { opacity: .95; } 100% { opacity: 0; transform: scale(4.4); } }
+
+/* rodapé com drone em voo e botão de voltar ao topo */
+.site-footer { position: relative; overflow: hidden; padding-top: 56px; }
+.site-footer .container { position: relative; z-index: 1; }
+.foot-flight { position: absolute; top: 0; left: 0; width: 100%; height: 80px; pointer-events: none; }
+.foot-flight .small { filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .4)); }
+.footer-top {
+  display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600; font-size: .92rem; cursor: pointer;
+  color: var(--gold-400); background: none; border: 1.5px solid rgba(208, 172, 44, .45); border-radius: 999px; padding: 8px 16px;
+  transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), transform .16s var(--ease);
+}
+.footer-top svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+.footer-top:active { transform: scale(.97); }
+@media (hover: hover) and (pointer: fine) {
+  .footer-top:hover { background: var(--gold-500); color: var(--green-900); border-color: var(--gold-500); }
+  .footer-top:hover svg { transform: translateY(-3px); }
+}
+
+/* marcas de registro na foto do atendimento */
+.attend-media .reg { position: absolute; width: 18px; height: 18px; z-index: 3; pointer-events: none; }
+.attend-media .reg::before, .attend-media .reg::after { content: ""; position: absolute; background: var(--green-900); }
+.attend-media .reg::before { left: 50%; top: 0; bottom: 0; width: 1.5px; margin-left: -.75px; }
+.attend-media .reg::after { top: 50%; left: 0; right: 0; height: 1.5px; margin-top: -.75px; }
+.attend-media .tl { top: -10px; left: -10px; } .attend-media .tr { top: -10px; right: -10px; }
+.attend-media .bl { bottom: -10px; left: -10px; } .attend-media .br { bottom: -10px; right: -10px; }
+.js .attend-media .reg { opacity: 0; transform: scale(.4) rotate(-45deg); }
+.js .attend-media.is-visible .reg { opacity: .8; transform: none; transition: opacity .6s ease .35s, transform .7s var(--ease) .35s; }
+
+/* curvas de nível que surgem no cartão ao passar o mouse */
+.card { position: relative; isolation: isolate; }
+.card::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: repeating-radial-gradient(ellipse at 100% 0%, transparent 0 22px, rgba(11, 43, 34, .07) 22px 23px);
+  transition: opacity .45s var(--ease);
+}
+.card-feature::before { display: none; }
+@media (hover: hover) and (pointer: fine) { .card:hover::before { opacity: 1; } }
+
+/* desempenho: seções longas só renderizam perto da tela */
+#portfolio, #sobre, #duvidas { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+
+@media (prefers-reduced-motion: reduce) { .hero-bg .flight .shot, .foot-flight { display: none; } .js .attend-media .reg { opacity: .8; transform: none; } }
+@media print { .foot-flight, .footer-top { display: none !important; } }
+
+/* página 404 */
+.not-found { background: linear-gradient(160deg, var(--green-800), var(--green-950)); min-height: 100dvh; display: grid; place-items: center; }
+.nf { position: relative; max-width: 560px; padding: 32px 24px; text-align: center; color: rgba(255, 255, 255, .85); }
+.nf h1 { color: var(--white); margin-bottom: .4em; }
+.nf .eyebrow { color: var(--gold-400); }
+.nf-map { width: min(420px, 90%); margin: 0 auto 16px; display: block; }
+.nf-actions { margin-top: 28px; }
