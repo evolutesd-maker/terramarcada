@@ -24,12 +24,13 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <div id="topo" class="top-sentinel" aria-hidden="true"></div>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <div class="progress" aria-hidden="true"></div>
 
   <!-- ================= CABEÇALHO ================= -->
-  <header class="site-header" id="topo">
+  <header class="site-header">
     <div class="container header-inner">
       <a href="#topo" class="brand" aria-label="Terra Marcada — início">
         <img src="assets/img/logo-symbol.svg" alt="" width="38" height="47">
@@ -61,6 +62,18 @@
     <!-- ================= HERO ================= -->
     <section class="hero">
       <div class="hero-bg" aria-hidden="true">
+        <svg class="flight" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+          <path id="flight-path" d="M-40 110 C 200 50 380 30 560 80 S 900 190 1050 130 S 1200 50 1260 70" fill="none" stroke="rgba(208,172,44,.4)" stroke-width="1.6" stroke-dasharray="3 9" stroke-linecap="round"/>
+          <g class="flight-drone">
+            <g fill="none" stroke="#ddbf52" stroke-width="2" stroke-linecap="round">
+              <path d="M-9 -9 L9 9 M9 -9 L-9 9"/>
+              <circle cx="-11" cy="-11" r="4.5"/><circle cx="11" cy="-11" r="4.5"/><circle cx="-11" cy="11" r="4.5"/><circle cx="11" cy="11" r="4.5"/>
+            </g>
+            <rect x="-5" y="-5" width="10" height="10" rx="3" fill="#ddbf52"/>
+            <animateMotion dur="34s" repeatCount="indefinite" rotate="0"><mpath href="#flight-path"/></animateMotion>
+          </g>
+        </svg>
+        <i class="hero-pin p1"></i><i class="hero-pin p2"></i><i class="hero-pin p3"></i><i class="hero-pin p4"></i>
         <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
           <g fill="none" stroke="currentColor" stroke-width="1.2">
             <path d="M-50 520 C 150 460 260 560 420 500 S 700 380 860 430 S 1120 520 1260 460"/>
@@ -152,6 +165,7 @@
     <!-- ================= CARROSSEL FLUTUANTE ================= -->
     <section class="float-showcase" aria-label="Diferenciais da Terra Marcada">
       <div class="fc" id="fc">
+        <span class="fc-cursor" aria-hidden="true">Arraste</span>
         <button type="button" class="fc-btn fc-prev" aria-label="Item anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></svg></button>
         <div class="fc-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Diferenciais da Terra Marcada">
         <article class="fc-slide" role="group" aria-roledescription="slide" aria-label="1 de 6">
@@ -206,6 +220,7 @@
         </div>
         <button type="button" class="fc-btn fc-next" aria-label="Próximo item"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg></button>
       </div>
+      <div class="fc-meta"><span class="fc-count" aria-hidden="true"><b id="fcNow">01</b> / 06</span></div>
       <div class="fc-dots" role="group" aria-label="Escolher item"><button type="button" class="fc-dot" aria-label="Ir para o item 1"><i></i></button><button type="button" class="fc-dot" aria-label="Ir para o item 2"><i></i></button><button type="button" class="fc-dot" aria-label="Ir para o item 3"><i></i></button><button type="button" class="fc-dot" aria-label="Ir para o item 4"><i></i></button><button type="button" class="fc-dot" aria-label="Ir para o item 5"><i></i></button><button type="button" class="fc-dot" aria-label="Ir para o item 6"><i></i></button></div>
     </section>
 
@@ -213,13 +228,7 @@
     <section class="strip" aria-label="Para quem trabalhamos">
       <div class="container strip-inner">
         <span>Atendemos</span>
-        <ul>
-          <li>Famílias e proprietários</li>
-          <li>Associações de moradores</li>
-          <li>Prefeituras</li>
-          <li>Loteadores e incorporadoras</li>
-          <li>Produtores rurais</li>
-        </ul>
+        <div class="marquee"><ul class="marquee-track"><li>Famílias e proprietários</li><li>Associações de moradores</li><li>Prefeituras</li><li>Loteadores e incorporadoras</li><li>Produtores rurais</li></ul><ul class="marquee-track" aria-hidden="true"><li>Famílias e proprietários</li><li>Associações de moradores</li><li>Prefeituras</li><li>Loteadores e incorporadoras</li><li>Produtores rurais</li></ul></div>
       </div>
     </section>
 
@@ -678,7 +687,8 @@
   </footer>
 
   <button class="to-top" type="button" aria-label="Voltar ao topo">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
+    <svg class="to-top-ring" viewBox="0 0 48 48" aria-hidden="true"><circle class="trk" cx="24" cy="24" r="21"/><circle class="bar" cx="24" cy="24" r="21"/></svg>
+    <svg class="to-top-arrow" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
   </button>
 
   <div class="wa-bubble" role="status" hidden>

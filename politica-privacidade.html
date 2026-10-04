@@ -18,11 +18,12 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <div id="topo" class="top-sentinel" aria-hidden="true"></div>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <div class="progress" aria-hidden="true"></div>
 
-  <header class="site-header" id="topo">
+  <header class="site-header">
     <div class="container header-inner">
       <a href="index.html" class="brand" aria-label="Terra Marcada — início">
         <img src="assets/img/logo-symbol.svg" alt="" width="38" height="47">
@@ -202,7 +203,8 @@
   </footer>
 
   <button class="to-top" type="button" aria-label="Voltar ao topo">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
+    <svg class="to-top-ring" viewBox="0 0 48 48" aria-hidden="true"><circle class="trk" cx="24" cy="24" r="21"/><circle class="bar" cx="24" cy="24" r="21"/></svg>
+    <svg class="to-top-arrow" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m6 14 6-6 6 6"/></svg>
   </button>
 
   <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Aviso de privacidade" hidden>

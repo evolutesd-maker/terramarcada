@@ -958,3 +958,91 @@ a, button, summary, .chip { touch-action: manipulation; }
 .type-card h3 { font-weight: 600; }
 .pf-meta { gap: 22px; }
 .pf-meta dd { white-space: nowrap; }
+
+/* =========================================================
+   VIDA E INTERAÇÃO — o movimento é a assinatura do site
+   ========================================================= */
+.top-sentinel { position: absolute; top: 0; left: 0; width: 1px; height: 1px; pointer-events: none; }
+
+/* voltar ao topo com anel de progresso */
+.to-top { overflow: visible; }
+.to-top .to-top-ring { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); transform: rotate(-90deg); pointer-events: none; }
+.to-top .trk { fill: none; stroke: rgba(11, 43, 34, .14); stroke-width: 2.4; }
+.to-top .bar { fill: none; stroke: var(--gold-500); stroke-width: 2.8; stroke-linecap: round; stroke-dasharray: 132; stroke-dashoffset: calc(132 - 132 * var(--tp, 0)); }
+.to-top .to-top-arrow { width: 22px; height: 22px; position: relative; transition: transform .3s var(--ease); }
+.to-top:hover .to-top-arrow { transform: translateY(-3px); }
+.to-top:active { transform: scale(.94); }
+
+/* balão do WhatsApp com tempo visível */
+.wa-bubble { overflow: hidden; }
+.wa-bubble::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--gold-500); transform-origin: left; animation: fc-prog 12s linear both; }
+
+/* hero: rota de voo, marcos e inclinação */
+.hero-bg .flight { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-bg .flight .flight-drone { filter: drop-shadow(0 6px 8px rgba(0, 0, 0, .35)); }
+.hero-pin { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--gold-500); box-shadow: 0 0 0 4px rgba(208, 172, 44, .18); animation: float-soft 7s ease-in-out infinite; }
+.hero-pin::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid var(--gold-500); opacity: 0; animation: sonar 3.6s ease-out infinite; }
+.hero-pin.p1 { left: 54%; top: 11%; } .hero-pin.p2 { left: 94%; top: 22%; animation-delay: -2s; } .hero-pin.p2::after { animation-delay: -1.2s; }
+.hero-pin.p3 { left: 90%; top: 66%; animation-delay: -4s; } .hero-pin.p3::after { animation-delay: -2.4s; }
+.hero-pin.p4 { left: 58%; top: 84%; animation-delay: -1s; } .hero-pin.p4::after { animation-delay: -.4s; }
+@keyframes sonar { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(3.4); opacity: 0; } }
+.map-tag { animation: float 6.5s ease-in-out infinite; }
+.map-tag-b { animation-duration: 8s; }
+.map-svg g[transform] { animation: pin 2.8s ease-in-out infinite; }
+
+/* botões: brilho e ímã discretos */
+.btn-lg { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-lg:hover { transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 1px), 0); }
+  .btn-lg:active { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(.97); }
+  .btn-gold::after { display: block; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .42) 50%, transparent 65%); transform: translateX(-120%); transition: transform .65s var(--ease); }
+  .btn-gold:hover::after { transform: translateX(120%); }
+  .card:hover .card-ico svg, .benefit:hover svg { animation: icon-pop .5s var(--ease); }
+}
+@keyframes icon-pop { 40% { transform: scale(1.18) rotate(-6deg); } 100% { transform: none; } }
+
+/* faixa de públicos em movimento contínuo */
+.strip-inner { flex-wrap: nowrap; gap: 28px; }
+.strip-inner > span { flex: none; }
+.strip .marquee { flex: 1; min-width: 0; display: flex; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+.strip .marquee-track { flex: none; flex-wrap: nowrap; min-width: 100%; justify-content: space-around; gap: 0 40px; padding-right: 40px; white-space: nowrap; animation: marquee 34s linear infinite; }
+.strip .marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+@media (max-width: 640px) { .strip-inner { gap: 14px; flex-direction: column; align-items: flex-start; } .strip .marquee { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .strip .marquee-track { animation: none; } .strip .marquee-track[aria-hidden="true"] { display: none; } .strip .marquee { overflow-x: auto; } }
+
+/* fotos e drone reagem ao cursor e à rolagem */
+.attend-media img { object-position: 50% calc(38% + var(--pp, 0) * 1%); }
+.tech-card img { translate: var(--dx, 0px) var(--dy, 0px); rotate: var(--dr, 0deg); transition: translate .5s var(--ease), rotate .5s var(--ease); }
+.tech-card:hover .tech-glow { opacity: 1; transform: scale(1.06); }
+.tech-glow { transition: transform .8s var(--ease); }
+
+/* linha do tempo que se preenche com a rolagem */
+.step-list::after { content: ""; position: absolute; left: 18.5px; top: 8px; width: 2px; height: calc((100% - 16px) * var(--tp, 0)); background: var(--gold-400); box-shadow: 0 0 12px rgba(221, 191, 82, .6); border-radius: 2px; }
+.js .step-n { background: var(--green-800); color: var(--gold-400); box-shadow: 0 0 0 6px var(--green-900), inset 0 0 0 2px rgba(208, 172, 44, .45); transition: background-color .35s var(--ease), color .35s var(--ease), box-shadow .35s var(--ease), transform .35s var(--ease); }
+.js .step-list li.is-done .step-n { background: var(--gold-500); color: var(--green-900); box-shadow: 0 0 0 6px var(--green-900), 0 0 0 8px rgba(208, 172, 44, .3); }
+.step-list li strong, .step-list li p { transition: opacity .35s ease; }
+.js .step-list li:not(.is-done) strong, .js .step-list li:not(.is-done) p { opacity: .55; }
+
+/* carrossel interativo */
+.fc-slide { position: relative; cursor: pointer; }
+.js .fc-slide.is-active { animation: float-soft 7s ease-in-out infinite; cursor: grab; }
+.fc-track.is-dragging .fc-slide { cursor: grabbing; }
+.fc-slide.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--gold-500); transform-origin: left; animation: fc-prog 6.5s linear both; z-index: 2; }
+.is-paused .fc-slide.is-active::after { animation-play-state: paused; }
+.fc-media img { translate: var(--ix, 0px) var(--iy, 0px); transition: transform 1.2s var(--ease), translate .5s var(--ease); }
+.fc-slide:hover .fc-tag { background: var(--gold-500); color: var(--green-900); }
+.fc-tag { transition: background-color .25s ease, color .25s ease; }
+.fc-icon svg { transition: transform .5s var(--ease); }
+.fc-slide.is-active:hover .fc-icon svg { transform: scale(1.1) rotate(-6deg); }
+.fc-meta { text-align: center; margin: -2px 0 6px; color: var(--muted); font-size: .9rem; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.fc-meta b { color: var(--green-900); font-size: 1.1rem; }
+.fc-cursor {
+  position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; padding: 8px 16px; border-radius: 999px;
+  background: var(--green-900); color: var(--gold-400); font-weight: 700; font-size: .82rem; letter-spacing: .06em;
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, .5); opacity: 0; scale: .7; transition: opacity .2s var(--ease), scale .25s var(--ease);
+}
+.fc-cursor.is-on { opacity: 1; scale: 1; }
+.fc-cursor.is-down { scale: .88; }
+@media (hover: none) { .fc-cursor { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-pin, .hero-pin::after, .js .fc-slide.is-active, .fc-slide.is-active::after, .wa-bubble::after { animation: none; } .hero-bg .flight-drone { display: none; } }
