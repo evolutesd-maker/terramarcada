@@ -130,19 +130,7 @@
       toTop.style.setProperty("--tp", max > 0 ? Math.min(1, y / max).toFixed(3) : 0);
     }
     var vh = window.innerHeight;
-    if (timeline) {
-      var tr = timeline.getBoundingClientRect();
-      var tp = Math.max(0, Math.min(1, (vh * 0.62 - tr.top) / tr.height));
-      timeline.style.setProperty("--tp", tp.toFixed(3));
-      var done = stepItems.map(function (li) {
-        var n = li.firstElementChild.getBoundingClientRect();
-        return n.top + n.height / 2 < vh * 0.62;
-      });
-      stepItems.forEach(function (li, i) {
-        li.classList.toggle("is-done", done[i]);
-        li.classList.toggle("is-link-done", !!done[i + 1]); // o trecho de linha só acende quando a próxima etapa é alcançada
-      });
-    }
+    kickTimeline();
     if (!reduce) {
       for (var fi = 0; fi < floaters.length; fi++) {
         var fr = floaters[fi].getBoundingClientRect();
@@ -156,6 +144,31 @@
     if (heroBg && !reduce && hero && y < hero.offsetHeight) heroBg.style.setProperty("--py", (y * 0.12).toFixed(1) + "px");
     lastY = y;
     ticking = false;
+  }
+
+  /* ---------- Linha do tempo: a linha dourada acompanha a rolagem de forma contínua ---------- */
+  var tlRef = null, tlRaf = 0;
+  function tlTick() {
+    tlRaf = 0;
+    var y = window.scrollY, vh = window.innerHeight;
+    var target = y + vh * 0.6;                       // ponto de leitura: 60% da altura da tela
+    if (tlRef === null || reduce) tlRef = target;
+    tlRef += (target - tlRef) * 0.18;                // desliza em vez de pular
+    if (Math.abs(target - tlRef) < 0.4) tlRef = target;
+    var c = stepItems.map(function (li) { var r = li.firstElementChild.getBoundingClientRect(); return r.top + r.height / 2 + y; });
+    stepItems.forEach(function (li, i) {
+      var lp = i < c.length - 1 ? Math.max(0, Math.min(1, (tlRef - c[i]) / (c[i + 1] - c[i]))) : 0;
+      li.style.setProperty("--lp", lp.toFixed(4));
+      li.classList.toggle("is-done", tlRef >= c[i]);
+    });
+    if (tlRef !== target) tlRaf = requestAnimationFrame(tlTick);
+  }
+  function kickTimeline() {
+    if (!timeline || tlRaf) return;
+    var r = timeline.getBoundingClientRect(), vh = window.innerHeight;
+    if (r.bottom < -vh * 0.5 && tlRef !== null) { tlRef = null; }      // longe da tela: recomeça do ponto certo ao voltar
+    if (r.top > vh * 1.5 || r.bottom < -vh * 1.5) return;
+    tlRaf = requestAnimationFrame(tlTick);
   }
   window.addEventListener("scroll", function () {
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
@@ -189,7 +202,7 @@
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
     Object.keys(map).forEach(function (id) { var s = doc.getElementById(id); if (s) spy.observe(s); });
-    $$(".hero, .float-showcase").forEach(function (s) { spy.observe(s); });
+    $$(".hero").forEach(function (s) { spy.observe(s); });
   }
 
   /* ---------- Indicador deslizante do menu (desktop) ---------- */
@@ -391,122 +404,6 @@
     target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     try { history.replaceState(null, "", "#" + id); } catch (err) {}
   });
-
-  /* ---------- Carrossel flutuante ---------- */
-  (function () {
-    var fc = $("#fc");
-    if (!fc) return;
-    var track = $(".fc-track", fc);
-    var slides = $$(".fc-slide", fc);
-    var dots = $$(".fc-dot");
-    var wrap = fc.parentElement;
-    var DELAY = 6500;
-    var idx = 0, timer = null, inView = false, hovering = false, dragging = false, raf = 0, jump = 0;
-
-    function centerOf(i) { var el = slides[i]; return el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2; }
-    function setActive(i) {
-      if (i === idx && slides[i].classList.contains("is-active")) return;
-      idx = i;
-      var now = $("#fcNow"); if (now) now.textContent = (i < 9 ? "0" : "") + (i + 1);
-      slides.forEach(function (s, n) { s.classList.toggle("is-active", n === i); s.setAttribute("aria-hidden", n === i ? "false" : "true"); });
-      dots.forEach(function (d, n) {
-        d.classList.toggle("is-active", n === i);
-        d.setAttribute("aria-current", n === i ? "true" : "false");
-        d.firstElementChild.style.animation = "none";
-        if (n === i) { void d.offsetWidth; d.firstElementChild.style.animation = ""; }
-      });
-    }
-    function go(i, instant) {
-      i = (i + slides.length) % slides.length;
-      jump = Date.now();
-      track.scrollTo({ left: centerOf(i), behavior: (instant || reduce) ? "auto" : "smooth" });
-      setActive(i);
-    }
-    function nearest() {
-      var mid = track.scrollLeft + track.clientWidth / 2, best = 0, d = 1e9;
-      slides.forEach(function (s, n) { var c = s.offsetLeft + s.offsetWidth / 2, x = Math.abs(c - mid); if (x < d) { d = x; best = n; } });
-      return best;
-    }
-    track.addEventListener("scroll", function () {
-      if (raf) return;
-      raf = requestAnimationFrame(function () { raf = 0; setActive(nearest()); });
-    }, { passive: true });
-
-    function play() {
-      stop();
-      if (reduce || !inView || hovering || dragging || doc.hidden) { wrap.classList.add("is-paused"); return; }
-      wrap.classList.remove("is-paused");
-      timer = setTimeout(function () { go(idx + 1); play(); }, DELAY);
-    }
-    function stop() { if (timer) { clearTimeout(timer); timer = null; } }
-
-    $(".fc-prev", fc).addEventListener("click", function () { go(idx - 1); play(); });
-    $(".fc-next", fc).addEventListener("click", function () { go(idx + 1); play(); });
-    dots.forEach(function (d, n) { d.addEventListener("click", function () { go(n); play(); }); });
-    slides.forEach(function (s, n) { s.addEventListener("click", function () { if (n !== idx && !dragging) { go(n); play(); } }); });
-    track.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") { e.preventDefault(); go(idx + 1); play(); }
-      else if (e.key === "ArrowLeft") { e.preventDefault(); go(idx - 1); play(); }
-    });
-
-    // pausa ao passar o mouse ou focar
-    wrap.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") { hovering = true; play(); } });
-    wrap.addEventListener("pointerleave", function () { hovering = false; play(); });
-    wrap.addEventListener("focusin", function () { hovering = true; play(); });
-    wrap.addEventListener("focusout", function () { hovering = false; play(); });
-    doc.addEventListener("visibilitychange", play);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (en) { inView = en[0].isIntersecting; play(); }, { threshold: 0.35 }).observe(wrap);
-    } else { inView = true; }
-
-    // arrastar com o mouse (toque já é nativo)
-    var sx = 0, sl = 0, moved = 0;
-    track.addEventListener("pointerdown", function (e) {
-      if (e.pointerType !== "mouse" || e.button !== 0) return;
-      dragging = true; moved = 0; sx = e.clientX; sl = track.scrollLeft;
-      track.classList.add("is-dragging");
-      track.setPointerCapture(e.pointerId);
-    });
-    track.addEventListener("pointermove", function (e) {
-      if (!dragging) return;
-      moved = Math.abs(e.clientX - sx);
-      track.scrollLeft = sl - (e.clientX - sx);
-    });
-    function endDrag() {
-      if (!dragging) return;
-      var n = nearest(), dx = track.scrollLeft - sl;
-      track.classList.remove("is-dragging");
-      if (Math.abs(dx) > 40) n = Math.max(0, Math.min(slides.length - 1, idx + (dx > 0 ? 1 : -1)));
-      go(n);
-      setTimeout(function () { dragging = false; play(); }, 60);
-    }
-    track.addEventListener("pointerup", endDrag);
-    track.addEventListener("pointercancel", endDrag);
-    window.addEventListener("resize", function () { go(idx, true); });
-
-    // leve parallax da mídia do card ativo (mouse)
-    if (finePointer && !reduce) {
-      track.addEventListener("pointermove", function (e) {
-        if (e.pointerType !== "mouse") return;
-        var act = $(".fc-slide.is-active", track);
-        if (!act) return;
-        var r = act.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return;
-        var img = $(".fc-media img, .fc-media svg", act);
-        if (!img) return;
-        img.style.setProperty("--ix", (((e.clientX - r.left) / r.width - 0.5) * -14).toFixed(1) + "px");
-        img.style.setProperty("--iy", (((e.clientY - r.top) / r.height - 0.5) * -10).toFixed(1) + "px");
-      }, { passive: true });
-      track.addEventListener("pointerleave", function () {
-        $$(".fc-media img", track).forEach(function (im) { im.style.setProperty("--ix", "0px"); im.style.setProperty("--iy", "0px"); });
-      });
-    }
-
-    setActive(0);
-    go(0, true);
-    play();
-  })();
-
 
   /* ---------- Detalhes temáticos ---------- */
   // ondulação ao clicar nos botões
