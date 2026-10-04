@@ -174,13 +174,45 @@
     if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
   }, { passive: true });
   onScroll();
-  function scrollToTop() {
-    var anchor = doc.getElementById("topo");
-    var behavior = reduce ? "auto" : "smooth";
-    if (anchor && anchor.scrollIntoView) anchor.scrollIntoView({ behavior: behavior, block: "start" });
-    try { window.scrollTo({ top: 0, behavior: behavior }); } catch (e) { window.scrollTo(0, 0); }
+  /* ---------- Rolagem animada: o clique "leva" a página até o destino ---------- */
+  var glideCancel = null;
+  function glideTo(targetY, fallbackEl, trigger) {
+    var max = Math.max(0, root.scrollHeight - window.innerHeight);
+    targetY = Math.max(0, Math.min(max, Math.round(targetY)));
+    var startY = window.scrollY, dist = targetY - startY;
+    if (glideCancel) glideCancel();
+    if (Math.abs(dist) < 3) return;
+    // com "reduzir movimento" no sistema: deslize curto e sem aceleração; sem isso: viagem mais longa e suave
+    var dur = reduce ? Math.min(450, Math.max(220, Math.abs(dist) * 0.2)) : Math.min(1700, Math.max(700, Math.abs(dist) * 0.42));
+    var ease = reduce ? function (t) { return 1 - Math.pow(1 - t, 3); }
+                      : function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+    var t0 = null, raf = 0, ev = ["wheel", "touchstart", "keydown", "mousedown"];
+    if (trigger) trigger.classList.add("is-gliding");
+    function stop() {
+      cancelAnimationFrame(raf); glideCancel = null;
+      ev.forEach(function (n) { window.removeEventListener(n, stop); });
+      if (trigger) trigger.classList.remove("is-gliding");
+    }
+    ev.forEach(function (n) { window.addEventListener(n, stop, { passive: true }); }); // o usuário assume o controle
+    glideCancel = stop;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      window.scrollTo(0, startY + dist * ease(p));
+      // quadros incorporados (ex.: prévia) podem não deixar a janela rolar: usa a rolagem nativa do navegador
+      if (ts - t0 > 120 && Math.abs(window.scrollY - startY) < 1) {
+        stop();
+        if (fallbackEl && fallbackEl.scrollIntoView) fallbackEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+      if (p < 1) raf = requestAnimationFrame(step); else stop();
+    }
+    raf = requestAnimationFrame(step);
   }
-  doc.addEventListener("click", function (e) { if (e.target.closest("[data-top]")) { e.preventDefault(); scrollToTop(); } });
+  doc.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-top]");
+    if (b) { e.preventDefault(); glideTo(0, doc.getElementById("topo"), b); }
+  });
   var heroOut = false;
   function applyTop() { if (toTop) toTop.classList.toggle("is-on", heroOut || window.scrollY > 900); }
   if (hero && "IntersectionObserver" in window) {
@@ -393,16 +425,21 @@
     bubble.addEventListener("click", function (e) { if (!e.target.closest(".wa-bubble-x")) { var f = $(".wa-float"); if (f) f.click(); } });
   }
 
-  /* ---------- Rolagem suave com foco acessível nas âncoras ---------- */
+  /* ---------- Âncoras da página: levam até a seção com animação e foco acessível ---------- */
   doc.addEventListener("click", function (e) {
+    if (e.defaultPrevented) return;
     var a = e.target.closest('a[href^="#"]');
     if (!a || a.hasAttribute("data-whatsapp")) return;
     var id = a.getAttribute("href").slice(1);
     var target = id ? doc.getElementById(id) : null;
     if (!target) return;
     e.preventDefault();
-    target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+    var y = id === "topo" ? 0 : target.getBoundingClientRect().top + window.scrollY - pad;
+    glideTo(y, target, a);
     try { history.replaceState(null, "", "#" + id); } catch (err) {}
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    try { target.focus({ preventScroll: true }); } catch (err2) {}
   });
 
   /* ---------- Detalhes temáticos ---------- */

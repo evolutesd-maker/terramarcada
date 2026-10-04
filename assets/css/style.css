@@ -33,8 +33,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); -webkit-text-size-adjust: 100%; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-padding-top: calc(var(--header-h) + 8px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   font-family: var(--font);
@@ -1367,3 +1366,48 @@ a, button, summary, .chip { touch-action: manipulation; }
 @media (hover: hover) and (pointer: fine) { .nav .btn-gold:hover { transform: translateY(-1px); } }
 
 @media (prefers-reduced-motion: reduce) { .hero .btn-gold.btn-lg, .attend-actions .btn-gold, .wa-form .btn-gold { animation: none; } .step-list li::after { will-change: auto; } }
+
+/* =========================================================
+   RITMO DAS SEÇÕES, ETIQUETAS IGUAIS, "+" CENTRALIZADO E ROLAGEM ANIMADA
+   ========================================================= */
+[tabindex="-1"]:focus { outline: none; }
+
+/* espaços menores entre as seções: leitura mais contínua */
+.section { padding: clamp(40px, 5vw, 68px) 0; }
+.hero { padding-top: clamp(44px, 5.5vw, 76px); padding-bottom: clamp(40px, 5vw, 64px); }
+.section-head { margin-bottom: clamp(26px, 3.2vw, 40px); }
+.reurb-types { margin-bottom: 44px; }
+.benefits, .steps { margin-bottom: 44px; }
+.contour-divider { height: 30px; margin: -6px auto -6px; }
+.audience { margin: -8px auto 30px; }
+.legal-page .section { padding-top: clamp(40px, 5vw, 64px); }
+
+/* REURB-S e REURB-E com o mesmo estilo */
+.type-badge, .type-badge-alt {
+  background: transparent; color: var(--gold-400); box-shadow: inset 0 0 0 2px var(--gold-500); border-radius: 6px;
+}
+
+/* dúvidas frequentes: "+" desenhado no centro exato do círculo */
+.faq summary::after {
+  content: ""; width: 28px; height: 28px; border-radius: 50%; display: block; top: 50%; right: 22px; transform: translateY(-50%);
+  color: var(--green-700);
+  background:
+    linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat,
+    var(--green-100);
+  transition: background-size .3s var(--ease), background-color .3s ease, color .3s ease, rotate .3s var(--ease);
+}
+.faq details[open] summary::after {
+  content: ""; color: var(--green-900);
+  background:
+    linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 0 no-repeat,
+    var(--gold-500);
+}
+@media (hover: hover) and (pointer: fine) { .faq summary:hover::after { background-color: var(--green-100); color: var(--green-900); } .faq details[open] summary:hover::after { background-color: var(--gold-400); } }
+
+/* durante a rolagem animada, a seta sobe em loop */
+@keyframes rise-arrow { 0% { transform: translateY(0); opacity: 1; } 55% { transform: translateY(-9px); opacity: 0; } 56% { transform: translateY(9px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+.to-top.is-gliding .to-top-arrow, .footer-top.is-gliding svg { animation: rise-arrow .6s ease-in-out infinite; }
+.to-top.is-gliding, .footer-top.is-gliding { background: var(--green-700); }
+@media (prefers-reduced-motion: reduce) { .to-top.is-gliding .to-top-arrow, .footer-top.is-gliding svg { animation: none; } }
