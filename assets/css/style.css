@@ -1,8 +1,7 @@
 /* Fontes hospedadas no próprio site (sem requisições a terceiros) */
-@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/poppins-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/poppins-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; font-display: swap; src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2"); }
-@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-style: normal; font-weight: 200 900; font-display: swap; src: url("../fonts/source-sans-3-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("../fonts/playfair-display-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Playfair Display"; font-style: italic; font-weight: 400 900; font-display: swap; src: url("../fonts/playfair-display-latin-wght-italic.woff2") format("woff2"); }
 
 /* =========================================================
    Terra Marcada — mapeamento territorial
@@ -31,7 +30,7 @@
   --shadow-lg: 0 30px 60px -20px rgba(7, 29, 23, .45);
   --container: 1180px;
   --header-h: 76px;
-  --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -467,7 +466,7 @@ body { overflow-x: clip; }
 .nav a:not(.btn).is-active::after { transform: scaleX(1); }
 
 /* botões: brilho, ímã e pressão */
-.btn { position: relative; overflow: hidden; isolation: isolate; transform: translate3d(var(--mx, 0), var(--my, 0), 0); will-change: transform; }
+.btn { position: relative; overflow: hidden; isolation: isolate; will-change: transform; }
 @media (hover: hover) and (pointer: fine) { .btn:hover { transform: translate3d(var(--mx, 0), calc(var(--my, 0px) - 2px), 0); } }
 .btn:active { transform: translate3d(var(--mx, 0), var(--my, 0), 0) scale(.98); }
 .btn::after {
@@ -560,7 +559,7 @@ body { overflow-x: clip; }
 /* =========================================================
    TIPOGRAFIA DE AUTORIDADE, PRIVACIDADE E CANAL OFICIAL
    ========================================================= */
-:root { --font-display: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+:root { --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
 h1, h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.015em; }
 h1 { font-weight: 800; }
 .hl { font-style: italic; }
@@ -801,7 +800,6 @@ a, button, summary, .chip { touch-action: manipulation; }
 .map-svg g[transform] { animation: pin 2.8s ease-in-out infinite; }
 
 /* botões: brilho e ímã discretos */
-.btn-lg { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); }
 @media (hover: hover) and (pointer: fine) {
   .btn-lg:hover { transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 1px), 0); }
   .btn-lg:active { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(.97); }
@@ -1292,31 +1290,14 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 .attend-media .reg { opacity: .8; }
 
 
-/* =========================================================
-   AUDITORIA — tipografia, leitura e acabamento
-   ========================================================= */
-/* títulos em condensada de sinalização/planta; texto corrido em humanista */
-h1, h2 { font-weight: 700; letter-spacing: 0; line-height: 1.04; }
-h1 { font-size: clamp(2.9rem, 6vw, 4.7rem); line-height: 1.02; }
-h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
-.hl { font-style: normal; }
-.brand-text strong, .footer-brand strong { font-size: 1.55rem; letter-spacing: .01em; }
-.card-feature h3 { font-size: 2rem; line-height: 1.05; }
-.type-card h3 { font-size: 1.9rem; font-weight: 700; }
-.benefits h3, .steps h3 { font-size: clamp(2.1rem, 3.2vw, 2.8rem); font-weight: 700; }
-.step-list strong { font-size: 1.5rem; font-weight: 600; }
-.legal-content h2 { font-size: 1.7rem; }
-.mvv-main p { font-family: var(--font); font-weight: 500; font-size: 1.2rem; line-height: 1.5; }
-
+/* leitura e rótulos (auditoria) */
 /* linhas de leitura de até ~70 caracteres */
 .section-head p, .section-head-light p { max-width: 64ch; margin-inline: auto; }
 .card-wide p, .about-copy p, .attend-copy > p, .tech-copy > p, .faq-intro > p, .legal-content p { max-width: 68ch; }
-
 /* rótulos em texto normal (sem caixa alta), com tamanho legível */
 .pf-tag, .mvv-label, .pf-meta dt, .wa-preview-label, .pf-sample, .contact-list small, .audience-label { font-size: .88rem; font-weight: 600; }
 .mvv-label { margin-bottom: 8px; }
 .audience-label { font-size: .95rem; }
-
 
 /* =========================================================
    SOBRIEDADE — sem flutuações, brilhos, preenchimentos ou rotações
@@ -1324,7 +1305,11 @@ h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 /* mapa do hero e ícones: estáticos */
 .map-svg g[transform], .map-svg .map-pin, .lot-hl { animation: none !important; }
 .card-ico svg, .card:hover .card-ico svg { animation: none !important; }
-.card-ico::after { display: none; }
+/* anel suave ao passar o mouse no ícone (teste) */
+.card-ico::after { display: block; }
+@keyframes icon-ping-soft { 0% { opacity: .35; scale: 1; } 100% { opacity: 0; scale: 1.7; } }
+@media (hover: hover) and (pointer: fine) { .card:hover .card-ico::after { animation: icon-ping-soft .9s ease-out; } }
+@media (prefers-reduced-motion: reduce) { .card:hover .card-ico::after { animation: none; } }
 .card:hover .card-ico, .benefit:hover svg, .contact-list li:hover svg, .step-list li:hover .step-n { animation: none; translate: none; scale: 1; }
 .attend-chip { animation: none !important; }
 /* sem "disparo" de câmera do drone */
@@ -1347,8 +1332,8 @@ h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .tech-card:hover .hc { opacity: .55; }
 .tech-chips li:hover { background: var(--green-100); color: var(--green-900); transform: none; }
 /* quem somos: tudo estático */
-.mvv-card:hover, .mvv-card.mvv-main:hover { transform: none; border-color: var(--line); box-shadow: none; }
-.mvv-main:hover { border-color: var(--green-900); }
+.mvv-card:hover, .mvv-card.mvv-main:hover { transform: none; box-shadow: none; }
+@media (hover: hover) and (pointer: fine) { .mvv-card:hover { border-color: var(--hover-blue); } }
 .mvv-main::after, .mvv-main:hover::after { transform: none; transition: none; }
 .values li, .values li:hover { translate: none; transition: none; }
 .values li::before, .values li:hover::before { rotate: none; scale: 1; transition: none; }
@@ -1356,20 +1341,3 @@ h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .attend-media::before, .attend-media:hover::before, .attend-media img, .attend-media:hover img, .attend-chip, .attend-media:hover .attend-chip { transform: none !important; translate: none !important; rotate: none !important; transition: none !important; animation: none !important; }
 /* logos fixos */
 .brand img, .brand:hover img, .footer-brand img, .footer-brand:hover img, .contact-logo, .contact-card:hover .contact-logo { transform: none !important; rotate: none !important; scale: 1 !important; }
-
-
-/* =========================================================
-   POPPINS — escala ajustada (fonte mais larga que a anterior)
-   ========================================================= */
-body { font-size: 15.5px; line-height: 1.65; }
-h1, h2 { font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
-h1 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.12; }
-h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
-.brand-text strong, .footer-brand strong { font-size: 1.15rem; font-weight: 600; letter-spacing: -.01em; }
-.card-feature h3 { font-size: 1.45rem; line-height: 1.2; }
-.type-card h3 { font-size: 1.35rem; font-weight: 600; }
-.benefits h3, .steps h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 600; }
-.step-list strong { font-size: 1.05rem; font-weight: 600; }
-.mvv-main p { font-size: 1.05rem; line-height: 1.6; }
-.hl { font-weight: 600; }
-.pf-tag, .mvv-label, .pf-meta dt, .wa-preview-label, .pf-sample, .contact-list small, .audience-label { font-size: .8rem; }

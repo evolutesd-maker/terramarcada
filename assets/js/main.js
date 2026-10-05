@@ -256,16 +256,6 @@
   }
 
   if (finePointer && !reduce) {
-    // ímã discreto nos botões principais
-    $$(".btn-lg").forEach(function (b) {
-      b.addEventListener("pointermove", function (e) {
-        var r = b.getBoundingClientRect();
-        b.style.setProperty("--mx", (((e.clientX - (r.left + r.width / 2)) / r.width) * 7).toFixed(1) + "px");
-        b.style.setProperty("--my", (((e.clientY - (r.top + r.height / 2)) / r.height) * 5).toFixed(1) + "px");
-      }, { passive: true });
-      b.addEventListener("pointerleave", function () { b.style.removeProperty("--mx"); b.style.removeProperty("--my"); });
-    });
-
   }
   if (reduce) { $$("svg.flight").forEach(function (sv) { if (sv.pauseAnimations) sv.pauseAnimations(); }); }
 
