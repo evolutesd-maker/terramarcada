@@ -110,8 +110,7 @@
   var lastY = window.scrollY, ticking = false;
   var timeline = $(".step-list");
   var stepItems = $$(".step-list li");
-  var attendImg = $(".attend-media img");
-  var floaters = $$(".attend-media, .tech-visual");
+  var floaters = $$(".tech-visual");
 
   function onScroll() {
     var y = window.scrollY;
@@ -130,17 +129,13 @@
     }
     var vh = window.innerHeight;
     kickTimeline();
-    if (!reduce) {
+    if (!reduce && finePointer) {
       for (var fi = 0; fi < floaters.length; fi++) {
         var fr = floaters[fi].getBoundingClientRect();
         if (fr.bottom > -100 && fr.top < vh + 100) floaters[fi].style.setProperty("--fy", ((((fr.top + fr.height / 2) - vh / 2) / vh) * -22).toFixed(1) + "px");
       }
     }
-    if (attendImg && !reduce) {
-      var ar = attendImg.getBoundingClientRect();
-      if (ar.bottom > 0 && ar.top < vh) attendImg.style.setProperty("--pp", (((ar.top + ar.height / 2) - vh / 2) / vh * -14).toFixed(2));
-    }
-    if (heroBg && !reduce && hero && y < hero.offsetHeight) heroBg.style.setProperty("--py", (y * 0.12).toFixed(1) + "px");
+    if (heroBg && !reduce && finePointer && hero && y < hero.offsetHeight) heroBg.style.setProperty("--py", (y * 0.12).toFixed(1) + "px");
     lastY = y;
     ticking = false;
   }
@@ -261,7 +256,7 @@
   }
 
   /* ---------- Revelar ao rolar, com escalonamento ---------- */
-  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .contour-divider, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
+  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .contour-divider, .faq-intro, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
   var items = $$(revealSel);
   if ("IntersectionObserver" in window && !reduce) {
     items.forEach(function (el) {
@@ -437,46 +432,10 @@
     b.appendChild(d); setTimeout(function () { d.remove(); }, 650);
   });
 
-  // lotes do mapa: o cartão aparece só enquanto o cursor está sobre um lote
-  var tagA = $(".map-tag-a"), lotName = $("#lotName"), lotArea = $("#lotArea"), mapSvg = $(".map-svg"), mapCard = $(".map-card");
-  if (mapSvg && tagA && mapCard) {
-    var hideT = 0;
-    var showLot = function (p, touch) {
-      clearTimeout(hideT);
-      lotName.textContent = "Lote " + p.getAttribute("data-lot") + " · Quadra " + p.getAttribute("data-q");
-      lotArea.textContent = "Área: " + p.getAttribute("data-area") + " m²";
-      var cr = mapCard.getBoundingClientRect(), pr = p.getBoundingClientRect();
-      var half = tagA.offsetWidth / 2, h = tagA.offsetHeight;
-      var x = Math.max(half + 8, Math.min(cr.width - half - 8, pr.left + pr.width / 2 - cr.left));
-      var y = pr.top - cr.top - 10;
-      if (y - h < 6) y = pr.bottom - cr.top + h + 10; // lote na borda de cima: o cartão vai abaixo
-      tagA.style.left = x + "px"; tagA.style.top = y + "px";
-      tagA.classList.add("is-on");
-      if (touch) hideT = setTimeout(hideLot, 2200);
-    };
-    var hideLot = function () { clearTimeout(hideT); hideT = setTimeout(function () { tagA.classList.remove("is-on"); }, 90); };
-    mapSvg.addEventListener("pointerover", function (e) {
-      var p = e.target.closest("path[data-lot]");
-      if (p) showLot(p, e.pointerType === "touch"); else hideLot();
-    });
-    mapSvg.addEventListener("pointerleave", hideLot);
-  }
-
-  // altitude do visor do drone
-  var alt = $("#hudAlt");
-  if (alt && !reduce) {
-    var a = 86, hudOn = false;
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (en) { hudOn = en[0].isIntersecting; }).observe(alt.closest(".tech-card"));
-    setInterval(function () {
-      if (!hudOn || doc.hidden) return;
-      a = Math.max(62, Math.min(118, a + Math.round((Math.random() - 0.5) * 6)));
-      alt.textContent = a;
-    }, 900);
-  }
 
 
   /* ---------- Floats: poeira dourada e pinos em camadas ---------- */
-  if (!reduce) {
+  if (!reduce && finePointer) {
     $$(".section-dark, .cta-final").forEach(function (sec, si) {
       var d = doc.createElement("div");
       d.className = "dust"; d.setAttribute("aria-hidden", "true");
