@@ -1,7 +1,8 @@
 /* Fontes hospedadas no próprio site (sem requisições a terceiros) */
-@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url("../fonts/barlow-condensed-latin-600-normal.woff2") format("woff2"); }
-@font-face { font-family: "Barlow Condensed"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/barlow-condensed-latin-700-normal.woff2") format("woff2"); }
-@font-face { font-family: "Source Sans 3"; font-style: normal; font-weight: 200 900; font-display: swap; src: url("../fonts/source-sans-3-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/poppins-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/poppins-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; font-display: swap; src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2"); }
 
 /* =========================================================
    Terra Marcada — mapeamento territorial
@@ -30,7 +31,7 @@
   --shadow-lg: 0 30px 60px -20px rgba(7, 29, 23, .45);
   --container: 1180px;
   --header-h: 76px;
-  --font: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -559,7 +560,7 @@ body { overflow-x: clip; }
 /* =========================================================
    TIPOGRAFIA DE AUTORIDADE, PRIVACIDADE E CANAL OFICIAL
    ========================================================= */
-:root { --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", Arial, sans-serif; }
+:root { --font-display: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 h1, h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.015em; }
 h1 { font-weight: 800; }
 .hl { font-style: italic; }
@@ -1355,3 +1356,20 @@ h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .attend-media::before, .attend-media:hover::before, .attend-media img, .attend-media:hover img, .attend-chip, .attend-media:hover .attend-chip { transform: none !important; translate: none !important; rotate: none !important; transition: none !important; animation: none !important; }
 /* logos fixos */
 .brand img, .brand:hover img, .footer-brand img, .footer-brand:hover img, .contact-logo, .contact-card:hover .contact-logo { transform: none !important; rotate: none !important; scale: 1 !important; }
+
+
+/* =========================================================
+   POPPINS — escala ajustada (fonte mais larga que a anterior)
+   ========================================================= */
+body { font-size: 15.5px; line-height: 1.65; }
+h1, h2 { font-weight: 600; letter-spacing: -.02em; line-height: 1.15; }
+h1 { font-size: clamp(2.1rem, 4.4vw, 3.3rem); line-height: 1.12; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+.brand-text strong, .footer-brand strong { font-size: 1.15rem; font-weight: 600; letter-spacing: -.01em; }
+.card-feature h3 { font-size: 1.45rem; line-height: 1.2; }
+.type-card h3 { font-size: 1.35rem; font-weight: 600; }
+.benefits h3, .steps h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); font-weight: 600; }
+.step-list strong { font-size: 1.05rem; font-weight: 600; }
+.mvv-main p { font-size: 1.05rem; line-height: 1.6; }
+.hl { font-weight: 600; }
+.pf-tag, .mvv-label, .pf-meta dt, .wa-preview-label, .pf-sample, .contact-list small, .audience-label { font-size: .8rem; }
