@@ -1350,3 +1350,7 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 .privacy-link { text-align: center; margin: 0; }
 @media (max-width: 900px) { .privacy-points { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .privacy-points { grid-template-columns: 1fr; } .privacy-link .btn { width: 100%; } }
+
+/* botão do WhatsApp sem anel irradiando; título das perguntas parado */
+.wa-float::before, .wa-float::after, .wa-float:hover::after { animation: none !important; display: none; }
+.faq-intro { position: static; }
