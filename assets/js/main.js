@@ -255,32 +255,6 @@
     moveIndicator(currentLink());
   }
 
-  /* ---------- Revelar ao rolar, com escalonamento ---------- */
-  var revealSel = ".section-head, .card, .type-card, .benefits h3, .benefit, .steps h3, .step-list li, .inline-cta, .pf-filters, .pf-card, .contour-divider, .faq-intro, .about-copy, .attend-media, .attend-copy, .tech-copy, .tech-card, .mvv-card, .faq details, .cta-copy, .contact-card";
-  var items = $$(revealSel);
-  if ("IntersectionObserver" in window && !reduce) {
-    items.forEach(function (el) {
-      el.classList.add("reveal");
-      var sib = el.parentElement ? $$(":scope > " + (el.tagName.toLowerCase()), el.parentElement) : [];
-      var i = sib.indexOf(el);
-      if (i > 0) el.style.setProperty("--d", Math.min(i, 4) * 60 + "ms");
-    });
-    // após a animação de entrada, os cartões perdem a classe de revelação para o hover ter só as transições dele
-    var CARD = ".card, .type-card, .benefit, .pf-card, .mvv-card";
-    function settle(el) {
-      if (!el.matches(CARD)) return;
-      setTimeout(function () { el.classList.remove("reveal", "is-visible"); el.style.removeProperty("--d"); }, 1200);
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("is-visible"); settle(en.target); io.unobserve(en.target); }
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
-    items.forEach(function (el) { io.observe(el); });
-    // rede de segurança: nada fica escondido se o observador falhar
-    setTimeout(function () { items.forEach(function (el) { el.classList.add("is-visible"); settle(el); }); }, 3500);
-  }
-
   if (finePointer && !reduce) {
     // ímã discreto nos botões principais
     $$(".btn-lg").forEach(function (b) {
@@ -291,26 +265,6 @@
       }, { passive: true });
       b.addEventListener("pointerleave", function () { b.style.removeProperty("--mx"); b.style.removeProperty("--my"); });
     });
-
-    // mapa do início: inclinação suave com profundidade
-    var art = $(".hero-art"), mcard = $(".map-card");
-    if (art && mcard) {
-      var tilt = 0;
-      art.addEventListener("pointermove", function (e) {
-        mcard.classList.add("is-tilting");
-        if (tilt) return;
-        tilt = requestAnimationFrame(function () {
-          var r = art.getBoundingClientRect();
-          mcard.style.setProperty("--ry", (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(2) + "deg");
-          mcard.style.setProperty("--rx", ((-((e.clientY - r.top) / r.height - 0.5)) * 6).toFixed(2) + "deg");
-          tilt = 0;
-        });
-      }, { passive: true });
-      art.addEventListener("pointerleave", function () {
-        mcard.classList.remove("is-tilting");
-        mcard.style.setProperty("--rx", "0deg"); mcard.style.setProperty("--ry", "0deg");
-      });
-    }
 
     // drone acompanha o cursor
     var tcard = $(".tech-card");
@@ -408,50 +362,6 @@
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
     try { target.focus({ preventScroll: true }); } catch (err2) {}
   });
-
-  /* ---------- Detalhes temáticos ---------- */
-  // ondulação ao clicar nos botões
-  doc.addEventListener("pointerdown", function (e) {
-    var b = e.target.closest(".btn");
-    if (!b || reduce) return;
-    var r = b.getBoundingClientRect(), d = doc.createElement("span");
-    d.className = "ripple"; d.style.left = (e.clientX - r.left) + "px"; d.style.top = (e.clientY - r.top) + "px";
-    b.appendChild(d); setTimeout(function () { d.remove(); }, 650);
-  });
-
-
-
-  /* ---------- Floats: poeira dourada e pinos em camadas ---------- */
-  if (!reduce && finePointer) {
-    $$(".section-dark, .cta-final").forEach(function (sec, si) {
-      var d = doc.createElement("div");
-      d.className = "dust"; d.setAttribute("aria-hidden", "true");
-      for (var i = 0; i < 9; i++) {
-        var p = doc.createElement("i");
-        p.style.setProperty("--x", ((i * 11 + si * 7 + 6) % 96) + "%");
-        p.style.setProperty("--s", (2 + (i % 3)) + "px");
-        p.style.setProperty("--t", (16 + (i * 3) % 11) + "s");
-        p.style.setProperty("--d", "-" + ((i * 2.3 + si) % 14).toFixed(1) + "s");
-        p.style.setProperty("--dx", ((i % 2 ? 1 : -1) * (14 + i * 4)) + "px");
-        d.appendChild(p);
-      }
-      sec.insertBefore(d, sec.firstChild);
-    });
-    var heroEl2 = $(".hero");
-    if (heroEl2 && finePointer) {
-      var hraf = 0;
-      heroEl2.addEventListener("pointermove", function (e) {
-        if (hraf) return;
-        hraf = requestAnimationFrame(function () {
-          var r = heroEl2.getBoundingClientRect();
-          heroEl2.style.setProperty("--hx", (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3));
-          heroEl2.style.setProperty("--hy", (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3));
-          hraf = 0;
-        });
-      }, { passive: true });
-      heroEl2.addEventListener("pointerleave", function () { heroEl2.style.setProperty("--hx", "0"); heroEl2.style.setProperty("--hy", "0"); });
-    }
-  }
 
   /* ---------- Aviso de privacidade ---------- */
   var cookie = $("#cookieBanner");
