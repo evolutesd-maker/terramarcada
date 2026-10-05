@@ -1305,11 +1305,8 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 /* mapa do hero e ícones: estáticos */
 .map-svg g[transform], .map-svg .map-pin, .lot-hl { animation: none !important; }
 .card-ico svg, .card:hover .card-ico svg { animation: none !important; }
-/* anel suave ao passar o mouse no ícone (teste) */
-.card-ico::after { display: block; }
-@keyframes icon-ping-soft { 0% { opacity: .35; scale: 1; } 100% { opacity: 0; scale: 1.7; } }
-@media (hover: hover) and (pointer: fine) { .card:hover .card-ico::after { animation: icon-ping-soft .9s ease-out; } }
-@media (prefers-reduced-motion: reduce) { .card:hover .card-ico::after { animation: none; } }
+.card-ico::after { display: none; }
+@media (hover: hover) and (pointer: fine) { .card:hover .card-ico::after { animation: none; } }
 .card:hover .card-ico, .benefit:hover svg, .contact-list li:hover svg, .step-list li:hover .step-n { animation: none; translate: none; scale: 1; }
 .attend-chip { animation: none !important; }
 /* sem "disparo" de câmera do drone */

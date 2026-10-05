@@ -79,7 +79,7 @@
             <rect x="-5" y="-5" width="10" height="10" rx="3" fill="#ddbf52"/>
             <circle class="shot" r="7" fill="none" stroke="#ddbf52" stroke-width="1.5"/>
             <set attributeName="opacity" from="0" to="1" begin="9s" fill="freeze"/>
-            <animateMotion dur="34s" begin="9s" repeatCount="indefinite" rotate="0"><mpath href="#flight-path"/></animateMotion>
+            <animateMotion dur="20s" begin="9s" repeatCount="indefinite" rotate="0" calcMode="linear" keyPoints="0;1;1" keyTimes="0;.6;1"><mpath href="#flight-path"/></animateMotion>
           </g>
         </svg>
         <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
@@ -234,10 +234,6 @@
                sizes="(max-width: 900px) 92vw, 480px"
                width="1000" height="1309" loading="lazy" decoding="async"
                alt="Atendimento na Terra Marcada: duas pessoas analisam mapas e plantas de um projeto de REURB sobre a mesa">
-          <figcaption class="attend-chip">
-            <svg aria-hidden="true"><use href="#i-map"/></svg>
-            <span><strong>Seu projeto, na mesa</strong><small>Mapas e plantas explicados com calma</small></span>
-          </figcaption>
         </figure>
 
         <div class="attend-copy">
@@ -546,23 +542,6 @@
       </div>
     </section>
 
-    <!-- ================= PRIVACIDADE (resumo) ================= -->
-    <section class="section section-cream privacy-brief" id="privacidade" aria-labelledby="priv-title">
-      <div class="container">
-        <div class="privacy-head">
-          <h2 id="priv-title">Sua privacidade em primeiro lugar</h2>
-          <p>Tratamos seus dados com cuidado e de acordo com a LGPD. O essencial, em poucas linhas:</p>
-        </div>
-        <ul class="privacy-points">
-          <li><strong>Só o necessário</strong><span>Nome, cidade e assunto, apenas para atender o seu pedido.</span></li>
-          <li><strong>Sem rastreamento</strong><span>Nenhum cookie de publicidade ou de análise de audiência.</span></li>
-          <li><strong>Não vendemos dados</strong><span>Compartilhamos só o que o serviço contratado exige.</span></li>
-          <li><strong>Seus direitos</strong><span>Você pode pedir acesso, correção ou exclusão dos seus dados.</span></li>
-        </ul>
-        <p class="privacy-link"><a class="btn btn-dark" href="politica-privacidade.html" target="_blank" rel="noopener noreferrer">Verifique nossa política de privacidade completa</a></p>
-      </div>
-    </section>
-
     <!-- ================= CTA FINAL / CONTATO ================= -->
     <section class="section cta-final" id="contato">
       <div class="container cta-grid">
@@ -631,6 +610,22 @@
       </div>
     </section>
 
+    <!-- ================= PRIVACIDADE (resumo) ================= -->
+    <section class="section section-cream privacy-brief" id="privacidade" aria-labelledby="priv-title">
+      <div class="container">
+        <div class="privacy-head">
+          <h2 id="priv-title">Sua privacidade em primeiro lugar</h2>
+          <p>Tratamos seus dados com cuidado e de acordo com a LGPD. O essencial, em poucas linhas:</p>
+        </div>
+        <ul class="privacy-points">
+          <li><strong>Só o necessário</strong><span>Nome, cidade e assunto, apenas para atender o seu pedido.</span></li>
+          <li><strong>Sem rastreamento</strong><span>Nenhum cookie de publicidade ou de análise de audiência.</span></li>
+          <li><strong>Não vendemos dados</strong><span>Compartilhamos só o que o serviço contratado exige.</span></li>
+          <li><strong>Seus direitos</strong><span>Você pode pedir acesso, correção ou exclusão dos seus dados.</span></li>
+        </ul>
+        <p class="privacy-link"><a class="btn btn-dark" href="politica-privacidade.html" target="_blank" rel="noopener noreferrer">Verifique nossa política de privacidade completa</a></p>
+      </div>
+    </section>
   </main>
 
   <!-- ================= RODAPÉ ================= -->
