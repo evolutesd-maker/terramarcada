@@ -265,33 +265,20 @@
       var i = sib.indexOf(el);
       if (i > 0) el.style.setProperty("--d", Math.min(i, 4) * 60 + "ms");
     });
+    // após a animação de entrada, os cartões perdem a classe de revelação para o hover ter só as transições dele
+    var CARD = ".card, .type-card, .benefit, .pf-card, .mvv-card";
+    function settle(el) {
+      if (!el.matches(CARD)) return;
+      setTimeout(function () { el.classList.remove("reveal", "is-visible"); el.style.removeProperty("--d"); }, 1200);
+    }
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
+        if (en.isIntersecting) { en.target.classList.add("is-visible"); settle(en.target); io.unobserve(en.target); }
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
     items.forEach(function (el) { io.observe(el); });
     // rede de segurança: nada fica escondido se o observador falhar
-    setTimeout(function () { items.forEach(function (el) { el.classList.add("is-visible"); }); }, 3500);
-  }
-
-  /* ---------- Interações de ponteiro (somente mouse/trackpad) ---------- */
-  if (finePointer && !reduce) {
-    // destaque que segue o cursor nos cartões
-    var spots = $$(".card, .type-card, .benefit, .pf-card, .mvv-card");
-    spots.forEach(function (el) {
-      el.setAttribute("data-spot", "");
-      var raf = 0;
-      el.addEventListener("pointermove", function (e) {
-        if (raf) return;
-        raf = requestAnimationFrame(function () {
-          var r = el.getBoundingClientRect();
-          el.style.setProperty("--sx", (e.clientX - r.left).toFixed(0) + "px");
-          el.style.setProperty("--sy", (e.clientY - r.top).toFixed(0) + "px");
-          raf = 0;
-        });
-      }, { passive: true });
-    });
+    setTimeout(function () { items.forEach(function (el) { el.classList.add("is-visible"); settle(el); }); }, 3500);
   }
 
   if (finePointer && !reduce) {
