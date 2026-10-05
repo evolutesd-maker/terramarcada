@@ -110,7 +110,7 @@
   var lastY = window.scrollY, ticking = false;
   var timeline = $(".step-list");
   var stepItems = $$(".step-list li");
-  var floaters = $$(".tech-visual");
+  var floaters = [];
 
   function onScroll() {
     var y = window.scrollY;
@@ -266,20 +266,6 @@
       b.addEventListener("pointerleave", function () { b.style.removeProperty("--mx"); b.style.removeProperty("--my"); });
     });
 
-    // drone acompanha o cursor
-    var tcard = $(".tech-card");
-    if (tcard) {
-      tcard.addEventListener("pointermove", function (e) {
-        var r = tcard.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-        tcard.style.setProperty("--dx", (x * 22).toFixed(1) + "px");
-        tcard.style.setProperty("--dy", (y * 16).toFixed(1) + "px");
-        tcard.style.setProperty("--dr", (x * 5).toFixed(2) + "deg");
-      }, { passive: true });
-      tcard.addEventListener("pointerleave", function () {
-        tcard.style.setProperty("--dx", "0px"); tcard.style.setProperty("--dy", "0px"); tcard.style.setProperty("--dr", "0deg");
-      });
-    }
   }
   if (reduce) { $$("svg.flight").forEach(function (sv) { if (sv.pauseAnimations) sv.pauseAnimations(); }); }
 

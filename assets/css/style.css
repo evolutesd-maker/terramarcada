@@ -461,7 +461,7 @@ body { overflow-x: clip; }
 .site-header.is-hidden:not(:focus-within) { transform: translateY(-100%); }
 .nav-open .site-header { transform: none !important; }
 .brand img { transition: transform .5s var(--ease); }
-@media (hover: hover) and (pointer: fine) { .brand:hover img { transform: rotate(-8deg) scale(1.08); } }
+
 .nav a:not(.btn).is-active { color: var(--green-700); }
 .nav a:not(.btn).is-active::after { transform: scaleX(1); }
 
@@ -861,7 +861,7 @@ a, button, summary, .chip { touch-action: manipulation; }
 @media (hover: hover) and (pointer: fine) { .tech-card:hover .hc { opacity: 1; } }
 
 /* símbolo da marca gira com a rolagem */
-.brand img { rotate: calc(var(--sp, 0) * 540deg); }
+
 
 /* prévia da mensagem (estilo WhatsApp) */
 .wa-preview { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 6px; }
@@ -1262,7 +1262,7 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
    sem acompanhar o mouse; desligado com "reduzir movimento")
    ========================================================= */
 :root {
-  --hover-blue: #2f6fe4;                              /* troque aqui para mudar o azul */
+  --hover-blue: #D0AC2C;                              /* troque aqui para mudar o azul */
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-shadow: 0 1px 2px rgba(11, 43, 34, .05), 0 6px 16px -10px rgba(11, 43, 34, .2);
   --card-shadow-hover: 0 2px 4px rgba(11, 43, 34, .06), 0 20px 34px -12px rgba(11, 43, 34, .32);
@@ -1315,3 +1315,43 @@ h2 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
 .pf-tag, .mvv-label, .pf-meta dt, .wa-preview-label, .pf-sample, .contact-list small, .audience-label { font-size: .88rem; font-weight: 600; }
 .mvv-label { margin-bottom: 8px; }
 .audience-label { font-size: .95rem; }
+
+
+/* =========================================================
+   SOBRIEDADE — sem flutuações, brilhos, preenchimentos ou rotações
+   ========================================================= */
+/* mapa do hero e ícones: estáticos */
+.map-svg g[transform], .map-svg .map-pin, .lot-hl { animation: none !important; }
+.card-ico svg, .card:hover .card-ico svg { animation: none !important; }
+.card-ico::after { display: none; }
+.card:hover .card-ico, .benefit:hover svg, .contact-list li:hover svg, .step-list li:hover .step-n { animation: none; translate: none; scale: 1; }
+.attend-chip { animation: none !important; }
+/* sem "disparo" de câmera do drone */
+.hero-bg .flight .shot { display: none; }
+/* drone do hero: mais presente */
+.hero-bg .flight .flight-drone { opacity: .95; }
+.hero-bg .flight path { stroke: rgba(208, 172, 44, .55); }
+/* botões de contorno e filtros: sem preenchimento deslizante */
+.btn-ghost::before, .btn-ghost-dark::before, .chip::before { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .btn-ghost:hover { background: transparent; border-color: var(--gold-500); color: var(--gold-400); }
+  .btn-ghost-dark:hover { background: transparent; border-color: var(--green-700); color: var(--green-900); }
+  .chip:hover { transform: none; box-shadow: none; border-color: var(--green-700); }
+}
+/* foto e drone da tecnologia: totalmente parados */
+.tech-card img { animation: none !important; translate: none !important; rotate: none !important; transform: none !important; }
+.tech-visual { translate: none !important; }
+.tech-card:hover .tech-glow { transform: none; }
+.tech-card:hover .tl, .tech-card:hover .tr, .tech-card:hover .bl, .tech-card:hover .br { transform: none; }
+.tech-card:hover .hc { opacity: .55; }
+.tech-chips li:hover { background: var(--green-100); color: var(--green-900); transform: none; }
+/* quem somos: tudo estático */
+.mvv-card:hover, .mvv-card.mvv-main:hover { transform: none; border-color: var(--line); box-shadow: none; }
+.mvv-main:hover { border-color: var(--green-900); }
+.mvv-main::after, .mvv-main:hover::after { transform: none; transition: none; }
+.values li, .values li:hover { translate: none; transition: none; }
+.values li::before, .values li:hover::before { rotate: none; scale: 1; transition: none; }
+/* foto do atendimento parada */
+.attend-media::before, .attend-media:hover::before, .attend-media img, .attend-media:hover img, .attend-chip, .attend-media:hover .attend-chip { transform: none !important; translate: none !important; rotate: none !important; transition: none !important; animation: none !important; }
+/* logos fixos */
+.brand img, .brand:hover img, .footer-brand img, .footer-brand:hover img, .contact-logo, .contact-card:hover .contact-logo { transform: none !important; rotate: none !important; scale: 1 !important; }

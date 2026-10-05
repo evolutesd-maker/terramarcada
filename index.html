@@ -70,7 +70,7 @@
       <div class="hero-bg" aria-hidden="true">
         <svg class="flight" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
           <path id="flight-path" d="M-40 110 C 200 50 380 30 560 80 S 900 190 1050 130 S 1200 50 1260 70" fill="none" stroke="rgba(208,172,44,.4)" stroke-width="1.6" stroke-dasharray="3 9" stroke-linecap="round"/>
-          <g class="flight-drone">
+          <g class="flight-drone" opacity="0">
             <g fill="none" stroke="#ddbf52" stroke-width="2" stroke-linecap="round">
               <path d="M-9 -9 L9 9 M9 -9 L-9 9"/>
               <circle cx="-11" cy="-11" r="4.5"/><circle cx="11" cy="-11" r="4.5"/><circle cx="-11" cy="11" r="4.5"/><circle cx="11" cy="11" r="4.5"/>
@@ -78,7 +78,8 @@
             <g class="props" stroke="#ddbf52" stroke-width="1.6" stroke-linecap="round"><path class="prop" d="M-15.5 -11 H-6.5" transform="translate(0 0)"/><path class="prop" d="M6.5 -11 H15.5"/><path class="prop" d="M-15.5 11 H-6.5"/><path class="prop" d="M6.5 11 H15.5"/></g>
             <rect x="-5" y="-5" width="10" height="10" rx="3" fill="#ddbf52"/>
             <circle class="shot" r="7" fill="none" stroke="#ddbf52" stroke-width="1.5"/>
-            <animateMotion dur="34s" repeatCount="indefinite" rotate="0"><mpath href="#flight-path"/></animateMotion>
+            <set attributeName="opacity" from="0" to="1" begin="9s" fill="freeze"/>
+            <animateMotion dur="34s" begin="9s" repeatCount="indefinite" rotate="0"><mpath href="#flight-path"/></animateMotion>
           </g>
         </svg>
         <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
