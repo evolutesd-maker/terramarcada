@@ -723,7 +723,7 @@ a, button, summary, .chip { touch-action: manipulation; }
 
 /* REURB: processo em linha do tempo */
 .steps { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
-.steps h3 { text-align: left; font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 0; position: sticky; top: calc(var(--header-h) + 24px); line-height: 1.15; }
+.steps h3 { text-align: left; font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem); margin: 0; position: static; line-height: 1.15; }
 .step-list { grid-template-columns: 1fr; gap: 0; position: relative; }
 .step-list::before { content: ""; position: absolute; left: 19px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(var(--gold-500), rgba(208, 172, 44, .15)); }
 .step-list li { background: none; border-top: 0; border-radius: 0; padding: 0 0 34px 64px; position: relative; display: block; }

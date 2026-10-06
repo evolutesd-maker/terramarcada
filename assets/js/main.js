@@ -38,6 +38,9 @@
     $$('[data-fill="' + key + '"]').forEach(function (el) { el.textContent = value; });
   }
   fill("phone", waNumber ? cfg.whatsappDisplay : "", 30);
+  if (cfg.phone && /^\d{10,13}$/.test(cfg.phone)) {
+    $$('[data-fill="tel"]').forEach(function (el) { el.textContent = clean(cfg.phoneDisplay, 30) || cfg.phone; el.href = "tel:+" + cfg.phone; });
+  }
   fill("address", cfg.address, 140);
   fill("hours", cfg.hours, 80);
   fill("cnpj", cfg.cnpj, 40);
