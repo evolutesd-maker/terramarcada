@@ -1356,15 +1356,27 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 .faq-intro { position: static; }
 
 /* =========================================================
-   BOTÕES — sobem e crescem de leve no hover (como antes)
+   BOTÕES — elevação no hover
+   sobe 2px; a sombra desce e se suaviza (descola da página); ao clicar, volta e a sombra encolhe
+   0,2s · cubic-bezier(0.2, 0.7, 0.2, 1) · só transform e box-shadow · sem scale, sem rotação
    ========================================================= */
-.btn { transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), background-position .6s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease); }
+.btn, .btn.btn-lg {
+  --btn-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sh-rest: 0 8px 20px -8px rgba(7, 29, 23, .6);          /* repouso: curta e junto do botão */
+  --sh-lift: 0 12px 26px -10px rgba(7, 29, 23, .7);        /* hover: mais deslocada e mais difusa */
+  transform: none; translate: none; rotate: none; scale: none; background-position: 0% 0;
+  box-shadow: var(--sh-rest);
+  transition: transform .2s var(--btn-ease), box-shadow .2s var(--btn-ease);
+}
+.btn.btn-gold { --sh-rest: 0 8px 20px -8px rgba(120, 92, 10, .65); --sh-lift: 0 12px 26px -10px rgba(120, 92, 10, .75); }
+.btn.btn-ghost, .btn.btn-ghost-dark { --sh-rest: 0 0 0 0 rgba(0, 0, 0, 0); --sh-lift: 0 12px 26px -10px rgba(0, 0, 0, .45); }
+.btn.btn-ghost-dark { --sh-lift: 0 12px 26px -10px rgba(7, 29, 23, .35); }
 .btn .ico, .btn:hover .ico { translate: none; rotate: none; scale: 1; transform: none; transition: none; }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover, .btn.btn-lg:hover, .nav .btn-gold:hover { transform: translateY(-2px) scale(1.03); }
-  .btn:active, .btn.btn-lg:active { transform: none; }
+  .btn:hover, .btn.btn-lg:hover, .nav .btn-gold:hover { transform: translateY(-2px); background-position: 0% 0; box-shadow: var(--sh-lift); }
+  .btn:active, .btn.btn-lg:active, .nav .btn-gold:active { transform: translateY(0); box-shadow: var(--sh-rest); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .btn { transition: none; }
+  .btn, .btn.btn-lg { transition: none; }
   .btn:hover, .btn.btn-lg:hover, .nav .btn-gold:hover, .btn:active { transform: none; }
 }
