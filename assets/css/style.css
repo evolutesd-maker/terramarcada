@@ -1261,7 +1261,7 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
    sem acompanhar o mouse; desligado com "reduzir movimento")
    ========================================================= */
 :root {
-  --hover-blue: #2f6fe4;                              /* troque aqui para mudar o azul */
+  --hover-blue: #D0AC2C;                              /* troque aqui para mudar o azul */
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-shadow: 0 1px 2px rgba(11, 43, 34, .05), 0 6px 16px -10px rgba(11, 43, 34, .2);
   --card-shadow-hover: 0 2px 4px rgba(11, 43, 34, .06), 0 20px 34px -12px rgba(11, 43, 34, .32);
@@ -1354,3 +1354,26 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 /* botão do WhatsApp sem anel irradiando; título das perguntas parado */
 .wa-float::before, .wa-float::after, .wa-float:hover::after { animation: none !important; display: none; }
 .faq-intro { position: static; }
+
+/* =========================================================
+   BOTÕES — "levantadinha" no hover
+   sobe 2px · 0,2s · cubic-bezier(0.2, 0.7, 0.2, 1) · só transform e box-shadow
+   ========================================================= */
+.btn, .btn.btn-lg {
+  --btn-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: none; translate: none; rotate: none;
+  transition: transform .2s var(--btn-ease), box-shadow .2s var(--btn-ease);
+}
+.btn-gold { background-position: 0% 0; }
+.btn .ico, .btn:hover .ico { translate: none; rotate: none; scale: 1; transform: none; transition: none; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover, .btn.btn-lg:hover, .nav .btn-gold:hover { transform: translateY(-2px); background-position: 0% 0; }
+  .btn:active, .btn.btn-lg:active { transform: none; }
+  /* botões principais: a sombra cresce um pouco */
+  .btn-gold:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 16px 28px -12px rgba(120, 92, 10, .7); }
+  .btn-dark:hover { box-shadow: 0 16px 28px -12px rgba(7, 29, 23, .6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn.btn-lg { transition: none; }
+  .btn:hover, .btn.btn-lg:hover, .nav .btn-gold:hover, .btn:active { transform: none; }
+}
