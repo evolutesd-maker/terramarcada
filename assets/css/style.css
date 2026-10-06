@@ -1261,7 +1261,7 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
    sem acompanhar o mouse; desligado com "reduzir movimento")
    ========================================================= */
 :root {
-  --hover-blue: #D0AC2C;                              /* troque aqui para mudar o azul */
+  --hover-blue: #2f6fe4;                              /* troque aqui para mudar o azul */
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-shadow: 0 1px 2px rgba(11, 43, 34, .05), 0 6px 16px -10px rgba(11, 43, 34, .2);
   --card-shadow-hover: 0 2px 4px rgba(11, 43, 34, .06), 0 20px 34px -12px rgba(11, 43, 34, .32);
