@@ -5,14 +5,14 @@
 window.TERRA_MARCADA = {
   // WhatsApp: somente números, com DDI 55 + DDD + número.
   // Exemplo: "5561999998888". Deixe "" enquanto não houver número.
-  whatsapp: "",
+  whatsapp: "555533320990",
 
   // Como o número aparece escrito no site. Ex.: "(61) 99999-8888"
-  whatsappDisplay: "(00) 00000-0000",
+  whatsappDisplay: "(55) 3332-0990",
 
   // Telefone fixo (somente números, com DDI e DDD) e como aparece escrito.
-  phone: "555533320990",
-  phoneDisplay: "(55) 3332-0990",
+  phone: "5555999345858",
+  phoneDisplay: "(55) 99934-5858",
 
   // E-mail de contato. Ex.: "contato@terramarcada.com.br"
   email: "terramarcada@gmail.com",

@@ -48,6 +48,36 @@
     $$('[data-fill="email"]').forEach(function (el) { el.textContent = email; el.href = "mailto:" + email; });
   }
 
+  /* ---------- Voos de drone ajustados ao tamanho real da tela ---------- */
+  // O desenho usa pixels reais (sem esticar): o drone mantém a proporção e a trilha
+  // pontilhada se estende por toda a largura, em qualquer resolução.
+  function scalePath(d, sx, sy) {
+    var n = 0;
+    return d.replace(/-?\d+(\.\d+)?/g, function (v) { return (parseFloat(v) * (n++ % 2 === 0 ? sx : sy)).toFixed(1); });
+  }
+  var flights = [
+    { svg: $(".hero-bg svg.flight"), path: $("#flight-path"), box: ".hero-bg", w: 1200, h: 700 },
+    { svg: $("svg.foot-flight"), path: $("#foot-path"), box: null, w: 1200, h: 80 }
+  ];
+  flights.forEach(function (f) { if (f.svg && f.path) f.d = f.path.getAttribute("d"); });
+  function fitFlights() {
+    flights.forEach(function (f) {
+      if (!f.svg || !f.path) return;
+      var host = f.box ? $(f.box) : f.svg;
+      var W = host.clientWidth, H = host.clientHeight;
+      if (!W || !H) return;
+      f.svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      f.svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+      f.path.setAttribute("d", scalePath(f.d, W / f.w, f.box ? H / f.h : 1));
+    });
+  }
+  var fitTick = false;
+  window.addEventListener("resize", function () {
+    if (fitTick) return; fitTick = true;
+    requestAnimationFrame(function () { fitTick = false; fitFlights(); });
+  });
+  fitFlights();
+
   /* ---------- Formulário -> mensagem pronta no WhatsApp ---------- */
   var form = $("#wa-form");
   if (form) {
