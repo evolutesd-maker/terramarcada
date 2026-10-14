@@ -27,6 +27,9 @@
 
   <script src="assets/js/boot.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/terra-story.css">
+  <meta name="terra-core" content="assets/js/terra-core.js">
+  <meta name="terra-worker" content="assets/js/terra-worker.js">
 </head>
 <body>
   <div id="topo" class="top-sentinel" aria-hidden="true"></div>
@@ -54,7 +57,7 @@
         <a href="#servicos">Serviços</a>
         <a href="#reurb">O que é REURB</a>
         <a href="#portfolio">Portfólio</a>
-        <a href="#sobre">Quem somos</a>
+        <a href="quem-somos.html">Quem somos</a>
         <a href="#contato">Contato</a>
         <a href="#" class="btn btn-dark btn-sm" data-whatsapp="Olá! Vim pelo site e gostaria de agendar um atendimento." target="_blank" rel="noopener noreferrer">
           <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg> Agendar pelo WhatsApp
@@ -65,112 +68,145 @@
 
   <main id="conteudo">
 
-    <!-- ================= HERO ================= -->
-    <section class="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <svg class="flight" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
-          <path id="flight-path" d="M-40 110 C 200 50 380 30 560 80 S 900 190 1050 130 S 1200 50 1260 70" fill="none" stroke="rgba(208,172,44,.4)" stroke-width="1.6" stroke-dasharray="3 9" stroke-linecap="round"/>
-          <g class="flight-drone" opacity="0">
-            <g fill="none" stroke="#ddbf52" stroke-width="2" stroke-linecap="round">
-              <path d="M-9 -9 L9 9 M9 -9 L-9 9"/>
-              <circle cx="-11" cy="-11" r="4.5"/><circle cx="11" cy="-11" r="4.5"/><circle cx="-11" cy="11" r="4.5"/><circle cx="11" cy="11" r="4.5"/>
-            </g>
-            <g class="props" stroke="#ddbf52" stroke-width="1.6" stroke-linecap="round"><path class="prop" d="M-15.5 -11 H-6.5" transform="translate(0 0)"/><path class="prop" d="M6.5 -11 H15.5"/><path class="prop" d="M-15.5 11 H-6.5"/><path class="prop" d="M6.5 11 H15.5"/></g>
-            <rect x="-5" y="-5" width="10" height="10" rx="3" fill="#ddbf52"/>
-            <circle class="shot" r="7" fill="none" stroke="#ddbf52" stroke-width="1.5"/>
-            <set attributeName="opacity" from="0" to="1" begin="9s" fill="freeze"/>
-            <animateMotion dur="54s" begin="9s" repeatCount="indefinite" rotate="0" calcMode="linear" keyPoints="0;1;1" keyTimes="0;.6296;1"><mpath href="#flight-path"/></animateMotion>
-          </g>
-        </svg>
-        <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
-          <g fill="none" stroke="currentColor" stroke-width="1.2">
-            <path d="M-50 520 C 150 460 260 560 420 500 S 700 380 860 430 S 1120 520 1260 460"/>
-            <path d="M-50 470 C 160 410 270 510 430 450 S 700 330 860 380 S 1120 470 1260 410"/>
-            <path d="M-50 420 C 170 360 280 460 440 400 S 700 280 860 330 S 1120 420 1260 360"/>
-            <path d="M-50 370 C 180 310 290 410 450 350 S 710 230 870 280 S 1130 370 1260 310"/>
-            <path d="M-50 320 C 190 260 300 360 460 300 S 720 180 880 230 S 1140 320 1260 260"/>
-            <path d="M-50 270 C 200 210 310 310 470 250 S 730 130 890 180 S 1150 270 1260 210"/>
-            <path d="M-50 220 C 210 160 320 260 480 200 S 740 80 900 130 S 1160 220 1260 160"/>
-            <path d="M-50 170 C 220 110 330 210 490 150 S 750 30 910 80 S 1170 170 1260 110"/>
-            <path d="M-50 600 C 140 540 250 640 410 580 S 690 460 850 510 S 1110 600 1260 540"/>
-            <path d="M-50 650 C 130 590 240 690 400 630 S 680 510 840 560 S 1100 650 1260 590"/>
-          </g>
-        </svg>
+    <!-- ================= HERO + MAPA (carta topográfica) ================= -->
+<div class="tm2">
+<section class="tm-hero escuro" id="terra">
+  <div class="tm-hero-bg" aria-hidden="true">
+    <canvas data-terra="lines" class="terra-cv hero-linhas"></canvas>
+    <div class="hero-brilho"></div>
+  </div>
+  <div class="hero-grade">
+    <div class="hero-txt">
+      <h1 data-fx="palavras" data-fx-duracao="900">Cada metro da sua terra, no mapa certo.</h1>
+      <p class="sub" data-fx="subir" data-fx-atraso="900">Mapeamento territorial com drone e GNSS, regularização de imóveis e REURB em Ijuí e região.</p>
+      <div class="acoes" data-fx="subir" data-fx-atraso="1100">
+        <a class="tm-btn" data-whatsapp="Olá, Terra Marcada! Gostaria de um orçamento." href="#" target="_blank" rel="noopener noreferrer">Pedir orçamento</a>
+        <a class="tm-btn tm-btn-vazado" href="#mapa">Ver como mapeamos</a>
       </div>
-
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <h1>Seu imóvel <span class="hl">no mapa</span> e com a escritura em <span class="hl">seu nome</span></h1>
-          <p class="lead">
-            A Terra Marcada transforma posse em propriedade registrada. Fazemos o levantamento, o projeto
-            e acompanhamos todo o processo de regularização — para famílias, empresas e prefeituras.
-          </p>
-          <div class="hero-actions">
-            <a href="#" class="btn btn-gold btn-lg" data-whatsapp="Olá! Vim pelo site e gostaria de falar sobre a regularização do meu imóvel." target="_blank" rel="noopener noreferrer">
-              <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
-              Falar no WhatsApp
-            </a>
-            <a href="#reurb" class="btn btn-ghost btn-lg">Entenda a REURB</a>
-          </div>
-        </div>
-
-        <!-- Ilustração: mapa de lotes -->
-        <div class="hero-art" aria-hidden="true">
-          <div class="map-card">
-            <svg viewBox="0 0 460 400" class="map-svg">
-              <defs>
-                <linearGradient id="mapbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14473A"/><stop offset="1" stop-color="#0C2F25"/></linearGradient>
-                <radialGradient id="mapglow" cx=".3" cy=".25" r=".8"><stop offset="0" stop-color="#D0AC2C" stop-opacity=".16"/><stop offset="1" stop-color="#D0AC2C" stop-opacity="0"/></radialGradient>
-              </defs>
-              <rect width="460" height="400" rx="20" fill="url(#mapbg)"/>
-              <rect width="460" height="400" rx="20" fill="url(#mapglow)"/>
-              <g stroke="#2E5E4F" stroke-width=".8" opacity=".5"><path d="M0 50H460M0 100H460M0 150H460M0 200H460M0 250H460M0 300H460M0 350H460M50 0V400M100 0V400M150 0V400M200 0V400M250 0V400M300 0V400M350 0V400M400 0V400"/></g>
-              <g fill="none" stroke="#D0AC2C" stroke-opacity=".1" stroke-width="1.2"><path d="M-20 40 C 110 6 230 70 360 30 S 450 48 490 26"/><path d="M-20 95 C 110 61 230 125 360 85 S 450 103 490 81"/><path d="M-20 150 C 110 116 230 180 360 140 S 450 158 490 136"/><path d="M-20 205 C 110 171 230 235 360 195 S 450 213 490 191"/><path d="M-20 330 C 110 296 230 360 360 320 S 450 338 490 316"/><path d="M-20 372 C 110 338 230 402 360 362 S 450 380 490 358"/></g>
-              <path d="M-20 306 C 160 312 330 316 392 270 S 412 120 412 -20" fill="none" stroke="#F4EFDF" stroke-opacity=".13" stroke-width="34" stroke-linecap="round"/>
-              <path d="M-20 306 C 160 312 330 316 392 270 S 412 120 412 -20" fill="none" stroke="#F4EFDF" stroke-opacity=".38" stroke-width="1.4" stroke-dasharray="9 9"/>
-              <g fill="#D0AC2C" fill-opacity=".16" stroke="#D0AC2C" stroke-width="1.6" stroke-linejoin="round">
-                <path data-lot="01" data-q="A" data-area="17,86" d="M37.8 38.2 L113.3 36.8 L114.5 106.3 L39.1 107.7Z"/>
-                <path data-lot="02" data-q="A" data-area="18,31" d="M116.8 36.7 L192.3 35.3 L193.5 104.8 L118.1 106.2Z"/>
-                <path data-lot="03" data-q="A" data-area="17,22" d="M195.8 35.2 L271.3 33.8 L272.5 103.3 L197.1 104.7Z"/>
-                <path data-lot="04" data-q="A" data-area="18,05" d="M274.8 33.7 L350.3 32.3 L351.5 101.8 L276.1 103.2Z"/>
-                <path data-lot="05" data-q="A" data-area="19,10" d="M39.1 112.2 L114.6 110.8 L115.9 180.3 L40.4 181.7Z"/>
-                <path data-lot="06" data-q="A" data-area="17,75" d="M118.1 110.7 L193.6 109.3 L194.9 178.8 L119.4 180.2Z"/>
-                <path data-lot="07" data-q="A" data-area="18,54" d="M197.1 109.2 L272.6 107.8 L273.9 177.3 L198.4 178.7Z"/>
-                <path data-lot="08" data-q="A" data-area="18,68" d="M276.1 107.7 L351.6 106.3 L352.9 175.8 L277.4 177.2Z" class="lot-hl"/>
-                <path data-lot="09" data-q="A" data-area="17,05" d="M40.5 186.2 L115.9 184.8 L117.2 254.3 L41.7 255.7Z"/>
-                <path data-lot="10" data-q="A" data-area="19,32" d="M119.5 184.7 L194.9 183.3 L196.2 252.8 L120.7 254.2Z"/>
-                <path data-lot="11" data-q="A" data-area="17,48" d="M198.5 183.2 L273.9 181.8 L275.2 251.3 L199.7 252.7Z"/>
-                <path data-lot="12" data-q="A" data-area="18,40" d="M277.5 181.7 L352.9 180.3 L354.2 249.8 L278.7 251.2Z"/>
+    </div>
+    <div class="hero-vis" aria-hidden="false">
+            <div class="ping"><i></i><i></i><i></i></div>
+      <div class="anel"></div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="map-card">
+          <svg viewBox="0 0 844 780" class="map-svg" role="img" aria-label="Vista aérea de Ijuí com o lote da Terra Marcada marcado">
+            <defs>
+              <clipPath id="mapclip"><rect width="844" height="780" rx="36"/></clipPath>
+              <linearGradient id="mapveil" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14473A" stop-opacity=".22"/><stop offset="1" stop-color="#0C2F25" stop-opacity=".38"/></linearGradient>
+              <radialGradient id="mapfoco" cx=".57" cy=".34" r=".6"><stop offset="0" stop-color="#0C2F25" stop-opacity="0"/><stop offset="1" stop-color="#0C2F25" stop-opacity=".42"/></radialGradient>
+            </defs>
+            <g clip-path="url(#mapclip)"><g class="map-zoom">
+              <image href="assets/img/terra-marcada-lote.webp" width="844" height="780" preserveAspectRatio="xMidYMid slice"/>
+              <rect width="844" height="780" class="mapa-veu" fill="url(#mapveil)"/>
+              <rect width="844" height="780" fill="url(#mapfoco)"/>
+              <g stroke="#F4EFDF" stroke-opacity=".07" stroke-width="1.2"><path d="M0 100H844M0 200H844M0 300H844M0 400H844M0 500H844M0 600H844M0 700H844M100 0V780M200 0V780M300 0V780M400 0V780M500 0V780M600 0V780M700 0V780M800 0V780"/></g>
+              <path class="lote-halo" pathLength="1" d="M421 243 L541 243 L541 291 L421 291Z" fill="none" stroke="#D0AC2C" stroke-width="12" stroke-opacity=".3" stroke-linejoin="round"/>
+              <path class="lote" pathLength="1" d="M421 243 L541 243 L541 291 L421 291Z" fill="#D0AC2C" fill-opacity=".22" stroke="#F1D673" stroke-width="4" stroke-linejoin="round"/>
+              <g class="mapa-aparece mapa-a2" fill="#F4EFDF"><circle cx="421" cy="243" r="5.5"/><circle cx="541" cy="243" r="5.5"/><circle cx="541" cy="291" r="5.5"/><circle cx="421" cy="291" r="5.5"/></g>
+              <g class="mapa-aparece mapa-a3">
+                <svg class="pino" x="455" y="203" width="52" height="68" viewBox="-13 -34 26 34" overflow="visible">
+                  <g class="pino-corpo">
+                    <path d="M0 0 C-2.5 -6 -9.5 -12 -9.5 -19.5 A9.5 9.5 0 0 1 9.5 -19.5 C9.5 -12 2.5 -6 0 0Z" fill="#F1D673" stroke="#0B2B22" stroke-opacity=".6" stroke-width=".9" stroke-linejoin="round"/>
+                    <circle cx="0" cy="-19.5" r="3.4" fill="#0B2B22"/>
+                  </g>
+                </svg>
               </g>
-              <g fill="#F4EFDF" pointer-events="none">
-                <circle cx="36" cy="36" r="3.6"/><circle cx="352" cy="30" r="3.6"/><circle cx="356" cy="252" r="3.6"/><circle cx="40" cy="258" r="3.6"/>
+              <g class="mapa-aparece mapa-a4">
+                <rect x="350" y="305" width="262" height="40" rx="20" fill="#0B2B22" fill-opacity=".88" stroke="#F1D673" stroke-opacity=".65" stroke-width="1.6"/>
+                <text x="481" y="331" text-anchor="middle" fill="#F4EFDF" font-size="20" font-weight="700" font-family="Bricolage Grotesque, Arial, sans-serif">Terra Marcada · Ijuí/RS</text>
               </g>
-              <g transform="translate(314.5 137.8)" pointer-events="none" class="map-pin">
-                <path d="M0 -34 C -16 -34 -24 -22 -24 -10 C -24 8 0 30 0 30 C 0 30 24 8 24 -10 C 24 -22 16 -34 0 -34 Z" fill="#D0AC2C"/>
-                <circle cx="0" cy="-10" r="8" fill="#0F3A2E"/>
-              </g>
-              <g transform="translate(430 40)" pointer-events="none" fill="none" stroke="#F4EFDF" stroke-opacity=".75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <circle r="15" stroke-opacity=".35"/><path d="M0 -11 L5 7 L0 3.5 L-5 7Z" fill="#D0AC2C" stroke="#D0AC2C"/>
-                <text y="-19" text-anchor="middle" fill="#F4EFDF" stroke="none" font-size="10" font-weight="700" font-family="sans-serif">N</text>
-              </g>
-              <g transform="translate(32 380)" pointer-events="none" stroke="#F4EFDF" stroke-opacity=".7" stroke-width="1.6" fill="none">
-                <path d="M0 0H90M0 -4V4M45 -3V3M90 -4V4"/>
-                <text x="45" y="14" text-anchor="middle" fill="#F4EFDF" stroke="none" font-size="8" font-family="sans-serif" opacity=".6">250</text>
-                <text x="0" y="-9" fill="#F4EFDF" stroke="none" font-size="9" font-family="sans-serif" opacity=".8">0</text>
-                <text x="90" y="-9" text-anchor="end" fill="#F4EFDF" stroke="none" font-size="9" font-family="sans-serif" opacity=".8">500 m</text>
-              </g>
+            </g></g>
+            <rect width="844" height="780" rx="36" fill="none" stroke="#F4EFDF" stroke-opacity=".14" stroke-width="2"/>
+            <svg x="756" y="30" width="64" height="64" viewBox="-32 -32 64 64" overflow="visible">
+              <circle r="28" fill="#0B2B22" fill-opacity=".6" stroke="#F4EFDF" stroke-opacity=".4" stroke-width="2"/>
+              <path d="M0 -19 L8 12 L0 6 L-8 12Z" fill="#D0AC2C" stroke="#D0AC2C" stroke-width="2" stroke-linejoin="round"/>
+              <text y="-35" text-anchor="middle" fill="#F4EFDF" font-size="17" font-weight="700" font-family="sans-serif">N</text>
             </svg>
-            
-          </div>
+          </svg>
         </div>
       </div>
-
+    </div>
+  </div>
     </section>
+
+<section class="pico claro" id="mapa" data-passo="1">
+  <div class="pico-grade">
+    <div class="prancha" id="prancha">
+      <div class="prancha-in">
+        <canvas data-terra="aerial" class="terra-cv base"></canvas>
+        <div class="nuvens" aria-hidden="true"><i></i><i></i></div>
+        <div class="prancha-mapa" id="pranchaMapa"><canvas data-terra="map" class="terra-cv"></canvas></div>
+        <div class="scan" id="scan"></div>
+        <svg class="cad" id="cad" viewBox="0 0 1200 800" role="img" aria-label="Carta topográfica de um terreno de exemplo, com curvas de nível, lotes, limites e marcos"></svg>
+      </div>
+      <svg class="rosa" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,.7)" stroke="#0B2F24" stroke-width="1.5"/><path d="M40 8 L47 40 L40 34 L33 40 Z" fill="#0B2F24"/><path d="M40 72 L47 40 L40 46 L33 40 Z" fill="#C49A2A"/><text x="40" y="22" text-anchor="middle" font-size="9" font-weight="800" fill="#fff">N</text></svg>
+      <div class="escala" aria-hidden="true"><i></i><span>0</span><span>100 m</span></div>
+      <span class="selo">Terreno de exemplo, ilustrativo</span>
+    </div>
+    <div class="painel-vidro claro-vidro leg-pico">
+      <div class="etapas">
+        <div class="fx-etapa">
+          <h2>Primeiro, o relevo.</h2>
+          <p>As curvas de nível mostram cada subida e descida do terreno: onde a água corre, onde se pode construir.</p>
+        </div>
+        <div class="fx-etapa">
+          <h2>Depois, os limites.</h2>
+          <p>Os marcos recebem coordenadas e a divisa fecha, ponto a ponto, no lugar certo.</p>
+        </div>
+        <div class="fx-etapa">
+          <h2>Agora dá para ver cada metro.</h2>
+          <p>Área, perímetro e confrontações, prontos para projeto, venda ou documentação.</p>
+          <dl class="entrega" id="entrega">
+            <div><dt>Área</dt><dd><span id="eArea">0</span> ha</dd></div>
+            <div><dt>Perímetro</dt><dd><span id="ePer">0</span> m</dd></div>
+            <div><dt>Marcos</dt><dd>6</dd></div>
+          </dl>
+          <a class="tm-btn" data-whatsapp="Olá, Terra Marcada! Quero um mapa da minha área, com limites e curvas de nível." href="#" target="_blank" rel="noopener noreferrer">Quero esse mapa da minha área</a>
+        </div>
+      </div>
+      <button type="button" class="rever" id="rever">Rever o time lapse</button>
+    </div>
+  </div>
+</section>
+</div>
 
     <!-- ================= FAIXA DE CONFIANÇA ================= -->
 
+    <section class="section" id="atendimento">
+      <div class="container attend-grid">
+        <figure class="attend-media">
+          <i class="reg tl" aria-hidden="true"></i><i class="reg tr" aria-hidden="true"></i><i class="reg bl" aria-hidden="true"></i><i class="reg br" aria-hidden="true"></i>
+          <img src="assets/img/atendimento-1000.webp"
+               srcset="assets/img/atendimento-640.webp 640w, assets/img/atendimento-1000.webp 1000w"
+               sizes="(max-width: 900px) 92vw, 480px"
+               width="1000" height="1309" loading="lazy" decoding="async"
+               alt="Atendimento na Terra Marcada: duas pessoas analisam mapas e plantas de um projeto de REURB sobre a mesa">
+        </figure>
+
+        <div class="attend-copy">
+          <h2>Cada imóvel é analisado com você, no mapa</h2>
+          <p>
+            Na primeira conversa, abrimos as plantas e as imagens da sua área e mostramos o que está
+            regular, o que falta e qual é o melhor caminho. Sem termos complicados e sem compromisso.
+          </p>
+          <ul class="attend-list">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Diagnóstico claro:</strong> entendemos a situação do imóvel e da documentação.</span></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Passo a passo:</strong> você sabe o que será feito, em que ordem e por quê.</span></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Presencial ou à distância:</strong> atendimento no escritório, visita técnica ou pelo WhatsApp.</span></li>
+          </ul>
+          <div class="attend-actions">
+            <a href="#" class="btn btn-dark btn-lg" data-whatsapp="Olá! Gostaria de agendar um atendimento com a Terra Marcada." target="_blank" rel="noopener noreferrer">
+              <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg> Agendar pelo WhatsApp
+            </a>
+            <span class="attend-hours" data-fill="hours">Seg. a sex., 8h às 18h</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TECNOLOGIA EM CAMPO ================= -->
     <!-- ================= SERVIÇOS ================= -->
-    <section class="section" id="servicos">
+    <section class="section section-cream" id="servicos">
       <div class="container">
         <header class="section-head">
           <h2>Do levantamento em campo ao registro em cartório</h2>
@@ -225,40 +261,7 @@
     </section>
 
     <!-- ================= ATENDIMENTO ================= -->
-    <section class="section section-cream" id="atendimento">
-      <div class="container attend-grid">
-        <figure class="attend-media">
-          <i class="reg tl" aria-hidden="true"></i><i class="reg tr" aria-hidden="true"></i><i class="reg bl" aria-hidden="true"></i><i class="reg br" aria-hidden="true"></i>
-          <img src="assets/img/atendimento-1000.webp"
-               srcset="assets/img/atendimento-640.webp 640w, assets/img/atendimento-1000.webp 1000w"
-               sizes="(max-width: 900px) 92vw, 480px"
-               width="1000" height="1309" loading="lazy" decoding="async"
-               alt="Atendimento na Terra Marcada: duas pessoas analisam mapas e plantas de um projeto de REURB sobre a mesa">
-        </figure>
-
-        <div class="attend-copy">
-          <h2>Cada imóvel é analisado com você, no mapa</h2>
-          <p>
-            Na primeira conversa, abrimos as plantas e as imagens da sua área e mostramos o que está
-            regular, o que falta e qual é o melhor caminho. Sem termos complicados e sem compromisso.
-          </p>
-          <ul class="attend-list">
-            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Diagnóstico claro:</strong> entendemos a situação do imóvel e da documentação.</span></li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Passo a passo:</strong> você sabe o que será feito, em que ordem e por quê.</span></li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Presencial ou à distância:</strong> atendimento no escritório, visita técnica ou pelo WhatsApp.</span></li>
-          </ul>
-          <div class="attend-actions">
-            <a href="#" class="btn btn-dark btn-lg" data-whatsapp="Olá! Gostaria de agendar um atendimento com a Terra Marcada." target="_blank" rel="noopener noreferrer">
-              <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg> Agendar pelo WhatsApp
-            </a>
-            <span class="attend-hours" data-fill="hours">Seg. a sex., 8h às 18h</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= TECNOLOGIA EM CAMPO ================= -->
-    <section class="section" id="tecnologia">
+    <section class="section section-cream" id="tecnologia">
       <div class="container tech-grid">
         <div class="tech-copy">
           <h2>Mapeamento aéreo com drone</h2>
@@ -466,46 +469,6 @@
     </section>
 
     <!-- ================= QUEM SOMOS / MISSÃO ================= -->
-    <section class="section section-cream" id="sobre">
-      <div class="container about-grid">
-        <div class="about-copy">
-          <h2>Marcamos a terra para que cada pessoa tenha o seu lugar garantido</h2>
-          <p>
-            A <strong>Terra Marcada</strong> é uma empresa de mapeamento territorial dedicada a medir, documentar
-            e regularizar imóveis urbanos e rurais. Unimos precisão técnica, tecnologia de ponta e um
-            atendimento próximo e humano — porque por trás de cada lote existe uma família, uma história
-            e um patrimônio.
-          </p>
-          <p>
-            Trabalhamos lado a lado com moradores, associações e prefeituras, explicando cada etapa com
-            clareza e cuidando da burocracia para que o resultado chegue onde importa: no documento registrado.
-          </p>
-        </div>
-
-        <div class="mvv">
-          <article class="mvv-card mvv-main">
-            <span class="mvv-label">Missão</span>
-            <p>Promover segurança jurídica e dignidade por meio do mapeamento territorial e da regularização fundiária, transformando posse em propriedade e informação geográfica em desenvolvimento.</p>
-          </article>
-          <article class="mvv-card">
-            <span class="mvv-label">Visão</span>
-            <p>Ser referência regional em mapeamento territorial e REURB, reconhecida pela qualidade técnica e pelo impacto social do nosso trabalho.</p>
-          </article>
-          <article class="mvv-card">
-            <span class="mvv-label">Valores</span>
-            <ul class="values">
-              <li>Precisão técnica</li>
-              <li>Transparência</li>
-              <li>Compromisso social</li>
-              <li>Ética e legalidade</li>
-              <li>Atendimento humano</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-
     <!-- ================= FAQ ================= -->
     <section class="section" id="duvidas">
       <div class="container faq-wrap">
@@ -543,11 +506,15 @@
     </section>
 
     <!-- ================= CTA FINAL / CONTATO ================= -->
-    <section class="section cta-final" id="contato">
+    <!-- ================= PODE FICAR TRANQUILO + CONTATO ================= -->
+    <section class="section cta-final tm-final" id="contato">
+      <div class="tm2 tm-final-bg" aria-hidden="true"><div class="final"><div class="final-bg"><canvas data-terra="lines" class="terra-cv"></canvas></div></div></div>
       <div class="container cta-grid">
         <div class="cta-copy">
-          <h2>Dê o primeiro passo para regularizar o seu imóvel</h2>
-          <p>Conte rapidamente sua situação e retornamos para agendar o atendimento. Simples assim.</p>
+          <div class="tm2"><div class="final escuro"><div class="final-in">
+                    <h2 data-fx="palavras" data-fx-duracao="800">Pode ficar tranquilo.</h2>
+                    <p class="final-sub" data-fx="subir" data-fx-atraso="500">O seu cálculo e o seu procedimento estão em mãos profissionais.</p>
+                  </div></div></div>
 
           <form class="wa-form" id="wa-form" novalidate>
             <div class="field">
@@ -583,7 +550,7 @@
         </div>
 
         <aside class="contact-card" aria-label="Canais de contato">
-          <img src="assets/img/logo-300.webp" alt="Logo Terra Marcada — mapeamento territorial" class="contact-logo" width="140" height="140" decoding="async">
+          <img src="assets/img/logo-600.webp" alt="Logo Terra Marcada — mapeamento territorial" class="contact-logo" width="140" height="140" decoding="async">
           <ul class="contact-list">
             <li>
               <svg aria-hidden="true"><use href="#i-whatsapp"/></svg>
@@ -614,22 +581,6 @@
       </div>
     </section>
 
-    <!-- ================= PRIVACIDADE (resumo) ================= -->
-    <section class="section section-cream privacy-brief" id="privacidade" aria-labelledby="priv-title">
-      <div class="container">
-        <div class="privacy-head">
-          <h2 id="priv-title">Sua privacidade em primeiro lugar</h2>
-          <p>Tratamos seus dados com cuidado e de acordo com a LGPD. O essencial, em poucas linhas:</p>
-        </div>
-        <ul class="privacy-points">
-          <li><strong>Só o necessário</strong><span>Nome, cidade e assunto, apenas para atender o seu pedido.</span></li>
-          <li><strong>Sem rastreamento</strong><span>Nenhum cookie de publicidade ou de análise de audiência.</span></li>
-          <li><strong>Não vendemos dados</strong><span>Compartilhamos só o que o serviço contratado exige.</span></li>
-          <li><strong>Seus direitos</strong><span>Você pode pedir acesso, correção ou exclusão dos seus dados.</span></li>
-        </ul>
-        <p class="privacy-link"><a class="btn btn-dark" href="politica-privacidade.html" target="_blank" rel="noopener noreferrer">Verifique nossa política de privacidade completa</a></p>
-      </div>
-    </section>
   </main>
 
   <!-- ================= RODAPÉ ================= -->
@@ -644,7 +595,7 @@
     </svg>
     <div class="container footer-inner">
       <div class="footer-brand">
-        <img src="assets/img/logo-300.webp" alt="Terra Marcada" width="64" height="64">
+        <img src="assets/img/logo-600.webp" alt="Terra Marcada" width="64" height="64">
         <div>
           <strong>Terra Marcada</strong>
           <span>mapeamento territorial</span>
@@ -654,7 +605,7 @@
         <a href="#servicos">Serviços</a>
         <a href="#reurb">REURB</a>
         <a href="#portfolio">Portfólio</a>
-        <a href="#sobre">Quem somos</a>
+        <a href="quem-somos.html">Quem somos</a>
         <a href="#contato">Contato</a>
         <a href="politica-privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
       </nav>
@@ -695,5 +646,8 @@
 
   <script src="assets/js/config.js" defer></script>
   <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/terra.js" defer></script>
+  <script src="assets/js/tm-motor.js" defer></script>
+  <script src="assets/js/tm-historia.js" defer></script>
 </body>
 </html>

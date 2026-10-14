@@ -276,9 +276,10 @@
     indicator.style.setProperty("--w", el.offsetWidth + "px");
     indicator.style.opacity = "1";
   }
-  function currentLink() { return $(".nav a.is-active:not(.btn)") || null; }
+  function currentLink() { return $(".nav a.is-active:not(.btn)") || $('.nav a[aria-current="page"]:not(.btn)') || null; }
   if (indicator) {
-    links.forEach(function (a) {
+    // a barra acompanha o mouse em todos os itens do menu (inclusive os que levam a outra página)
+    $$(".nav a:not(.btn)").forEach(function (a) {
       a.addEventListener("pointerenter", function () { moveIndicator(a); });
       a.addEventListener("focus", function () { moveIndicator(a); });
       a.addEventListener("pointerleave", function () { moveIndicator(currentLink()); });
@@ -371,6 +372,20 @@
     if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
     try { target.focus({ preventScroll: true }); } catch (err2) {}
   });
+
+
+  /* ---------- Troca de página pelo menu ou rodapé: sempre abre no topo da página de destino ---------- */
+  doc.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+    var a = e.target.closest("a[href]");
+    if (!a || a.target === "_blank" || a.hasAttribute("data-whatsapp")) return;
+    var href = a.getAttribute("href");
+    if (/^(https?:|mailto:|tel:|#)/.test(href)) return;
+    var dest = href.split("#")[0] || "index.html";
+    var here = location.pathname.split("/").pop() || "index.html";
+    if (dest === here) { e.preventDefault(); glideTo(0, null, a); return; }       // já está nesta página: volta ao topo
+    if (href.indexOf("#") > -1) { e.preventDefault(); location.href = dest; }       // outra página: ignora a âncora e abre no topo
+  }, true);
 
   /* ---------- Aviso de privacidade ---------- */
   var cookie = $("#cookieBanner");
