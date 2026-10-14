@@ -627,3 +627,11 @@
 .cta-final .official-note{background:#f7efd2;border-color:rgb(179 146 33 / .45);color:#12231d}
 .cta-final .official-note svg{color:#7a5f0a}
 .cta-final .official-note strong{color:#0b2b22}
+
+/* divisores em curva de nível entre seções */
+.tm-curva{position:absolute;left:0;width:100%;height:clamp(48px,7vw,96px);pointer-events:none;z-index:3;display:block}
+.tm-curva-topo{top:-1px}.tm-curva-base{bottom:-1px}
+.tm-curva .fundo-claro{fill:#fff}.tm-curva .fundo-areia{fill:#DCE7D6}
+.tm-curva .fio{fill:none;stroke:#C49A2A;stroke-width:2;vector-effect:non-scaling-stroke;opacity:.85}
+.tm-curva .fio-2{stroke:#E6C45E;stroke-width:1.2;opacity:.45}
+.tm-final{padding-top:clamp(96px,11vw,150px)}
