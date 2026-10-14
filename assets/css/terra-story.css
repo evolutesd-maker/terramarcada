@@ -547,8 +547,8 @@
 
 /* hero: o mapa de lotes ocupa o lugar do drone */
 .tm2 .hero-vis .hero-art{position:absolute;inset:0;display:grid;place-items:center;animation:none;perspective:1100px}
-.tm2 .hero-vis .map-card{height:96%;aspect-ratio:438/550;width:auto;max-width:100%;margin:0}
-.tm2 .hero-vis .map-svg{width:100%;height:100%;aspect-ratio:438/550;border-radius:22px;border:0;box-shadow:0 40px 60px -28px rgba(0,0,0,.65)}
+.tm2 .hero-vis .map-card{width:100%;max-width:none;aspect-ratio:844/780;margin:0}
+.tm2 .hero-vis .map-svg{width:100%;height:100%;aspect-ratio:844/780;border-radius:22px;border:0;box-shadow:0 40px 60px -28px rgba(0,0,0,.65)}
 .tm2 .mapa-veu{mix-blend-mode:normal}
 .tm2 .lote-halo{animation:tm-respira 3.4s ease-in-out infinite}
 
@@ -582,8 +582,8 @@
 @media (prefers-reduced-motion:reduce){.tm2 .lote-halo{animation:none}}
 
 /* mapa de satélite do hero: zoom out até o lote, depois o perímetro se fecha e o pino aparece */
-.tm2 .map-zoom{transform-box:view-box;transform-origin:322px 156px;animation:tm-zoomout 3.6s cubic-bezier(.22,1,.36,1) .5s both}
-@keyframes tm-zoomout{from{transform:scale(2.3)}to{transform:scale(1)}}
+.tm2 .map-zoom{transform-box:view-box;transform-origin:481px 267px;animation:tm-zoomout 3.6s cubic-bezier(.22,1,.36,1) .5s both}
+@keyframes tm-zoomout{from{transform:scale(2.8)}to{transform:scale(1)}}
 .tm2 .lote,.tm2 .lote-halo{stroke-dasharray:1;stroke-dashoffset:1;animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards}
 .tm2 .lote-halo{animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards,tm-respira 3.4s ease-in-out 4.2s infinite}
 .tm2 .mapa-aparece{opacity:0;animation:tm-aparece .7s ease forwards}
@@ -593,3 +593,15 @@
   .tm2 .map-zoom,.tm2 .lote,.tm2 .lote-halo,.tm2 .mapa-aparece{animation:none!important}
   .tm2 .lote,.tm2 .lote-halo{stroke-dashoffset:0}.tm2 .mapa-aparece{opacity:1}
 }
+
+/* marcador: gota dourada que sobe e desce devagar, com sombra e onda no chão */
+.tm2 .pino-corpo{animation:tm-pino 3.2s ease-in-out 4.4s infinite}
+.tm2 .pino-sombra{transform-box:fill-box;transform-origin:center;animation:tm-sombra 3.2s ease-in-out 4.4s infinite}
+.tm2 .pino-onda{transform-box:fill-box;transform-origin:center;animation:tm-onda-chao 3.2s ease-out 4.4s infinite}
+@keyframes tm-pino{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+@keyframes tm-sombra{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.62);opacity:.55}}
+@keyframes tm-onda-chao{0%{transform:scale(.6);opacity:.9}70%,100%{transform:scale(3.4);opacity:0}}
+.tm2 .map-svg g[transform],.tm2 .map-svg .map-pin{animation:none}
+@media (prefers-reduced-motion:reduce){.tm2 .pino-corpo,.tm2 .pino-sombra,.tm2 .pino-onda{animation:none!important}.tm2 .pino-onda{opacity:0}}
+/* contato: as curvas de nível cobrem a seção inteira, sem esmaecer à esquerda */
+.tm-final .tm2 .final-bg{-webkit-mask-image:none;mask-image:none;opacity:.75}
