@@ -628,10 +628,11 @@
 .cta-final .official-note svg{color:#7a5f0a}
 .cta-final .official-note strong{color:#0b2b22}
 
-/* divisores em curva de nível entre seções */
-.tm-curva{position:absolute;left:0;width:100%;height:clamp(48px,7vw,96px);pointer-events:none;z-index:3;display:block}
-.tm-curva-topo{top:-1px}.tm-curva-base{bottom:-1px}
-.tm-curva .fundo-claro{fill:#fff}.tm-curva .fundo-areia{fill:#DCE7D6}
-.tm-curva .fio{fill:none;stroke:#C49A2A;stroke-width:2;vector-effect:non-scaling-stroke;opacity:.85}
-.tm-curva .fio-2{stroke:#E6C45E;stroke-width:1.2;opacity:.45}
-.tm-final{padding-top:clamp(96px,11vw,150px)}
+/* transição em degradê entre seções */
+.tm-degrade{position:absolute;left:0;width:100%;height:clamp(110px,14vw,210px);pointer-events:none;z-index:3}
+.tm-degrade-topo{top:-1px;background:linear-gradient(180deg,#fff 0%,rgb(255 255 255 / .94) 14%,rgb(255 255 255 / .78) 30%,rgb(255 255 255 / .52) 48%,rgb(255 255 255 / .28) 66%,rgb(255 255 255 / .1) 84%,rgb(255 255 255 / 0) 100%)}
+.tm-degrade-base{bottom:-1px;background:linear-gradient(0deg,#DCE7D6 0%,rgb(220 231 214 / .94) 14%,rgb(220 231 214 / .78) 30%,rgb(220 231 214 / .52) 48%,rgb(220 231 214 / .28) 66%,rgb(220 231 214 / .1) 84%,rgb(220 231 214 / 0) 100%)}
+.tm-final{padding-top:clamp(110px,13vw,190px)}
+.tm2 .tm-hero{padding-bottom:clamp(200px,19vw,290px)}
+.tm2 .tm-hero .tm-degrade-base{z-index:1}
+.tm2 .tm-hero .hero-grade{z-index:2}
