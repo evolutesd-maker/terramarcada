@@ -107,13 +107,13 @@
   linear-gradient(rgb(6 28 21 / .26),rgb(6 28 21 / .26))}
 .tm2 .scan{position:absolute;top:0;bottom:0;left:0;width:3px;background:linear-gradient(180deg,transparent,var(--ouro-claro) 10%,var(--ouro-claro) 90%,transparent);box-shadow:0 4px 12px rgba(0,0,0,.3);opacity:0;will-change:transform}
 .tm2 .cad{position:absolute;inset:0;width:100%;height:100%}
-.tm2 .cad .nb{fill:none;stroke:rgba(255,255,255,.85);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1}
+.tm2 .cad .nb{fill:none;stroke:rgba(255,255,255,.9);stroke-width:2.5;stroke-dasharray:1;stroke-dashoffset:1}
 .tm2 .cad .rd{fill:none;stroke:rgba(255,255,255,.9);stroke-width:12;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-.tm2 .cad .lot{fill:none;stroke:var(--ouro-claro);stroke-width:5;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.tm2 .cad .lot{fill:none;stroke:var(--ouro-claro);stroke-width:6;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .tm2 .cad .lotfill{fill:rgb(var(--ouro-claro-rgb) / .26);opacity:0}
 .tm2 .cad .vx{fill:var(--abismo);stroke:#fff;stroke-width:3;opacity:0;transform-box:fill-box;transform-origin:center}
-.tm2 .cad .vl{font-family:var(--titulo);font-weight:800;font-size:22px;fill:var(--abismo);paint-order:stroke;stroke:#fff;stroke-width:6px;opacity:0}
-.tm2 .cad .dim{font-family:var(--titulo);font-weight:600;font-size:19px;fill:var(--abismo);opacity:0}
+.tm2 .cad .vl{font-family:var(--titulo);font-weight:800;font-size:25px;fill:var(--abismo);paint-order:stroke;stroke:#fff;stroke-width:7px;opacity:0}
+.tm2 .cad .dim{font-family:var(--titulo);font-weight:700;font-size:22px;fill:var(--abismo);opacity:0}
 .tm2 .cad .dimbg{fill:rgba(255,255,255,.9);opacity:0}
 .tm2 .cad .ctl{fill:var(--abismo);stroke:#fff;stroke-width:2.5;opacity:0}
 .tm2 .cad-fixo .nb,.tm2 .cad-fixo .rd,.tm2 .cad-fixo .lot{stroke-dashoffset:0}
@@ -575,7 +575,7 @@
 .tm2 .hero-grade{max-width:min(1760px,100%)}
 .tm2 .hero-vis{max-width:clamp(340px,29vw,620px)}
 .tm2 .pico-grade{max-width:min(1640px,100%)}
-.tm2 .prancha{max-width:1180px}
+.tm2 .prancha{max-width:1000px}   /* a foto tem 1000 px: no máximo em tamanho real, sem esticar */
 @media (min-width:1700px){
   .tm2{--s1:1.0625rem;--s2:1.25rem;--s3:1.7rem;--s4:2.6rem}
   .tm2 .hero{padding-left:6vw;padding-right:6vw}
@@ -628,3 +628,11 @@
 .cta-final .official-note{background:#f7efd2;border-color:rgb(179 146 33 / .45);color:#12231d}
 .cta-final .official-note svg{color:#7a5f0a}
 .cta-final .official-note strong{color:#0b2b22}
+
+/* selo, escala e rosa dos ventos proporcionais em telas pequenas */
+@media (max-width:640px){
+  .tm2 .selo{left:10px;top:10px;padding:4px 10px;font-size:.62rem}
+  .tm2 .rosa{right:10px;top:10px;width:38px;height:38px}
+  .tm2 .escala{left:10px;bottom:8px;padding:4px 8px;font-size:.62rem;gap:6px}
+  .tm2 .escala i{height:5px}
+}

@@ -39,13 +39,13 @@
     s += `<polygon class="lotfill" points="${LOTE.map(p => p.join(',')).join(' ')}"/>`;
     s += `<path class="lot" pathLength="1" d="${d(LOTE)}"/>`;
     s += LOTE.map((p, i) => {
-      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, 34);
-      return `<rect class="dimbg" x="${(t[0] - 40).toFixed(0)}" y="${(t[1] - 20).toFixed(0)}" width="80" height="30" rx="15"/>
-        <text class="dim" x="${t[0].toFixed(0)}" y="${(t[1] + 1).toFixed(0)}" text-anchor="middle">${Math.round(dist(p, a) * M_POR_PX)} m</text>`;
+      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, 40);
+      return `<rect class="dimbg" x="${(t[0] - 46).toFixed(0)}" y="${(t[1] - 22).toFixed(0)}" width="92" height="34" rx="17"/>
+        <text class="dim" x="${t[0].toFixed(0)}" y="${(t[1] + 3).toFixed(0)}" text-anchor="middle">${Math.round(dist(p, a) * M_POR_PX)} m</text>`;
     }).join('');
     s += CTL.map(c => `<path class="ctl" d="${tri(c)}"/>`).join('');
-    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="10"/>`).join('');
-    s += LOTE.map((p, i) => { const t = fora(p, 30); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 7).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
+    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="12"/>`).join('');
+    s += LOTE.map((p, i) => { const t = fora(p, 46); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 9).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
     return s;
   }
   $('#cad').innerHTML = cadastro();
