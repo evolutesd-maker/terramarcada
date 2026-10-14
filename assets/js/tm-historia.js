@@ -7,6 +7,15 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!$('#cad')) return;
 
+  /* mapa de satélite do hero: zoom, perímetro e marcador tocam quando ele aparece e recomeçam ao reaparecer */
+  const cartao = $('.map-card');
+  if (cartao && 'IntersectionObserver' in window && !reduce) {
+    new IntersectionObserver(es => {
+      if (es[0].isIntersecting) cartao.classList.add('tocar');
+      else { cartao.classList.remove('tocar'); cartao.classList.add('zera'); void cartao.offsetWidth; cartao.classList.remove('zera'); }
+    }, { threshold: .35 }).observe(cartao);
+  } else if (cartao) cartao.classList.add('tocar');
+
   /* ---------- Carta cadastral do terreno de exemplo (viewBox 1200 x 800) ---------- */
   const M_POR_PX = 0.6;                       // escala do exemplo: 1 px = 0,6 m
   const LOTE = [[430, 250], [700, 215], [820, 330], [780, 520], [560, 570], [400, 430]];

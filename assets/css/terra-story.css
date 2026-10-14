@@ -582,8 +582,8 @@
 @media (prefers-reduced-motion:reduce){.tm2 .lote-halo{animation:none}}
 
 /* mapa de satélite do hero: zoom out até o lote, depois o perímetro se fecha e o pino aparece */
-.tm2 .map-zoom{transform-box:view-box;transform-origin:481px 267px;animation:tm-zoomout 3.6s cubic-bezier(.22,1,.36,1) .5s both}
-@keyframes tm-zoomout{from{transform:scale(1)}to{transform:scale(1.5)}}
+.tm2 .map-zoom{transform-box:view-box;transform-origin:481px 267px;animation:tm-zoomout 4.2s cubic-bezier(.45,0,.2,1) .6s both}
+@keyframes tm-zoomout{from{transform:scale(1)}to{transform:scale(1.6)}}
 .tm2 .lote,.tm2 .lote-halo{stroke-dasharray:1;stroke-dashoffset:1;animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards}
 .tm2 .lote-halo{animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards,tm-respira 3.4s ease-in-out 4.2s infinite}
 .tm2 .mapa-aparece{opacity:0;animation:tm-aparece .7s ease forwards}
@@ -612,3 +612,7 @@
 /* título dentro da coluna do formulário */
 .tm-final .cta-copy .tm2 .final-in h2{font-size:clamp(2.4rem,4.6vw,4.2rem)}
 .tm-final .cta-copy .tm2 .final-sub{font-size:clamp(1.25rem,2vw,1.75rem);max-width:none;margin-bottom:var(--e3)}
+
+/* a sequência do mapa do hero só roda com ele na tela, e recomeça ao voltar */
+.js .tm2 .map-card:not(.tocar) *{animation-play-state:paused!important}
+.js .tm2 .map-card.zera *{animation:none!important}
