@@ -616,3 +616,14 @@
 /* a sequência do mapa do hero só roda com ele na tela, e recomeça ao voltar */
 .js .tm2 .map-card:not(.tocar) *{animation-play-state:paused!important}
 .js .tm2 .map-card.zera *{animation:none!important}
+
+/* cartão de contato: fundo branco, para ler bem sobre as curvas de nível */
+.cta-final .contact-card{background:#fff;border:1px solid rgb(11 43 34 / .12);box-shadow:0 30px 50px -28px rgb(0 0 0 / .6)}
+.cta-final .contact-logo{box-shadow:0 10px 26px -12px rgb(11 43 34 / .45);border:1px solid rgb(11 43 34 / .1)}
+.cta-final .contact-list small{color:#55665f}
+.cta-final .contact-list a,.cta-final .contact-list span{color:#12231d}
+.cta-final .contact-list svg{background:rgb(208 172 44 / .18);color:#7a5f0a}
+@media (hover:hover) and (pointer:fine){.cta-final .contact-list a:hover{color:#7a5f0a}.cta-final .contact-list li:hover svg{background:#d0ac2c;color:#0b2b22}}
+.cta-final .official-note{background:#f7efd2;border-color:rgb(179 146 33 / .45);color:#12231d}
+.cta-final .official-note svg{color:#7a5f0a}
+.cta-final .official-note strong{color:#0b2b22}
