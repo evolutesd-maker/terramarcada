@@ -266,6 +266,32 @@
     $$(".hero, main section[id]").forEach(function (s) { spy.observe(s); });
   }
 
+
+  /* ---------- Menu de serviços: destaca o item da seção em vista (sem animação de deslocamento) ---------- */
+  var subLinks = $$('.subnav a[href^="#"]');
+  if (subLinks.length) {
+    var subForced = false;
+    var setSub = function (a) {
+      subLinks.forEach(function (x) { x.classList.toggle("is-active", x === a); if (x === a) x.setAttribute("aria-current", "location"); else x.removeAttribute("aria-current"); });
+    };
+    var subTargets = subLinks.map(function (a) { return doc.getElementById(a.getAttribute("href").slice(1)); });
+    var subUpdate = function () {
+      if (subForced) return;
+      var header = $(".site-header"), line = (header ? header.getBoundingClientRect().bottom : 0) + 60, best = null, bestTop = -Infinity;
+      subTargets.forEach(function (t, i) {
+        if (!t) return;
+        var r = t.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line && r.top > bestTop) { best = subLinks[i]; bestTop = r.top; }
+      });
+      setSub(best);
+    };
+    var subTick = false;
+    window.addEventListener("scroll", function () { if (subTick) return; subTick = true; requestAnimationFrame(function () { subTick = false; subUpdate(); }); }, { passive: true });
+    subLinks.forEach(function (a) { a.addEventListener("click", function () { subForced = true; setSub(a); }); });
+    ["wheel", "touchmove", "keydown"].forEach(function (ev) { window.addEventListener(ev, function () { subForced = false; }, { passive: true }); });
+    subUpdate();
+  }
+
   /* ---------- Indicador deslizante do menu (desktop) ---------- */
   var indicator = $(".nav-indicator");
   var desk = window.matchMedia("(min-width: 981px)");
@@ -380,7 +406,7 @@
     var a = e.target.closest("a[href]");
     if (!a || a.target === "_blank" || a.hasAttribute("data-whatsapp")) return;
     var href = a.getAttribute("href");
-    if (/^(https?:|mailto:|tel:|#)/.test(href)) return;
+    if (/^(https?:|mailto:|tel:|#)/.test(href) || a.closest(".subnav")) return;   // o menu de serviços leva direto à seção
     var dest = href.split("#")[0] || "index.html";
     var here = location.pathname.split("/").pop() || "index.html";
     if (dest === here) { e.preventDefault(); glideTo(0, null, a); return; }       // já está nesta página: volta ao topo
