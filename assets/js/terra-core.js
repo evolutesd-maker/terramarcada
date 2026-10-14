@@ -111,61 +111,69 @@
 
   function construir(esc) {
     esc = Object.assign({ aerial: 2, map: 2, lines: 2 }, esc);
+    const quer = k => !esc.so || esc.so.indexOf(k) > -1;   // só gera o que a página usa
+    const saida = {};
     const { h, agua } = altura();
     const nf = noise2(37), nm = noise2(51), r = rng(9);
 
     /* imagem aérea: talhões, mata, rio */
-    const pa = new ImageData(GW, GH);
-    const paleta = ['#6F8D4B', '#7E9A55', '#93A65C', '#B5AE72', '#5E7E42', '#8DA25D', '#C2B67E', '#A3B068', '#6A8847', '#9CAA62'].map(hex);
-    const hash = (a, b) => { const v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return v - Math.floor(v); };
-    const nw = noise2(77);
-    for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) {
-      const k = j * GW + i, x = i / GW * 3.2, y = j / GH * 2.133;
-      const wx = nw(x * 1.3, y * 1.3) * .3, wy = nw(x * 1.3 + 9, y * 1.3 + 4) * .3;
-      const ang = .35, u = ((x + wx) * Math.cos(ang) - (y + wy) * Math.sin(ang)) * 4.6, v = ((x + wx) * Math.sin(ang) + (y + wy) * Math.cos(ang)) * 7;
-      const cu = Math.floor(u), cv = Math.floor(v), hh = hash(cu, cv), h2 = hash(cu + 7, cv + 3);
-      let c = paleta[Math.floor(hh * paleta.length)].slice();
-      const dir = h2 * 3.14, listra = Math.sin((u * Math.cos(dir) + v * Math.sin(dir)) * 22) * (.04 + h2 * .05);
-      c = c.map(w => w * (1 + listra));
-      const borda = Math.min(u - cu, cu + 1 - u, v - cv, cv + 1 - v);
-      if (borda < .035) c = c.map(w => w * .8);
-      const mata = fbm(nm, x * 2.2 + 4, y * 2.2 + 1, 3) * .5 + .5;
-      if (mata > .62 || h[k] < .1) { const t = clamp((mata - .62) * 8); c = mix(c, hex('#2F4A2A'), Math.max(t, h[k] < .1 ? .8 : 0)); c = c.map(w => w * (.85 + r() * .3)); }
-      const s = sombra(h, i, j);
-      c = c.map(w => w * (.74 + s * .52));
-      if (agua[k]) c = mix(hex('#4E7E8E'), hex('#7FA7AE'), r() * .5);
-      pa.data.set([c[0], c[1], c[2], 255], k * 4);
+    if (quer('aerial')) {
+      const pa = new ImageData(GW, GH);
+      const paleta = ['#6F8D4B', '#7E9A55', '#93A65C', '#B5AE72', '#5E7E42', '#8DA25D', '#C2B67E', '#A3B068', '#6A8847', '#9CAA62'].map(hex);
+      const hash = (a, b) => { const v = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return v - Math.floor(v); };
+      const nw = noise2(77);
+      for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) {
+        const k = j * GW + i, x = i / GW * 3.2, y = j / GH * 2.133;
+        const wx = nw(x * 1.3, y * 1.3) * .3, wy = nw(x * 1.3 + 9, y * 1.3 + 4) * .3;
+        const ang = .35, u = ((x + wx) * Math.cos(ang) - (y + wy) * Math.sin(ang)) * 4.6, v = ((x + wx) * Math.sin(ang) + (y + wy) * Math.cos(ang)) * 7;
+        const cu = Math.floor(u), cv = Math.floor(v), hh = hash(cu, cv), h2 = hash(cu + 7, cv + 3);
+        let c = paleta[Math.floor(hh * paleta.length)].slice();
+        const dir = h2 * 3.14, listra = Math.sin((u * Math.cos(dir) + v * Math.sin(dir)) * 22) * (.04 + h2 * .05);
+        c = c.map(w => w * (1 + listra));
+        const borda = Math.min(u - cu, cu + 1 - u, v - cv, cv + 1 - v);
+        if (borda < .035) c = c.map(w => w * .8);
+        const mata = fbm(nm, x * 2.2 + 4, y * 2.2 + 1, 3) * .5 + .5;
+        if (mata > .62 || h[k] < .1) { const t = clamp((mata - .62) * 8); c = mix(c, hex('#2F4A2A'), Math.max(t, h[k] < .1 ? .8 : 0)); c = c.map(w => w * (.85 + r() * .3)); }
+        const s = sombra(h, i, j);
+        c = c.map(w => w * (.74 + s * .52));
+        if (agua[k]) c = mix(hex('#4E7E8E'), hex('#7FA7AE'), r() * .5);
+        pa.data.set([c[0], c[1], c[2], 255], k * 4);
+      }
+      const aerial = saida.aerial = paraGrande(pa, esc.aerial), ca = aerial.getContext('2d');
+      ca.strokeStyle = 'rgba(226,214,180,.9)'; ca.lineWidth = 7; ca.beginPath();
+      ca.moveTo(-20, 735); ca.bezierCurveTo(300, 700, 700, 765, 1220, 705); ca.stroke();
+      grao(ca, .22);
     }
-    const aerial = paraGrande(pa, esc.aerial), ca = aerial.getContext('2d');
-    ca.strokeStyle = 'rgba(226,214,180,.9)'; ca.lineWidth = 7; ca.beginPath();
-    ca.moveTo(-20, 735); ca.bezierCurveTo(300, 700, 700, 765, 1220, 705); ca.stroke();
-    grao(ca, .22);
 
     /* carta topográfica: tinta hipsométrica, sombreado, curvas, água */
-    const pm = new ImageData(GW, GH);
-    const rampa = [[0, '#DCE8C2'], [.35, '#EEEBCB'], [.7, '#EBD9A8'], [1, '#D9BC8A']].map(([t, c]) => [t, hex(c)]);
-    for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) {
-      const k = j * GW + i, v = h[k], x = i / GW * 3.2, y = j / GH * 2.133;
-      let a = rampa[0], b = rampa[1];
-      for (let q = 0; q < rampa.length - 1; q++) if (v >= rampa[q][0]) { a = rampa[q]; b = rampa[q + 1]; }
-      let c = mix(a[1], b[1], clamp((v - a[0]) / (b[0] - a[0])));
-      const mata = fbm(nm, x * 2.2 + 4, y * 2.2 + 1, 3) * .5 + .5;
-      if (mata > .64) c = mix(c, hex('#C4D9A6'), clamp((mata - .64) * 6) * .55);
-      const s = sombra(h, i, j);
-      c = c.map(w => w * (.8 + s * .4));
-      if (agua[k]) c = hex('#9CC7DA');
-      pm.data.set([c[0], c[1], c[2], 255], k * 4);
+    if (quer('map')) {
+      const pm = new ImageData(GW, GH);
+      const rampa = [[0, '#DCE8C2'], [.35, '#EEEBCB'], [.7, '#EBD9A8'], [1, '#D9BC8A']].map(([t, c]) => [t, hex(c)]);
+      for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) {
+        const k = j * GW + i, v = h[k], x = i / GW * 3.2, y = j / GH * 2.133;
+        let a = rampa[0], b = rampa[1];
+        for (let q = 0; q < rampa.length - 1; q++) if (v >= rampa[q][0]) { a = rampa[q]; b = rampa[q + 1]; }
+        let c = mix(a[1], b[1], clamp((v - a[0]) / (b[0] - a[0])));
+        const mata = fbm(nm, x * 2.2 + 4, y * 2.2 + 1, 3) * .5 + .5;
+        if (mata > .64) c = mix(c, hex('#C4D9A6'), clamp((mata - .64) * 6) * .55);
+        const s = sombra(h, i, j);
+        c = c.map(w => w * (.8 + s * .4));
+        if (agua[k]) c = hex('#9CC7DA');
+        pm.data.set([c[0], c[1], c[2], 255], k * 4);
+      }
+      const map = saida.map = paraGrande(pm, esc.map), cm = map.getContext('2d');
+      contornos(cm, h, .03, i => i ? { cor: 'rgba(110,72,30,.85)', larg: 1.7 } : { cor: 'rgba(130,92,48,.5)', larg: .9 });
+      grao(cm, .1);
     }
-    const map = paraGrande(pm, esc.map), cm = map.getContext('2d');
-    contornos(cm, h, .03, i => i ? { cor: 'rgba(110,72,30,.85)', larg: 1.7 } : { cor: 'rgba(130,92,48,.5)', larg: .9 });
-    grao(cm, .1);
 
     /* só as linhas de nível, para fundos escuros */
-    const lines = canvas(OW * esc.lines, OH * esc.lines), cl = lines.getContext('2d');
-    cl.setTransform(esc.lines, 0, 0, esc.lines, 0, 0);
-    contornos(cl, h, .025, i => i ? { cor: 'rgba(230,196,94,.5)', larg: 1.6 } : { cor: 'rgba(217,228,200,.2)', larg: 1 });
+    if (quer('lines')) {
+      const lines = saida.lines = canvas(OW * esc.lines, OH * esc.lines), cl = lines.getContext('2d');
+      cl.setTransform(esc.lines, 0, 0, esc.lines, 0, 0);
+      contornos(cl, h, .025, i => i ? { cor: 'rgba(230,196,94,.5)', larg: 1.6 } : { cor: 'rgba(217,228,200,.2)', larg: 1 });
+    }
 
-    return { aerial, map, lines };
+    return saida;
   }
 
   raiz.TerraCore = {

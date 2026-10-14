@@ -276,9 +276,10 @@
     indicator.style.setProperty("--w", el.offsetWidth + "px");
     indicator.style.opacity = "1";
   }
-  function currentLink() { return $(".nav a.is-active:not(.btn)") || null; }
+  function currentLink() { return $(".nav a.is-active:not(.btn)") || $('.nav a[aria-current="page"]:not(.btn)') || null; }
   if (indicator) {
-    links.forEach(function (a) {
+    // a barra acompanha o mouse em todos os itens do menu (inclusive os que levam a outra página)
+    $$(".nav a:not(.btn)").forEach(function (a) {
       a.addEventListener("pointerenter", function () { moveIndicator(a); });
       a.addEventListener("focus", function () { moveIndicator(a); });
       a.addEventListener("pointerleave", function () { moveIndicator(currentLink()); });
