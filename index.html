@@ -85,13 +85,56 @@
       </div>
     </div>
     <div class="hero-vis" aria-hidden="false">
-      <svg class="rota" viewBox="0 0 600 600" aria-hidden="true"><path d="M20 520 C 140 380, 120 250, 260 230 S 460 300, 430 120 S 540 40, 580 60" pathLength="1"/></svg>
-      <div class="ping"><i></i><i></i><i></i></div>
+            <div class="ping"><i></i><i></i><i></i></div>
       <div class="anel"></div>
-      <img src="assets/img/drone-dji-air-3s.webp" alt="Drone DJI Air 3S" width="720" height="720" class="hero-drone" fetchpriority="high">
-      <span class="ficha f1">Câmera dupla</span>
-      <span class="ficha f2">Sensores em todas as direções</span>
-      <span class="ficha f3">GNSS em campo</span>
+      <div class="hero-art" aria-hidden="true">
+          <div class="map-card">
+            <svg viewBox="0 0 460 400" class="map-svg">
+              <defs>
+                <linearGradient id="mapbg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14473A"/><stop offset="1" stop-color="#0C2F25"/></linearGradient>
+                <radialGradient id="mapglow2" cx=".3" cy=".25" r=".8"><stop offset="0" stop-color="#D0AC2C" stop-opacity=".16"/><stop offset="1" stop-color="#D0AC2C" stop-opacity="0"/></radialGradient>
+              </defs>
+              <rect width="460" height="400" rx="20" fill="url(#mapbg2)"/>
+              <rect width="460" height="400" rx="20" fill="url(#mapglow2)"/>
+              <g stroke="#2E5E4F" stroke-width=".8" opacity=".5"><path d="M0 50H460M0 100H460M0 150H460M0 200H460M0 250H460M0 300H460M0 350H460M50 0V400M100 0V400M150 0V400M200 0V400M250 0V400M300 0V400M350 0V400M400 0V400"/></g>
+              <g fill="none" stroke="#D0AC2C" stroke-opacity=".1" stroke-width="1.2"><path d="M-20 40 C 110 6 230 70 360 30 S 450 48 490 26"/><path d="M-20 95 C 110 61 230 125 360 85 S 450 103 490 81"/><path d="M-20 150 C 110 116 230 180 360 140 S 450 158 490 136"/><path d="M-20 205 C 110 171 230 235 360 195 S 450 213 490 191"/><path d="M-20 330 C 110 296 230 360 360 320 S 450 338 490 316"/><path d="M-20 372 C 110 338 230 402 360 362 S 450 380 490 358"/></g>
+              <path d="M-20 306 C 160 312 330 316 392 270 S 412 120 412 -20" fill="none" stroke="#F4EFDF" stroke-opacity=".13" stroke-width="34" stroke-linecap="round"/>
+              <path d="M-20 306 C 160 312 330 316 392 270 S 412 120 412 -20" fill="none" stroke="#F4EFDF" stroke-opacity=".38" stroke-width="1.4" stroke-dasharray="9 9"/>
+              <g fill="#D0AC2C" fill-opacity=".16" stroke="#D0AC2C" stroke-width="1.6" stroke-linejoin="round">
+                <path data-lot="01" data-q="A" data-area="17,86" d="M37.8 38.2 L113.3 36.8 L114.5 106.3 L39.1 107.7Z"/>
+                <path data-lot="02" data-q="A" data-area="18,31" d="M116.8 36.7 L192.3 35.3 L193.5 104.8 L118.1 106.2Z"/>
+                <path data-lot="03" data-q="A" data-area="17,22" d="M195.8 35.2 L271.3 33.8 L272.5 103.3 L197.1 104.7Z"/>
+                <path data-lot="04" data-q="A" data-area="18,05" d="M274.8 33.7 L350.3 32.3 L351.5 101.8 L276.1 103.2Z"/>
+                <path data-lot="05" data-q="A" data-area="19,10" d="M39.1 112.2 L114.6 110.8 L115.9 180.3 L40.4 181.7Z"/>
+                <path data-lot="06" data-q="A" data-area="17,75" d="M118.1 110.7 L193.6 109.3 L194.9 178.8 L119.4 180.2Z"/>
+                <path data-lot="07" data-q="A" data-area="18,54" d="M197.1 109.2 L272.6 107.8 L273.9 177.3 L198.4 178.7Z"/>
+                <path data-lot="08" data-q="A" data-area="18,68" d="M276.1 107.7 L351.6 106.3 L352.9 175.8 L277.4 177.2Z" class="lot-hl"/>
+                <path data-lot="09" data-q="A" data-area="17,05" d="M40.5 186.2 L115.9 184.8 L117.2 254.3 L41.7 255.7Z"/>
+                <path data-lot="10" data-q="A" data-area="19,32" d="M119.5 184.7 L194.9 183.3 L196.2 252.8 L120.7 254.2Z"/>
+                <path data-lot="11" data-q="A" data-area="17,48" d="M198.5 183.2 L273.9 181.8 L275.2 251.3 L199.7 252.7Z"/>
+                <path data-lot="12" data-q="A" data-area="18,40" d="M277.5 181.7 L352.9 180.3 L354.2 249.8 L278.7 251.2Z"/>
+              </g>
+              <g fill="#F4EFDF" pointer-events="none">
+                <circle cx="36" cy="36" r="3.6"/><circle cx="352" cy="30" r="3.6"/><circle cx="356" cy="252" r="3.6"/><circle cx="40" cy="258" r="3.6"/>
+              </g>
+              <g transform="translate(314.5 137.8)" pointer-events="none" class="map-pin">
+                <path d="M0 -34 C -16 -34 -24 -22 -24 -10 C -24 8 0 30 0 30 C 0 30 24 8 24 -10 C 24 -22 16 -34 0 -34 Z" fill="#D0AC2C"/>
+                <circle cx="0" cy="-10" r="8" fill="#0F3A2E"/>
+              </g>
+              <g transform="translate(430 40)" pointer-events="none" fill="none" stroke="#F4EFDF" stroke-opacity=".75" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <circle r="15" stroke-opacity=".35"/><path d="M0 -11 L5 7 L0 3.5 L-5 7Z" fill="#D0AC2C" stroke="#D0AC2C"/>
+                <text y="-19" text-anchor="middle" fill="#F4EFDF" stroke="none" font-size="10" font-weight="700" font-family="sans-serif">N</text>
+              </g>
+              <g transform="translate(32 380)" pointer-events="none" stroke="#F4EFDF" stroke-opacity=".7" stroke-width="1.6" fill="none">
+                <path d="M0 0H90M0 -4V4M45 -3V3M90 -4V4"/>
+                <text x="45" y="14" text-anchor="middle" fill="#F4EFDF" stroke="none" font-size="8" font-family="sans-serif" opacity=".6">250</text>
+                <text x="0" y="-9" fill="#F4EFDF" stroke="none" font-size="9" font-family="sans-serif" opacity=".8">0</text>
+                <text x="90" y="-9" text-anchor="end" fill="#F4EFDF" stroke="none" font-size="9" font-family="sans-serif" opacity=".8">500 m</text>
+              </g>
+            </svg>
+            
+          </div>
+        </div>
     </div>
   </div>
 </section>
@@ -473,26 +516,17 @@
     </section>
 
     <!-- ================= CTA FINAL / CONTATO ================= -->
-    <!-- ================= PODE FICAR TRANQUILO ================= -->
-<div class="tm2">
-<section class="cena final escuro" id="tranquilo">
-  <div class="final-bg" aria-hidden="true"><canvas data-terra="lines" class="terra-cv"></canvas></div>
-  <div class="final-in">
-    <h2 data-fx="palavras" data-fx-duracao="800">Pode ficar tranquilo.</h2>
-    <p class="final-sub" data-fx="subir" data-fx-atraso="500">O seu cálculo e o seu procedimento estão em mãos profissionais.</p>
-    <div class="escolhas" data-fx="subir" data-fx-atraso="650">
-      <a class="tm-btn" data-whatsapp="Olá, Terra Marcada! Quero um orçamento para minha propriedade rural." href="#" target="_blank" rel="noopener noreferrer">Propriedade rural</a>
-      <a class="tm-btn tm-btn-vazado" data-whatsapp="Olá, Terra Marcada! Quero um orçamento para obra ou loteamento." href="#" target="_blank" rel="noopener noreferrer">Obra ou loteamento</a>
-      <a class="tm-btn tm-btn-vazado" data-whatsapp="Olá, Terra Marcada! Quero regularizar meu imóvel (REURB)." href="#" target="_blank" rel="noopener noreferrer">Regularizar imóvel</a>
-    </div>
-    </div>
-</section>
-</div>
-
-    <section class="section cta-final" id="contato">
+    <!-- ================= PODE FICAR TRANQUILO + CONTATO ================= -->
+    <section class="section cta-final tm-final" id="contato">
+      <div class="tm2 tm-final-bg" aria-hidden="true"><div class="final"><div class="final-bg"><canvas data-terra="lines" class="terra-cv"></canvas></div></div></div>
+      <div class="container tm-final-topo">
+        <div class="tm2"><div class="final escuro"><div class="final-in">
+          <h2 data-fx="palavras" data-fx-duracao="800">Pode ficar tranquilo.</h2>
+          <p class="final-sub" data-fx="subir" data-fx-atraso="500">O seu cálculo e o seu procedimento estão em mãos profissionais.</p>
+        </div></div></div>
+      </div>
       <div class="container cta-grid">
         <div class="cta-copy">
-          <h2>Dê o primeiro passo para regularizar o seu imóvel</h2>
           <p>Conte rapidamente sua situação e retornamos para agendar o atendimento. Simples assim.</p>
 
           <form class="wa-form" id="wa-form" novalidate>

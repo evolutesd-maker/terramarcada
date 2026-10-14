@@ -544,3 +544,28 @@
 .tm2 .perfil-fundo{background:linear-gradient(180deg,var(--areia-2),var(--areia))}
 .tm2 .final{min-height:min(100svh,760px);justify-content:center}
 .tm2 .final-in{margin:0}
+
+/* hero: o mapa de lotes ocupa o lugar do drone */
+.tm2 .hero-vis .hero-art{position:absolute;inset:0;display:grid;place-items:center;animation:none;perspective:1100px}
+.tm2 .hero-vis .map-card{width:94%;max-width:none;margin:0}
+.tm2 .hero-vis .map-svg{width:100%;height:auto;aspect-ratio:460/400;border-radius:22px;box-shadow:0 40px 60px -28px rgba(0,0,0,.6);border:1px solid rgb(255 255 255 / .1)}
+.tm2 .tm-btn{margin-top:0}
+.tm2 .acoes .tm-btn,.tm2 .escolhas .tm-btn{margin-top:var(--e3)}
+
+/* "Pode ficar tranquilo" e contato numa seção só */
+.tm-final{position:relative;overflow:hidden}
+.tm-final>.tm2.tm-final-bg{position:absolute;inset:0;background:none;pointer-events:none;overflow:hidden}
+.tm-final .tm2,.tm-final .tm2 .final{background:none}
+.tm-final .tm2 .final{min-height:0;display:block;overflow:visible}
+.tm-final .tm2 .final-bg{opacity:.6}
+.tm-final-topo{position:relative;z-index:2;margin-bottom:var(--tm-gap,8px)}
+.tm-final .tm2 .final-in{max-width:none;margin:0;padding-top:0}
+.tm-final .cta-grid{position:relative;z-index:2}
+/* botão do formulário no padrão dos botões das seções novas */
+.cta-final .wa-form button[type="submit"]{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;border:0;border-radius:999px;cursor:pointer;font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;font-weight:600;font-size:.9375rem;letter-spacing:.01em;color:#061C15;background:linear-gradient(135deg,#E6C45E,#C49A2A 60%,#A97F18);box-shadow:0 10px 24px -12px rgba(0,0,0,.5),inset 0 1px 0 rgb(255 255 255 / .45);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.cta-final .wa-form button[type="submit"]::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgb(255 255 255 / .5) 50%,transparent 70%);transform:translateX(-130%);transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.cta-final .wa-form button[type="submit"]:hover{transform:translateY(-2px);box-shadow:0 16px 28px -14px rgba(0,0,0,.55),inset 0 1px 0 rgb(255 255 255 / .45)}
+.cta-final .wa-form button[type="submit"]:hover::after{transform:translateX(130%)}
+@media (prefers-reduced-motion:reduce){.cta-final .wa-form button[type="submit"],.cta-final .wa-form button[type="submit"]::after{transition:none}}
+.tm2 .acoes .tm-btn{min-width:230px}
+.tm-final .tm2 .final-sub{margin-top:16px;margin-bottom:0}
