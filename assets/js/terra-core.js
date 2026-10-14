@@ -64,10 +64,13 @@
   let fabrica = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
   function canvas(w, h) { return fabrica(w, h); }
 
-  function paraGrande(pix) {
+  /* cada imagem nasce em OW x OH "lógicos" e é gerada em escala maior (esc), para ficar nítida em telas grandes e densas;
+     depois do desenho base, o contexto passa a usar as coordenadas lógicas (setTransform) */
+  function paraGrande(pix, esc) {
     const small = canvas(GW, GH); small.getContext('2d').putImageData(pix, 0, 0);
-    const big = canvas(OW, OH), c = big.getContext('2d');
-    c.imageSmoothingQuality = 'high'; c.drawImage(small, 0, 0, OW, OH);
+    const big = canvas(OW * esc, OH * esc), c = big.getContext('2d');
+    c.imageSmoothingQuality = 'high'; c.drawImage(small, 0, 0, OW * esc, OH * esc);
+    c.setTransform(esc, 0, 0, esc, 0, 0);
     return big;
   }
 
@@ -106,7 +109,8 @@
     }
   }
 
-  function construir() {
+  function construir(esc) {
+    esc = Object.assign({ aerial: 2, map: 2, lines: 2 }, esc);
     const { h, agua } = altura();
     const nf = noise2(37), nm = noise2(51), r = rng(9);
 
@@ -132,7 +136,7 @@
       if (agua[k]) c = mix(hex('#4E7E8E'), hex('#7FA7AE'), r() * .5);
       pa.data.set([c[0], c[1], c[2], 255], k * 4);
     }
-    const aerial = paraGrande(pa), ca = aerial.getContext('2d');
+    const aerial = paraGrande(pa, esc.aerial), ca = aerial.getContext('2d');
     ca.strokeStyle = 'rgba(226,214,180,.9)'; ca.lineWidth = 7; ca.beginPath();
     ca.moveTo(-20, 735); ca.bezierCurveTo(300, 700, 700, 765, 1220, 705); ca.stroke();
     grao(ca, .22);
@@ -152,19 +156,20 @@
       if (agua[k]) c = hex('#9CC7DA');
       pm.data.set([c[0], c[1], c[2], 255], k * 4);
     }
-    const map = paraGrande(pm), cm = map.getContext('2d');
+    const map = paraGrande(pm, esc.map), cm = map.getContext('2d');
     contornos(cm, h, .03, i => i ? { cor: 'rgba(110,72,30,.85)', larg: 1.7 } : { cor: 'rgba(130,92,48,.5)', larg: .9 });
     grao(cm, .1);
 
     /* só as linhas de nível, para fundos escuros */
-    const lines = canvas(OW, OH);
-    contornos(lines.getContext('2d'), h, .025, i => i ? { cor: 'rgba(230,196,94,.5)', larg: 1.6 } : { cor: 'rgba(217,228,200,.2)', larg: 1 });
+    const lines = canvas(OW * esc.lines, OH * esc.lines), cl = lines.getContext('2d');
+    cl.setTransform(esc.lines, 0, 0, esc.lines, 0, 0);
+    contornos(cl, h, .025, i => i ? { cor: 'rgba(230,196,94,.5)', larg: 1.6 } : { cor: 'rgba(217,228,200,.2)', larg: 1 });
 
     return { aerial, map, lines };
   }
 
   raiz.TerraCore = {
     OW, OH,
-    construir(criar) { if (criar) fabrica = criar; return construir(); }
+    construir(criar, esc) { if (criar) fabrica = criar; return construir(esc); }
   };
 })(typeof self !== 'undefined' ? self : this);

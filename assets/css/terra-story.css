@@ -547,10 +547,10 @@
 
 /* hero: o mapa de lotes ocupa o lugar do drone */
 .tm2 .hero-vis .hero-art{position:absolute;inset:0;display:grid;place-items:center;animation:none;perspective:1100px}
-.tm2 .hero-vis .map-card{width:94%;max-width:none;margin:0}
-.tm2 .hero-vis .map-svg{width:100%;height:auto;aspect-ratio:460/400;border-radius:22px;box-shadow:0 40px 60px -28px rgba(0,0,0,.6);border:1px solid rgb(255 255 255 / .1)}
-.tm2 .tm-btn{margin-top:0}
-.tm2 .acoes .tm-btn,.tm2 .escolhas .tm-btn{margin-top:var(--e3)}
+.tm2 .hero-vis .map-card{height:96%;aspect-ratio:438/550;width:auto;max-width:100%;margin:0}
+.tm2 .hero-vis .map-svg{width:100%;height:100%;aspect-ratio:438/550;border-radius:22px;border:0;box-shadow:0 40px 60px -28px rgba(0,0,0,.65)}
+.tm2 .mapa-veu{mix-blend-mode:normal}
+.tm2 .lote-halo{animation:tm-respira 3.4s ease-in-out infinite}
 
 /* "Pode ficar tranquilo" e contato numa seção só */
 .tm-final{position:relative;overflow:hidden}
@@ -569,3 +569,14 @@
 @media (prefers-reduced-motion:reduce){.cta-final .wa-form button[type="submit"],.cta-final .wa-form button[type="submit"]::after{transition:none}}
 .tm2 .acoes .tm-btn{min-width:230px}
 .tm-final .tm2 .final-sub{margin-top:16px;margin-bottom:0}
+
+/* telas grandes: o conteúdo cresce junto com a tela, sem ficar pequeno no meio */
+.tm2 .hero-grade{max-width:min(1760px,100%)}
+.tm2 .hero-vis{max-width:clamp(420px,40vw,880px)}
+.tm2 .pico-grade{max-width:min(2240px,100%)}
+@media (min-width:1700px){
+  .tm2{--s1:1.0625rem;--s2:1.25rem;--s3:1.7rem;--s4:2.6rem}
+  .tm2 .hero{padding-left:6vw;padding-right:6vw}
+  .tm2 .pico-grade{grid-template-columns:minmax(0,1.9fr) minmax(0,.75fr)}
+}
+@media (prefers-reduced-motion:reduce){.tm2 .lote-halo{animation:none}}
