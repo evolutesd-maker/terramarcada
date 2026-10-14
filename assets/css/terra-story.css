@@ -573,10 +573,23 @@
 /* telas grandes: o conteúdo cresce junto com a tela, sem ficar pequeno no meio */
 .tm2 .hero-grade{max-width:min(1760px,100%)}
 .tm2 .hero-vis{max-width:clamp(420px,40vw,880px)}
-.tm2 .pico-grade{max-width:min(2240px,100%)}
+.tm2 .pico-grade{max-width:min(1640px,100%)}
+.tm2 .prancha{max-width:1180px}
 @media (min-width:1700px){
   .tm2{--s1:1.0625rem;--s2:1.25rem;--s3:1.7rem;--s4:2.6rem}
   .tm2 .hero{padding-left:6vw;padding-right:6vw}
-  .tm2 .pico-grade{grid-template-columns:minmax(0,1.9fr) minmax(0,.75fr)}
 }
 @media (prefers-reduced-motion:reduce){.tm2 .lote-halo{animation:none}}
+
+/* mapa de satélite do hero: zoom out até o lote, depois o perímetro se fecha e o pino aparece */
+.tm2 .map-zoom{transform-box:view-box;transform-origin:322px 156px;animation:tm-zoomout 3.6s cubic-bezier(.22,1,.36,1) .5s both}
+@keyframes tm-zoomout{from{transform:scale(2.3)}to{transform:scale(1)}}
+.tm2 .lote,.tm2 .lote-halo{stroke-dasharray:1;stroke-dashoffset:1;animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards}
+.tm2 .lote-halo{animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards,tm-respira 3.4s ease-in-out 4.2s infinite}
+.tm2 .mapa-aparece{opacity:0;animation:tm-aparece .7s ease forwards}
+.tm2 .mapa-a2{animation-delay:3.4s}.tm2 .mapa-a3{animation-delay:3.7s}.tm2 .mapa-a4{animation-delay:4.1s}
+@keyframes tm-aparece{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .tm2 .map-zoom,.tm2 .lote,.tm2 .lote-halo,.tm2 .mapa-aparece{animation:none!important}
+  .tm2 .lote,.tm2 .lote-halo{stroke-dashoffset:0}.tm2 .mapa-aparece{opacity:1}
+}
