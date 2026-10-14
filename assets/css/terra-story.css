@@ -608,3 +608,7 @@
 
 .tm2 .pino-corpo{animation-duration:3.6s}
 @keyframes tm-pino{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+
+/* título dentro da coluna do formulário */
+.tm-final .cta-copy .tm2 .final-in h2{font-size:clamp(2.4rem,4.6vw,4.2rem)}
+.tm-final .cta-copy .tm2 .final-sub{font-size:clamp(1.25rem,2vw,1.75rem);max-width:none;margin-bottom:var(--e3)}
