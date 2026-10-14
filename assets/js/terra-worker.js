@@ -7,6 +7,10 @@ self.onmessage = e => {
     const img = self.TerraCore.construir((w, h) => new OffscreenCanvas(w, h), d.escalas);
     const jobs = d.jobs || [], saida = [], transf = [];
     for (const j of jobs) {
+      if (j.tipo === 'lines') {                                       // curvas: desenhadas direto no tamanho final
+        const bm = self.TerraCore.linhas((w, h) => new OffscreenCanvas(w, h), j).transferToImageBitmap();
+        saida.push(bm); transf.push(bm); continue;
+      }
       const fonte = img[j.tipo]; if (!fonte) { saida.push(null); continue; }
       const f = fonte.width / self.TerraCore.OW;                      // escala em que a imagem foi gerada
       const oc = new OffscreenCanvas(j.w, j.h), cx = oc.getContext('2d');

@@ -109,11 +109,14 @@
     }
   }
 
+  let cacheAltura = null;
+  const dados = () => cacheAltura || (cacheAltura = altura());
+
   function construir(esc) {
     esc = Object.assign({ aerial: 2, map: 2, lines: 2 }, esc);
     const quer = k => !esc.so || esc.so.indexOf(k) > -1;   // só gera o que a página usa
     const saida = {};
-    const { h, agua } = altura();
+    const { h, agua } = dados();
     const nf = noise2(37), nm = noise2(51), r = rng(9);
 
     /* imagem aérea: talhões, mata, rio */
@@ -176,8 +179,21 @@
     return saida;
   }
 
+  /* curvas de nível desenhadas direto no tamanho final de um canvas, só na parte que a tela mostra:
+     em celular em pé o fundo é alto e estreito, e assim ele nasce nítido sem gerar uma imagem gigante */
+  const ESTILO_LINHAS = i => i ? { cor: 'rgba(230,196,94,.5)', larg: 1.6 } : { cor: 'rgba(217,228,200,.2)', larg: 1 };
+  function linhas(criar, j) {
+    if (criar) fabrica = criar;
+    const { h } = dados();
+    const c = canvas(j.w, j.h), cx = c.getContext('2d'), a = j.w / j.sw, b = j.h / j.sh;
+    cx.setTransform(a, 0, 0, b, -j.sx * a, -j.sy * b);
+    contornos(cx, h, .025, ESTILO_LINHAS);
+    return c;
+  }
+
   raiz.TerraCore = {
     OW, OH,
-    construir(criar, esc) { if (criar) fabrica = criar; return construir(esc); }
+    construir(criar, esc) { if (criar) fabrica = criar; return construir(esc); },
+    linhas
   };
 })(typeof self !== 'undefined' ? self : this);
