@@ -572,7 +572,7 @@
 
 /* telas grandes: o conteúdo cresce junto com a tela, sem ficar pequeno no meio */
 .tm2 .hero-grade{max-width:min(1760px,100%)}
-.tm2 .hero-vis{max-width:clamp(420px,40vw,880px)}
+.tm2 .hero-vis{max-width:clamp(340px,29vw,620px)}
 .tm2 .pico-grade{max-width:min(1640px,100%)}
 .tm2 .prancha{max-width:1180px}
 @media (min-width:1700px){
