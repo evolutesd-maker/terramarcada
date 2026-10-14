@@ -25,9 +25,10 @@ cpSync(join(root, "assets/fonts"), join(out, "assets/fonts"), { recursive: true 
 
 // CSS e JS: minifica e coloca o hash do conteúdo no nome (cache eterno e seguro)
 const names = {};
-async function bundle(entry, outdir, ext) {
+const JS = ["boot", "config", "main", "terra", "tm-motor", "tm-historia", "tm-sobre"];
+async function bundle(entry, outdir, ext, pre) {
   const r = await build({ entryPoints: [join(root, entry)], bundle: false, minify: true, write: false, outdir, target: ["es2019"], legalComments: "none", loader: { ".css": "css", ".js": "js" } });
-  const text = r.outputFiles[0].text;
+  const text = pre ? pre(r.outputFiles[0].text) : r.outputFiles[0].text;
   const hash = createHash("sha256").update(text).digest("hex").slice(0, 10);
   const base = entry.split("/").pop().replace(/\.(css|js)$/, "");
   const file = `${base}.${hash}.${ext}`;
@@ -35,14 +36,18 @@ async function bundle(entry, outdir, ext) {
   names[entry] = file;
 }
 await bundle("assets/css/style.css", join(out, "assets/css"), "css");
-for (const f of ["boot", "config", "main"]) await bundle(`assets/js/${f}.js`, join(out, "assets/js"), "js");
+await bundle("assets/css/terra-story.css", join(out, "assets/css"), "css");
+// o worker do relevo carrega o núcleo pelo nome com hash: gera o núcleo primeiro e troca o nome no worker
+await bundle("assets/js/terra-core.js", join(out, "assets/js"), "js");
+await bundle("assets/js/terra-worker.js", join(out, "assets/js"), "js", (t) => t.replace("terra-core.js", names["assets/js/terra-core.js"]));
+for (const f of JS) await bundle(`assets/js/${f}.js`, join(out, "assets/js"), "js");
 
 // HTML
-const pages = ["index.html", "politica-privacidade.html", "404.html"];
+const pages = ["index.html", "quem-somos.html", "politica-privacidade.html", "404.html"];
 for (const page of pages) {
   let html = readFileSync(join(root, page), "utf8");
-  html = html.replace(/(["'(])(\/?)assets\/css\/style\.css/g, `$1$2assets/css/${names["assets/css/style.css"]}`);
-  for (const f of ["boot", "config", "main"]) {
+  for (const c of ["style", "terra-story"]) html = html.replace(new RegExp(`(["'(])(\\/?)assets\\/css\\/${c}\\.css`, "g"), `$1$2assets/css/${names[`assets/css/${c}.css`]}`);
+  for (const f of [...JS, "terra-core", "terra-worker"]) {
     html = html.replace(new RegExp(`(["'])(\\/?)assets\\/js\\/${f}\\.js`, "g"), `$1$2assets/js/${names[`assets/js/${f}.js`]}`);
   }
   if (siteUrl) {
