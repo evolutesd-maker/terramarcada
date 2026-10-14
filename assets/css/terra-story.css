@@ -583,7 +583,7 @@
 
 /* mapa de satélite do hero: zoom out até o lote, depois o perímetro se fecha e o pino aparece */
 .tm2 .map-zoom{transform-box:view-box;transform-origin:481px 267px;animation:tm-zoomout 3.6s cubic-bezier(.22,1,.36,1) .5s both}
-@keyframes tm-zoomout{from{transform:scale(2.8)}to{transform:scale(1)}}
+@keyframes tm-zoomout{from{transform:scale(1)}to{transform:scale(1.5)}}
 .tm2 .lote,.tm2 .lote-halo{stroke-dasharray:1;stroke-dashoffset:1;animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards}
 .tm2 .lote-halo{animation:tm-tracar 1.4s cubic-bezier(.22,1,.36,1) 2.6s forwards,tm-respira 3.4s ease-in-out 4.2s infinite}
 .tm2 .mapa-aparece{opacity:0;animation:tm-aparece .7s ease forwards}
@@ -596,12 +596,15 @@
 
 /* marcador: gota dourada que sobe e desce devagar, com sombra e onda no chão */
 .tm2 .pino-corpo{animation:tm-pino 3.2s ease-in-out 4.4s infinite}
-.tm2 .pino-sombra{transform-box:fill-box;transform-origin:center;animation:tm-sombra 3.2s ease-in-out 4.4s infinite}
-.tm2 .pino-onda{transform-box:fill-box;transform-origin:center;animation:tm-onda-chao 3.2s ease-out 4.4s infinite}
+.tm2 .pino-sombra-x{transform-box:fill-box;transform-origin:center;animation:tm-sombra 3.2s ease-in-out 4.4s infinite}
+.tm2 .pino-onda-x{transform-box:fill-box;transform-origin:center;animation:tm-onda-chao 3.2s ease-out 4.4s infinite}
 @keyframes tm-pino{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
 @keyframes tm-sombra{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.62);opacity:.55}}
 @keyframes tm-onda-chao{0%{transform:scale(.6);opacity:.9}70%,100%{transform:scale(3.4);opacity:0}}
 .tm2 .map-svg g[transform],.tm2 .map-svg .map-pin{animation:none}
-@media (prefers-reduced-motion:reduce){.tm2 .pino-corpo,.tm2 .pino-sombra,.tm2 .pino-onda{animation:none!important}.tm2 .pino-onda{opacity:0}}
+@media (prefers-reduced-motion:reduce){.tm2 .pino-corpo,.tm2 .pino-sombra,.tm2 .pino-onda-x{animation:none!important}.tm2 .pino-onda-x{opacity:0}}
 /* contato: as curvas de nível cobrem a seção inteira, sem esmaecer à esquerda */
 .tm-final .tm2 .final-bg{-webkit-mask-image:none;mask-image:none;opacity:.75}
+
+.tm2 .pino-corpo{animation-duration:3.6s}
+@keyframes tm-pino{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
