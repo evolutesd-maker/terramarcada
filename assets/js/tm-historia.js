@@ -17,16 +17,14 @@
   } else if (cartao) cartao.classList.add('tocar');
 
   /* ---------- Carta cadastral do terreno de exemplo (viewBox 1200 x 800) ---------- */
-  const M_POR_PX = 0.6;                       // escala do exemplo: 1 px = 0,6 m
-  const LOTE = [[430, 250], [700, 215], [820, 330], [780, 520], [560, 570], [400, 430]];
+  const M_POR_PX = 0.21;                      // escala estimada pela foto de Ijuí: 1 px = 0,21 m (ilustrativa)
+  /* mesma geometria de tm-cidade.js (1200 x 800) */
+  const LOTE = [[452, 300], [680, 300], [680, 612], [500, 612], [458, 410]];
   const VIZ = [
-    [[210, 300], [430, 250], [400, 430], [230, 470]],
-    [[700, 215], [960, 180], [1010, 360], [820, 330]],
-    [[820, 330], [1010, 360], [980, 540], [780, 520]],
-    [[230, 470], [400, 430], [560, 570], [500, 690], [300, 650]],
-    [[560, 570], [780, 520], [980, 540], [940, 700], [700, 720], [500, 690]]
+    [[452, 200], [680, 200], [680, 300], [452, 300]],        // lote da Terra Marcada, ao norte
+    [[386, 410], [458, 410], [500, 612], [386, 612]]         // vizinho a oeste
   ];
-  const CTL = [[330, 190], [900, 440], [620, 655]];
+  const CTL = [[782, 330], [782, 560], [540, 640]];
   const d = pts => pts.map((p, i) => (i ? 'L' : 'M') + p.join(' ')).join(' ') + ' Z';
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   const cx = LOTE.reduce((s, p) => s + p[0], 0) / LOTE.length;
@@ -38,7 +36,6 @@
 
   function cadastro() {
     let s = VIZ.map(v => `<path class="nb" pathLength="1" d="${d(v)}"/>`).join('');
-    s += '<path class="rd" pathLength="1" d="M-20 735 C300 700 700 765 1220 705"/>';
     s += `<polygon class="lotfill" points="${LOTE.map(p => p.join(',')).join(' ')}"/>`;
     s += `<path class="lot" pathLength="1" d="${d(LOTE)}"/>`;
     s += LOTE.map((p, i) => {
@@ -58,7 +55,7 @@
   /* ---------- PICO: time lapse da carta (toca sozinho, sem depender da rolagem) ---------- */
   const secMapa = $('#mapa'), prancha = $('#prancha'), pMapa = $('#pranchaMapa'), scan = $('#scan');
   const g = {
-    nb: $$('#cad .nb'), rd: $('#cad .rd'), lot: $('#cad .lot'), fill: $('#cad .lotfill'),
+    nb: $$('#cad .nb'), lot: $('#cad .lot'), fill: $('#cad .lotfill'),
     vx: $$('#cad .vx'), vl: $$('#cad .vl'), dim: $$('#cad .dim'), bg: $$('#cad .dimbg'), ctl: $$('#cad .ctl')
   };
   const eArea = $('#eArea'), ePer = $('#ePer'), rever = $('#rever');
@@ -73,7 +70,6 @@
     scan.style.opacity = s > .003 && s < .995 ? 1 : 0;
     scan.style.transform = `translateX(${(s * largP).toFixed(1)}px)`;
     g.nb.forEach((el, i) => { el.style.strokeDashoffset = (1 - clamp((p - (.16 + i * .025)) / .12)).toFixed(3); });
-    g.rd.style.strokeDashoffset = (1 - clamp((p - .16) / .18)).toFixed(3);
     g.ctl.forEach((el, i) => { el.style.opacity = clamp((p - (.26 + i * .03)) / .05).toFixed(2); });
     g.lot.style.strokeDashoffset = (1 - clamp((p - .34) / .26)).toFixed(3);
     g.vx.forEach((el, i) => {
@@ -87,7 +83,7 @@
     g.bg.forEach(el => { el.style.opacity = td; });
     g.fill.style.opacity = clamp((p - .7) / .1).toFixed(2);
     const n = clamp((p - .66) / .18);
-    eArea.textContent = fmt(area * n, 1);
+    eArea.textContent = fmt(area * n, 2);
     ePer.textContent = fmt(Math.round(perimetro * n), 0);
   }
   function quadro(t) {

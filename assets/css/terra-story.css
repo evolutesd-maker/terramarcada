@@ -116,7 +116,7 @@
 .tm2 .cad-fixo .lotfill,.tm2 .cad-fixo .vx,.tm2 .cad-fixo .vl,.tm2 .cad-fixo .dim,.tm2 .cad-fixo .dimbg,.tm2 .cad-fixo .ctl{opacity:1}
 .tm2 .rosa{position:absolute;right:14px;top:14px;width:58px;height:58px}
 .tm2 .escala{position:absolute;left:16px;bottom:14px;display:flex;align-items:flex-end;gap:8px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.88);font-family:var(--titulo);font-size:.8rem;font-weight:600;color:var(--abismo)}
-.tm2 .escala i{width:calc(var(--prancha-w,820px)*.139);max-width:130px;height:7px;border:2px solid var(--abismo);border-top:0;display:block;margin-right:2px}
+.tm2 .escala i{width:calc(var(--prancha-w,820px)*.198);max-width:220px;height:7px;border:2px solid var(--abismo);border-top:0;display:block;margin-right:2px}
 .tm2 .selo{position:absolute;left:16px;top:14px;padding:6px 14px;border-radius:999px;background:var(--abismo);color:var(--areia);font-family:var(--titulo);font-size:.78rem;font-weight:600}
 .tm2 .entrega{display:grid;grid-template-columns:repeat(3,auto);gap:var(--e3);margin-top:var(--e3);padding-top:var(--e2);border-top:1px solid rgb(var(--floresta-rgb) / .2);font-variant-numeric:tabular-nums}
 .tm2 .entrega dt{font-size:.82rem;opacity:.7;font-family:var(--titulo)}
@@ -627,3 +627,11 @@
 .cta-final .official-note{background:#f7efd2;border-color:rgb(179 146 33 / .45);color:#12231d}
 .cta-final .official-note svg{color:#7a5f0a}
 .cta-final .official-note strong{color:#0b2b22}
+
+/* selo, escala e rosa dos ventos proporcionais em telas pequenas */
+@media (max-width:640px){
+  .tm2 .selo{left:10px;top:10px;padding:4px 10px;font-size:.62rem}
+  .tm2 .rosa{right:10px;top:10px;width:38px;height:38px}
+  .tm2 .escala{left:10px;bottom:8px;padding:4px 8px;font-size:.62rem;gap:6px}
+  .tm2 .escala i{height:5px}
+}

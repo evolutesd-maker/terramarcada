@@ -25,7 +25,7 @@ cpSync(join(root, "assets/fonts"), join(out, "assets/fonts"), { recursive: true 
 
 // CSS e JS: minifica e coloca o hash do conteúdo no nome (cache eterno e seguro)
 const names = {};
-const JS = ["boot", "config", "main", "terra", "tm-motor", "tm-historia", "tm-sobre"];
+const JS = ["boot", "config", "main", "terra", "tm-motor", "tm-historia", "tm-cidade", "tm-sobre"];
 async function bundle(entry, outdir, ext, pre) {
   const r = await build({ entryPoints: [join(root, entry)], bundle: false, minify: true, write: false, outdir, target: ["es2019"], legalComments: "none", loader: { ".css": "css", ".js": "js" } });
   const text = pre ? pre(r.outputFiles[0].text) : r.outputFiles[0].text;
