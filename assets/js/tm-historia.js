@@ -17,14 +17,16 @@
   } else if (cartao) cartao.classList.add('tocar');
 
   /* ---------- Carta cadastral do terreno de exemplo (viewBox 1200 x 800) ---------- */
-  const M_POR_PX = 0.21;                      // escala estimada pela foto: 1 px = 0,21 m (ilustrativa)
-  /* coordenadas em pixels da foto recortada (1000 x 750) */
-  const LOTE = [[380, 203], [620, 203], [620, 548], [415, 548], [384, 305]];
+  const M_POR_PX = 0.6;                       // escala do exemplo: 1 px = 0,6 m
+  const LOTE = [[430, 250], [700, 215], [820, 330], [780, 520], [560, 570], [400, 430]];
   const VIZ = [
-    [[380, 115], [620, 115], [620, 203], [380, 203]],        // lote vizinho, ao norte
-    [[317, 305], [384, 305], [415, 548], [317, 548]]         // lote vizinho, a oeste
+    [[210, 300], [430, 250], [400, 430], [230, 470]],
+    [[700, 215], [960, 180], [1010, 360], [820, 330]],
+    [[820, 330], [1010, 360], [980, 540], [780, 520]],
+    [[230, 470], [400, 430], [560, 570], [500, 690], [300, 650]],
+    [[560, 570], [780, 520], [980, 540], [940, 700], [700, 720], [500, 690]]
   ];
-  const CTL = [[662, 225], [662, 520], [395, 585]];
+  const CTL = [[330, 190], [900, 440], [620, 655]];
   const d = pts => pts.map((p, i) => (i ? 'L' : 'M') + p.join(' ')).join(' ') + ' Z';
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   const cx = LOTE.reduce((s, p) => s + p[0], 0) / LOTE.length;
@@ -36,16 +38,17 @@
 
   function cadastro() {
     let s = VIZ.map(v => `<path class="nb" pathLength="1" d="${d(v)}"/>`).join('');
+    s += '<path class="rd" pathLength="1" d="M-20 735 C300 700 700 765 1220 705"/>';
     s += `<polygon class="lotfill" points="${LOTE.map(p => p.join(',')).join(' ')}"/>`;
     s += `<path class="lot" pathLength="1" d="${d(LOTE)}"/>`;
     s += LOTE.map((p, i) => {
-      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, dist(p, a) < 130 ? 96 : 54);   // lados curtos: rótulo mais afastado, para não cobrir o marco
-      return `<rect class="dimbg" x="${(t[0] - 63).toFixed(0)}" y="${(t[1] - 31).toFixed(0)}" width="126" height="48" rx="24"/>
-        <text class="dim" x="${t[0].toFixed(0)}" y="${(t[1] + 3).toFixed(0)}" text-anchor="middle">${Math.round(dist(p, a) * M_POR_PX)} m</text>`;
+      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, 34);
+      return `<rect class="dimbg" x="${(t[0] - 40).toFixed(0)}" y="${(t[1] - 20).toFixed(0)}" width="80" height="30" rx="15"/>
+        <text class="dim" x="${t[0].toFixed(0)}" y="${(t[1] + 1).toFixed(0)}" text-anchor="middle">${Math.round(dist(p, a) * M_POR_PX)} m</text>`;
     }).join('');
     s += CTL.map(c => `<path class="ctl" d="${tri(c)}"/>`).join('');
-    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="16"/>`).join('');
-    s += LOTE.map((p, i) => { const t = fora(p, 60); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 9).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
+    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="10"/>`).join('');
+    s += LOTE.map((p, i) => { const t = fora(p, 30); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 7).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
     return s;
   }
   $('#cad').innerHTML = cadastro();
@@ -55,7 +58,7 @@
   /* ---------- PICO: time lapse da carta (toca sozinho, sem depender da rolagem) ---------- */
   const secMapa = $('#mapa'), prancha = $('#prancha'), pMapa = $('#pranchaMapa'), scan = $('#scan');
   const g = {
-    nb: $$('#cad .nb'), lot: $('#cad .lot'), fill: $('#cad .lotfill'),
+    nb: $$('#cad .nb'), rd: $('#cad .rd'), lot: $('#cad .lot'), fill: $('#cad .lotfill'),
     vx: $$('#cad .vx'), vl: $$('#cad .vl'), dim: $$('#cad .dim'), bg: $$('#cad .dimbg'), ctl: $$('#cad .ctl')
   };
   const eArea = $('#eArea'), ePer = $('#ePer'), rever = $('#rever');
@@ -70,6 +73,7 @@
     scan.style.opacity = s > .003 && s < .995 ? 1 : 0;
     scan.style.transform = `translateX(${(s * largP).toFixed(1)}px)`;
     g.nb.forEach((el, i) => { el.style.strokeDashoffset = (1 - clamp((p - (.16 + i * .025)) / .12)).toFixed(3); });
+    g.rd.style.strokeDashoffset = (1 - clamp((p - .16) / .18)).toFixed(3);
     g.ctl.forEach((el, i) => { el.style.opacity = clamp((p - (.26 + i * .03)) / .05).toFixed(2); });
     g.lot.style.strokeDashoffset = (1 - clamp((p - .34) / .26)).toFixed(3);
     g.vx.forEach((el, i) => {
@@ -83,7 +87,7 @@
     g.bg.forEach(el => { el.style.opacity = td; });
     g.fill.style.opacity = clamp((p - .7) / .1).toFixed(2);
     const n = clamp((p - .66) / .18);
-    eArea.textContent = fmt(area * n, 2);
+    eArea.textContent = fmt(area * n, 1);
     ePer.textContent = fmt(Math.round(perimetro * n), 0);
   }
   function quadro(t) {

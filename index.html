@@ -146,20 +146,21 @@
   <div class="pico-grade">
     <div class="prancha" id="prancha">
       <div class="prancha-in">
-        <img class="foto-antes" src="assets/img/ortofoto-ijui.webp" alt="Vista aérea de um quarteirão de Ijuí, antes do mapeamento" width="1000" height="750" decoding="async">
-        <div class="prancha-mapa" id="pranchaMapa"><div class="trama"></div></div>
+        <canvas data-terra="aerial" class="terra-cv base"></canvas>
+        <div class="nuvens" aria-hidden="true"><i></i><i></i></div>
+        <div class="prancha-mapa" id="pranchaMapa"><canvas data-terra="map" class="terra-cv"></canvas></div>
         <div class="scan" id="scan"></div>
-        <svg class="cad" id="cad" viewBox="0 0 1000 750" role="img" aria-label="Foto aérea com o lote de exemplo mapeado: limites, vértices, medidas dos lados, área e perímetro"></svg>
+        <svg class="cad" id="cad" viewBox="0 0 1200 800" role="img" aria-label="Carta topográfica de um terreno de exemplo, com curvas de nível, lotes, limites e marcos"></svg>
       </div>
       <svg class="rosa" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="rgba(255,255,255,.7)" stroke="#0B2F24" stroke-width="1.5"/><path d="M40 8 L47 40 L40 34 L33 40 Z" fill="#0B2F24"/><path d="M40 72 L47 40 L40 46 L33 40 Z" fill="#C49A2A"/><text x="40" y="22" text-anchor="middle" font-size="9" font-weight="800" fill="#fff">N</text></svg>
-      <div class="escala" aria-hidden="true"><i></i><span>0</span><span>50 m</span></div>
-      <span class="selo">Medidas ilustrativas</span>
+      <div class="escala" aria-hidden="true"><i></i><span>0</span><span>100 m</span></div>
+      <span class="selo">Terreno de exemplo, ilustrativo</span>
     </div>
     <div class="painel-vidro claro-vidro leg-pico">
       <div class="etapas">
         <div class="fx-etapa">
-          <h2>Primeiro, a imagem do alto.</h2>
-          <p>O drone sobrevoa a área e registra uma imagem aérea de alta resolução. É o ponto de partida de todo o mapeamento.</p>
+          <h2>Primeiro, o relevo.</h2>
+          <p>As curvas de nível mostram cada subida e descida do terreno: onde a água corre, onde se pode construir.</p>
         </div>
         <div class="fx-etapa">
           <h2>Depois, os limites.</h2>
@@ -171,7 +172,7 @@
           <dl class="entrega" id="entrega">
             <div><dt>Área</dt><dd><span id="eArea">0</span> ha</dd></div>
             <div><dt>Perímetro</dt><dd><span id="ePer">0</span> m</dd></div>
-            <div><dt>Marcos</dt><dd>5</dd></div>
+            <div><dt>Marcos</dt><dd>6</dd></div>
           </dl>
           <a class="tm-btn" data-whatsapp="Olá, Terra Marcada! Quero um mapa da minha área, com limites e curvas de nível." href="#" target="_blank" rel="noopener noreferrer">Quero esse mapa da minha área</a>
         </div>
