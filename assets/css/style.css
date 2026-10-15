@@ -1393,3 +1393,6 @@ button, .btn, .chip, .footer-top { -webkit-user-select: none; user-select: none;
 .subnav a.is-active { background: var(--green-900); color: var(--white); }
 .subnav a:focus-visible { outline: 2px solid var(--gold-600); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .subnav a { transition: none; } }
+
+/* foto real no cartão do portfólio */
+img.pf-media { height: auto; object-fit: cover; object-position: 50% 35%; display: block; }
