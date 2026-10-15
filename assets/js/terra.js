@@ -54,8 +54,9 @@
     jobs.forEach((j, i) => {
       const bm = bitmaps[i]; if (!bm) return;
       const c = aplicar(j);
-      const r = c.getContext('bitmaprenderer');
-      if (r) r.transferFromImageBitmap(bm); else { c.getContext('2d').drawImage(bm, 0, 0); if (bm.close) bm.close(); }
+      /* canvas 2D comum (e não 'bitmaprenderer'): o canal de transparência das curvas de nível se mantém em qualquer placa de vídeo */
+      const cx = c.getContext('2d'); cx.clearRect(0, 0, c.width, c.height); cx.drawImage(bm, 0, 0);
+      if (bm.close) bm.close();
     });
     document.documentElement.classList.add('terreno-pronto');
   }
