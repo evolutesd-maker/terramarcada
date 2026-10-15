@@ -109,11 +109,11 @@
 .tm2 .cad{position:absolute;inset:0;width:100%;height:100%}
 .tm2 .cad .nb{fill:none;stroke:rgba(255,255,255,.9);stroke-width:3;stroke-dasharray:1;stroke-dashoffset:1}
 .tm2 .cad .rd{fill:none;stroke:rgba(255,255,255,.9);stroke-width:12;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
-.tm2 .cad .lot{fill:none;stroke:var(--ouro-claro);stroke-width:7;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.tm2 .cad .lot{fill:none;stroke:var(--ouro-claro);stroke-width:8;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .tm2 .cad .lotfill{fill:rgb(var(--ouro-claro-rgb) / .26);opacity:0}
 .tm2 .cad .vx{fill:var(--abismo);stroke:#fff;stroke-width:3;opacity:0;transform-box:fill-box;transform-origin:center}
-.tm2 .cad .vl{font-family:var(--titulo);font-weight:800;font-size:30px;fill:var(--abismo);paint-order:stroke;stroke:#fff;stroke-width:8px;opacity:0}
-.tm2 .cad .dim{font-family:var(--titulo);font-weight:700;font-size:27px;fill:var(--abismo);opacity:0}
+.tm2 .cad .vl{font-family:var(--titulo);font-weight:800;font-size:34px;fill:var(--abismo);paint-order:stroke;stroke:#fff;stroke-width:9px;opacity:0}
+.tm2 .cad .dim{font-family:var(--titulo);font-weight:700;font-size:31px;fill:var(--abismo);opacity:0}
 .tm2 .cad .dimbg{fill:rgba(255,255,255,.9);opacity:0}
 .tm2 .cad .ctl{fill:var(--abismo);stroke:#fff;stroke-width:2.5;opacity:0}
 .tm2 .cad-fixo .nb,.tm2 .cad-fixo .rd,.tm2 .cad-fixo .lot{stroke-dashoffset:0}
@@ -575,7 +575,8 @@
 .tm2 .hero-grade{max-width:min(1760px,100%)}
 .tm2 .hero-vis{max-width:clamp(340px,29vw,620px)}
 .tm2 .pico-grade{max-width:min(1640px,100%)}
-.tm2 .prancha{max-width:640px}   /* a foto tem 1000 px: mostrada menor, fica nítida (como no banner) */
+.tm2 .prancha{max-width:480px}   /* 2 pixels da foto por pixel da tela, a mesma proporção do banner */
+@media (min-width:901px){.tm2 .pico-grade{grid-template-columns:minmax(0,480px) minmax(0,520px);justify-content:center;gap:clamp(32px,5vw,88px)}}
 @media (min-width:1700px){
   .tm2{--s1:1.0625rem;--s2:1.25rem;--s3:1.7rem;--s4:2.6rem}
   .tm2 .hero{padding-left:6vw;padding-right:6vw}

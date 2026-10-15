@@ -39,13 +39,13 @@
     s += `<polygon class="lotfill" points="${LOTE.map(p => p.join(',')).join(' ')}"/>`;
     s += `<path class="lot" pathLength="1" d="${d(LOTE)}"/>`;
     s += LOTE.map((p, i) => {
-      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, dist(p, a) < 130 ? 82 : 46);   // lados curtos: rótulo mais afastado, para não cobrir o marco
-      return `<rect class="dimbg" x="${(t[0] - 56).toFixed(0)}" y="${(t[1] - 27).toFixed(0)}" width="112" height="42" rx="21"/>
+      const a = LOTE[(i + 1) % LOTE.length], m = [(p[0] + a[0]) / 2, (p[1] + a[1]) / 2], t = fora(m, dist(p, a) < 130 ? 96 : 54);   // lados curtos: rótulo mais afastado, para não cobrir o marco
+      return `<rect class="dimbg" x="${(t[0] - 63).toFixed(0)}" y="${(t[1] - 31).toFixed(0)}" width="126" height="48" rx="24"/>
         <text class="dim" x="${t[0].toFixed(0)}" y="${(t[1] + 3).toFixed(0)}" text-anchor="middle">${Math.round(dist(p, a) * M_POR_PX)} m</text>`;
     }).join('');
     s += CTL.map(c => `<path class="ctl" d="${tri(c)}"/>`).join('');
-    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="14"/>`).join('');
-    s += LOTE.map((p, i) => { const t = fora(p, 52); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 9).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
+    s += LOTE.map(p => `<circle class="vx" cx="${p[0]}" cy="${p[1]}" r="16"/>`).join('');
+    s += LOTE.map((p, i) => { const t = fora(p, 60); return `<text class="vl" x="${t[0].toFixed(0)}" y="${(t[1] + 9).toFixed(0)}" text-anchor="middle">P${i + 1}</text>`; }).join('');
     return s;
   }
   $('#cad').innerHTML = cadastro();
