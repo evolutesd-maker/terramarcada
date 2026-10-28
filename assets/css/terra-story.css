@@ -635,3 +635,14 @@
   .tm2 .escala{left:10px;bottom:8px;padding:4px 8px;font-size:.62rem;gap:6px}
   .tm2 .escala i{height:5px}
 }
+
+/* perfil da Dra. Sandra: formação e biografia */
+.tm2 .perfil{align-items:start}
+.tm2 .perfil .retrato{position:sticky;top:156px}
+.tm2 .formacao{list-style:none;display:grid;gap:10px;margin-top:var(--e3)}
+.tm2 .formacao li{padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.75);border:1px solid rgb(var(--floresta-rgb) / .14)}
+.tm2 .formacao b{display:block;font-family:var(--titulo);font-weight:700;font-size:var(--s1);color:var(--pinheiro)}
+.tm2 .formacao span{font-size:var(--s1);opacity:.82}
+.tm2 .bio{display:grid;gap:var(--e2);margin-top:var(--e3)}
+.tm2 .bio p{max-width:38em;opacity:.9}
+@media (max-width:900px){.tm2 .perfil .retrato{position:static;max-width:320px}}
