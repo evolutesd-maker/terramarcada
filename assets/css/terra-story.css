@@ -646,3 +646,7 @@
 .tm2 .bio{display:grid;gap:var(--e2);margin-top:var(--e3)}
 .tm2 .bio p{max-width:38em;opacity:.9}
 @media (max-width:900px){.tm2 .perfil .retrato{position:static;max-width:320px}}
+
+/* formação em destaque, com filete dourado, no lugar dos cartões */
+.tm2 .bio{margin-top:var(--e2)}
+.tm2 .bio-formacao{font-size:var(--s2);line-height:1.6;opacity:1;padding:2px 0 2px 20px;border-left:3px solid var(--ouro);color:var(--tinta)}
