@@ -41,9 +41,9 @@
   }
 
   /* paleta sóbria: tons de ortofoto e de planta cadastral, sem cores vivas */
-  const TELHAS = ['#7C5A4D', '#6E5348', '#7E8286', '#9A9890', '#8D877B', '#A5A399', '#575C61', '#876152', '#6B7073'];
-  const CHAOS = ['#767C62', '#82826A', '#6E7660', '#8B8872', '#696F5A', '#7C8068'];
-  const COPAS = ['#2F4530', '#35503A', '#2A3F2B', '#3C5A3C'];
+  const TELHAS = ['#A25D45', '#8F4F3C', '#7E8A93', '#B4B0A4', '#A59A86', '#C0BBAD', '#5C6A75', '#B06A4F', '#7A8790'];
+  const CHAOS = ['#6E9150', '#7C9A58', '#668A4C', '#8BA562', '#5F8446', '#7F9B5E'];
+  const COPAS = ['#2D5A32', '#33683A', '#285030', '#3A7040'];
 
   /* copa irregular: pequeno aglomerado de círculos (aérea) ou símbolo de árvore em linha fina (planta) */
   function arvore(c, x, y, r, modo, rr) {
@@ -89,7 +89,7 @@
   function desenhar(c, modo) {
     const rr = rng(21), plan = modo === 'plan';
     /* chão */
-    c.fillStyle = plan ? '#F3F2EC' : '#6F775B'; c.fillRect(0, 0, W, H);
+    c.fillStyle = plan ? '#F3F2EC' : '#6B8A52'; c.fillRect(0, 0, W, H);
     /* lotes */
     const L = lotes();
     L.forEach(l => {
@@ -104,7 +104,7 @@
     });
     /* praça */
     const [px0, py0, px1, py1] = PRACA, pw = px1 - px0, ph = py1 - py0;
-    c.fillStyle = plan ? '#E1E8D6' : '#5F7A4A'; c.fillRect(px0, py0, pw, ph);
+    c.fillStyle = plan ? '#E1E8D6' : '#5B8A45'; c.fillRect(px0, py0, pw, ph);
     if (plan) { hachura(c, px0, py0, pw, ph, 'rgba(143,165,123,.45)', 9); c.strokeStyle = '#A9B795'; c.lineWidth = .9; c.strokeRect(px0 + .5, py0 + .5, pw - 1, ph - 1); }
     c.strokeStyle = plan ? '#FFFFFF' : '#B8AD93'; c.lineWidth = plan ? 7 : 8; c.lineCap = 'butt';
     c.beginPath(); c.moveTo(px0 + 14, py0 + 14); c.lineTo(px1 - 14, py1 - 14); c.moveTo(px1 - 14, py0 + 14); c.lineTo(px0 + 14, py1 - 14); c.moveTo((px0 + px1) / 2, py0 + 8); c.lineTo((px0 + px1) / 2, py1 - 8); c.stroke();
@@ -117,11 +117,11 @@
     const [ex0, ey0, ex1, ey1] = EMPRESA;
     c.fillStyle = plan ? '#ECEAE2' : '#76805F'; c.fillRect(ex0, ey0, ex1 - ex0, ey1 - ey0);
     casa(c, ex0 + 70, ey0 + 8, 110, 46, '#98664F', modo); casa(c, ex0 + 188, ey0 + 12, 30, 30, '#A9A79E', modo);
-    c.fillStyle = plan ? '#CFE0E8' : '#5B8FA3'; c.fillRect(ex0 + 14, ey0 + 30, 40, 24);
+    c.fillStyle = plan ? '#CFE0E8' : '#4E9FC0'; c.fillRect(ex0 + 14, ey0 + 30, 40, 24);
     c.strokeStyle = plan ? '#BEBAAD' : 'rgba(20,24,14,.35)'; c.lineWidth = plan ? .8 : 1; c.strokeRect(ex0 + .5, ey0 + .5, ex1 - ex0 - 1, ey1 - ey0 - 1);
     /* lote mapeado: gramado com casa e árvores */
     c.beginPath(); LOTE.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath();
-    c.fillStyle = plan ? '#DCE5CF' : '#6E8B57'; c.fill();
+    c.fillStyle = plan ? '#DCE5CF' : '#72A04F'; c.fill();
     casa(c, 470, 330, 100, 70, '#8A5A47', modo); casa(c, 575, 338, 42, 54, '#98664F', modo);
     [[560, 450, 21], [610, 500, 18], [520, 540, 16], [640, 380, 19], [600, 330, 14], [490, 470, 13], [575, 570, 15]].forEach(t => arvore(c, t[0], t[1], t[2], modo, rr));
     /* vizinho a oeste: galpão cinza */
@@ -156,12 +156,12 @@
       /* aérea: textura fina e leve vinheta, como imagem de drone */
       for (let i = 0; i < 6500; i++) { c.fillStyle = rr() < .5 ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.05)'; c.fillRect(rr() * W, rr() * H, 1.5, 1.5); }
       const v = c.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * .9);
-      v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.26)'); c.fillStyle = v; c.fillRect(0, 0, W, H);
+      v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.18)'); c.fillStyle = v; c.fillRect(0, 0, W, H);
       /* tratamento de imagem aérea: menos saturação e mais contraste (onde o navegador permite) */
       try {
         const cv = c.canvas, t = document.createElement('canvas'); t.width = cv.width; t.height = cv.height;
         const tc = t.getContext('2d'); tc.drawImage(cv, 0, 0);
-        c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.filter = 'saturate(.62) contrast(1.1) brightness(.97)'; c.drawImage(t, 0, 0); c.restore();
+        c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.filter = 'saturate(1.08) contrast(1.06) brightness(1.04)'; c.drawImage(t, 0, 0); c.restore();
       } catch (e) { /* sem suporte a filtros */ }
     } else {
       /* planta: marcas de coordenadas a cada 100 m lógicos, como em carta cadastral */
