@@ -41,9 +41,9 @@
   }
 
   /* paleta sóbria: tons de ortofoto e de planta cadastral, sem cores vivas */
-  const TELHAS = ['#8E5A48', '#7A4F41', '#8B8F92', '#A9A79E', '#9C9588', '#B5B2A7', '#5F6469', '#98664F', '#767B7E'];
-  const CHAOS = ['#7E8767', '#8A8B6C', '#737D5E', '#979372', '#6D7759', '#868A68'];
-  const COPAS = ['#3F5B39', '#46633F', '#385232', '#4D6B44'];
+  const TELHAS = ['#7C5A4D', '#6E5348', '#7E8286', '#9A9890', '#8D877B', '#A5A399', '#575C61', '#876152', '#6B7073'];
+  const CHAOS = ['#767C62', '#82826A', '#6E7660', '#8B8872', '#696F5A', '#7C8068'];
+  const COPAS = ['#2F4530', '#35503A', '#2A3F2B', '#3C5A3C'];
 
   /* copa irregular: pequeno aglomerado de círculos (aérea) ou símbolo de árvore em linha fina (planta) */
   function arvore(c, x, y, r, modo, rr) {
@@ -53,15 +53,15 @@
       c.fillStyle = '#8FA57B'; c.beginPath(); c.arc(x, y, 1.1, 0, 6.2832); c.fill();
       return;
     }
-    c.save(); c.shadowColor = 'rgba(10,18,8,.45)'; c.shadowBlur = r * .8; c.shadowOffsetX = r * .35; c.shadowOffsetY = r * .5;
-    const n = 4 + Math.floor(rr() * 3);
+    c.save(); c.fillStyle = 'rgba(8,14,6,.42)'; c.filter = 'blur(' + (r * .22) + 'px)';
+    c.beginPath(); c.ellipse(x + r * .5, y + r * .65, r * 1.0, r * .85, 0, 0, 6.2832); c.fill(); c.restore();
+    c.fillStyle = COPAS[Math.floor(rr() * COPAS.length)]; c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
+    const n = Math.round(r * 2.4);                                                    // folhagem: pontos claros e escuros
     for (let i = 0; i < n; i++) {
-      const a = rr() * 6.2832, d = r * .45 * rr();
-      c.fillStyle = COPAS[Math.floor(rr() * COPAS.length)];
-      c.beginPath(); c.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, r * (.55 + rr() * .3), 0, 6.2832); c.fill();
+      const a = rr() * 6.2832, d = Math.sqrt(rr()) * r * .92, q = r * (.14 + rr() * .16);
+      c.fillStyle = rr() < .5 ? 'rgba(120,150,95,.30)' : 'rgba(10,22,10,.34)';
+      c.beginPath(); c.arc(x + Math.cos(a) * d, y + Math.sin(a) * d, q, 0, 6.2832); c.fill();
     }
-    c.restore();
-    c.fillStyle = 'rgba(150,185,110,.18)'; c.beginPath(); c.arc(x - r * .25, y - r * .25, r * .42, 0, 6.2832); c.fill();
   }
 
   function casa(c, x, y, w, h, cor, modo) {
@@ -69,14 +69,15 @@
       c.fillStyle = '#DAD7CC'; c.strokeStyle = '#A9A597'; c.lineWidth = .9; c.fillRect(x, y, w, h); c.strokeRect(x + .45, y + .45, w - .9, h - .9);
       return;
     }
-    c.save(); c.shadowColor = 'rgba(0,0,0,.4)'; c.shadowBlur = 6; c.shadowOffsetX = 4; c.shadowOffsetY = 5;
-    c.fillStyle = cor; c.fillRect(x, y, w, h); c.restore();
-    const g = c.createLinearGradient(x, y, x + w, y + h);
-    g.addColorStop(0, 'rgba(255,255,255,.14)'); g.addColorStop(1, 'rgba(0,0,0,.14)');
-    c.fillStyle = g; c.fillRect(x, y, w, h);
-    c.strokeStyle = 'rgba(0,0,0,.25)'; c.lineWidth = 1; c.beginPath();
-    if (w >= h) { c.moveTo(x, y + h / 2); c.lineTo(x + w, y + h / 2); } else { c.moveTo(x + w / 2, y); c.lineTo(x + w / 2, y + h); }
+    c.save(); c.fillStyle = 'rgba(0,0,0,.34)'; c.filter = 'blur(2.5px)'; c.fillRect(x + 5, y + 6, w, h); c.restore();
+    c.fillStyle = cor; c.fillRect(x, y, w, h);
+    const horiz = w >= h;                                                              // telhado de duas águas
+    c.fillStyle = 'rgba(255,255,255,.16)'; if (horiz) c.fillRect(x, y, w, h / 2); else c.fillRect(x, y, w / 2, h);
+    c.fillStyle = 'rgba(0,0,0,.16)'; if (horiz) c.fillRect(x, y + h / 2, w, h / 2); else c.fillRect(x + w / 2, y, w / 2, h);
+    c.strokeStyle = 'rgba(0,0,0,.3)'; c.lineWidth = 1; c.beginPath();
+    if (horiz) { c.moveTo(x, y + h / 2); c.lineTo(x + w, y + h / 2); } else { c.moveTo(x + w / 2, y); c.lineTo(x + w / 2, y + h); }
     c.stroke();
+    c.fillStyle = 'rgba(0,0,0,.05)'; for (let k = 0; k < Math.max(3, Math.round(w * h / 90)); k++) c.fillRect(x + Math.random() * w, y + Math.random() * h, 2, 2);
   }
 
   function hachura(c, x, y, w, h, cor, passo) {
@@ -155,7 +156,13 @@
       /* aérea: textura fina e leve vinheta, como imagem de drone */
       for (let i = 0; i < 6500; i++) { c.fillStyle = rr() < .5 ? 'rgba(255,255,255,.04)' : 'rgba(0,0,0,.05)'; c.fillRect(rr() * W, rr() * H, 1.5, 1.5); }
       const v = c.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * .9);
-      v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.28)'); c.fillStyle = v; c.fillRect(0, 0, W, H);
+      v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.26)'); c.fillStyle = v; c.fillRect(0, 0, W, H);
+      /* tratamento de imagem aérea: menos saturação e mais contraste (onde o navegador permite) */
+      try {
+        const cv = c.canvas, t = document.createElement('canvas'); t.width = cv.width; t.height = cv.height;
+        const tc = t.getContext('2d'); tc.drawImage(cv, 0, 0);
+        c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.filter = 'saturate(.62) contrast(1.1) brightness(.97)'; c.drawImage(t, 0, 0); c.restore();
+      } catch (e) { /* sem suporte a filtros */ }
     } else {
       /* planta: marcas de coordenadas a cada 100 m lógicos, como em carta cadastral */
       c.strokeStyle = '#9C998C'; c.lineWidth = .9;

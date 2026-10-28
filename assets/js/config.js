@@ -20,5 +20,5 @@ window.TERRA_MARCADA = {
   // Textos opcionais (deixe "" para manter o texto de exemplo do site)
   address: "Rua 19 de Outubro, nº 1289 · Ijuí/RS",   // Ex.: "Brasília – DF · Atendemos todo o Centro-Oeste"
   hours: "",     // Ex.: "Seg. a sex., 8h às 18h"
-  cnpj: ""       // Ex.: "CNPJ 12.345.678/0001-90"
+  cnpj: "CNPJ 18.730.963/0001-06"
 };
