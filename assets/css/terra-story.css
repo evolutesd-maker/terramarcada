@@ -669,17 +669,21 @@
 .tm2 .citacao footer::before{content:"— "}
 @media (max-width:640px){.tm2 .citacao{padding-left:24px;padding-top:60px}.tm2 .citacao::before{left:20px;top:8px}.tm2 .citacao p{font-size:1.25rem}}
 
-/* texto "Por trás de cada mapa" em seção clara e editorial */
-.tm2 .bloco.realidade{background:#fff;color:var(--tinta)}
-.tm2 .realidade-grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(32px,7vw,110px);row-gap:var(--e5);align-items:start}
-.tm2 .realidade h2{font-size:clamp(2rem,4.4vw,3.6rem);max-width:11em;color:var(--floresta)}
-.tm2 .realidade-texto{display:grid;gap:var(--e3);padding-top:6px}
-.tm2 .realidade-texto p{font-size:var(--s2);line-height:1.65;max-width:34em;margin:0;opacity:.9}
-.tm2 .realidade-texto p:last-child{opacity:1;font-weight:600;color:var(--pinheiro)}
-.tm2 .realidade-frase{grid-column:1/-1;margin:0;padding-top:var(--e4);border-top:1px solid rgb(var(--ouro-rgb) / .55)}
-.tm2 .realidade-frase blockquote{font-family:var(--titulo);font-weight:600;font-size:clamp(1.4rem,2.6vw,2.1rem);line-height:1.25;letter-spacing:-.015em;max-width:30em;color:var(--floresta);text-wrap:balance}
-.tm2 .realidade-frase blockquote::before{content:"\201C";color:var(--ouro)}
-.tm2 .realidade-frase blockquote::after{content:"\201D";color:var(--ouro)}
-.tm2 .realidade-frase figcaption{margin-top:var(--e2);font-family:var(--titulo);font-size:.9rem;font-weight:600;letter-spacing:.06em;color:var(--pinheiro)}
-@media (max-width:900px){.tm2 .realidade-grade{grid-template-columns:1fr;row-gap:var(--e3)}.tm2 .realidade-frase{padding-top:var(--e3)}}
+/* "Por trás de cada mapa": seção escura com curvas de nível, título em duas cores e citação em vidro */
+.tm2 .bloco.realidade{position:relative;overflow:hidden;color:var(--areia);padding-block:var(--e6);background:radial-gradient(900px 560px at 88% 12%,rgb(var(--musgo-rgb) / .5),transparent 62%),radial-gradient(700px 420px at 0% 100%,rgb(var(--ouro-rgb) / .16),transparent 62%),linear-gradient(165deg,var(--abismo),var(--floresta) 60%,var(--floresta-2))}
+.tm2 .realidade-bg{position:absolute;inset:0;opacity:.38;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent 5%,#000 70%);mask-image:linear-gradient(90deg,transparent 5%,#000 70%)}
+.tm2 .realidade-grade{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(32px,6vw,96px);row-gap:var(--e5);align-items:start}
+.tm2 .realidade h2{font-size:clamp(2.2rem,5vw,4.2rem);line-height:1;color:#fff;max-width:11em}
+.tm2 .realidade h2 em{font-style:normal;color:var(--ouro-claro)}
+.tm2 .realidade-texto{display:grid;gap:var(--e3);padding:6px 0 6px var(--e3);border-left:2px solid rgb(var(--ouro-claro-rgb) / .55)}
+.tm2 .realidade-texto p{font-size:var(--s2);line-height:1.65;max-width:32em;margin:0;color:rgb(var(--areia-rgb) / .88)}
+.tm2 .realidade-texto .fecho{color:#fff;font-weight:600}
+.tm2 .realidade-frase{grid-column:1/-1;position:relative;margin:0;padding:clamp(28px,4vw,52px) clamp(24px,5vw,72px);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgb(var(--ouro-claro-rgb) / .3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);overflow:hidden}
+.tm2 .realidade-frase::before{content:"\201C";position:absolute;right:clamp(16px,4vw,48px);top:-.12em;font-family:var(--titulo);font-weight:800;font-size:clamp(8rem,16vw,14rem);line-height:1;color:rgb(var(--ouro-claro-rgb) / .22);pointer-events:none}
+.tm2 .realidade-frase blockquote{position:relative;font-family:var(--titulo);font-weight:600;font-size:clamp(1.45rem,2.8vw,2.3rem);line-height:1.25;letter-spacing:-.015em;max-width:28em;color:#fff;text-wrap:balance}
+.tm2 .realidade-frase figcaption{position:relative;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:var(--e3);font-family:var(--titulo)}
+.tm2 .realidade-frase figcaption::before{content:"";width:44px;height:2px;background:var(--ouro-claro)}
+.tm2 .realidade-frase figcaption span{font-weight:700;color:var(--ouro-claro);letter-spacing:.04em}
+.tm2 .realidade-frase figcaption small{font-size:.86rem;opacity:.75}
+@media (max-width:900px){.tm2 .realidade-grade{grid-template-columns:1fr;row-gap:var(--e4)}.tm2 .realidade-texto{padding-left:var(--e2)}.tm2 .bloco.realidade{padding-block:var(--e5)}}
 .tm2 .foto:nth-child(3) img{transform:rotate(-1.5deg)}
