@@ -668,3 +668,18 @@
 .tm2 .citacao footer{margin-top:var(--e2);font-family:var(--titulo);font-size:.88rem;font-weight:600;color:var(--ouro-claro);letter-spacing:.04em}
 .tm2 .citacao footer::before{content:"— "}
 @media (max-width:640px){.tm2 .citacao{padding-left:24px;padding-top:60px}.tm2 .citacao::before{left:20px;top:8px}.tm2 .citacao p{font-size:1.25rem}}
+
+/* texto "Por trás de cada mapa" em seção clara e editorial */
+.tm2 .bloco.realidade{background:#fff;color:var(--tinta)}
+.tm2 .realidade-grade{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:clamp(32px,7vw,110px);row-gap:var(--e5);align-items:start}
+.tm2 .realidade h2{font-size:clamp(2rem,4.4vw,3.6rem);max-width:11em;color:var(--floresta)}
+.tm2 .realidade-texto{display:grid;gap:var(--e3);padding-top:6px}
+.tm2 .realidade-texto p{font-size:var(--s2);line-height:1.65;max-width:34em;margin:0;opacity:.9}
+.tm2 .realidade-texto p:last-child{opacity:1;font-weight:600;color:var(--pinheiro)}
+.tm2 .realidade-frase{grid-column:1/-1;margin:0;padding-top:var(--e4);border-top:1px solid rgb(var(--ouro-rgb) / .55)}
+.tm2 .realidade-frase blockquote{font-family:var(--titulo);font-weight:600;font-size:clamp(1.4rem,2.6vw,2.1rem);line-height:1.25;letter-spacing:-.015em;max-width:30em;color:var(--floresta);text-wrap:balance}
+.tm2 .realidade-frase blockquote::before{content:"\201C";color:var(--ouro)}
+.tm2 .realidade-frase blockquote::after{content:"\201D";color:var(--ouro)}
+.tm2 .realidade-frase figcaption{margin-top:var(--e2);font-family:var(--titulo);font-size:.9rem;font-weight:600;letter-spacing:.06em;color:var(--pinheiro)}
+@media (max-width:900px){.tm2 .realidade-grade{grid-template-columns:1fr;row-gap:var(--e3)}.tm2 .realidade-frase{padding-top:var(--e3)}}
+.tm2 .foto:nth-child(3) img{transform:rotate(-1.5deg)}
