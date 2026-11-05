@@ -656,3 +656,15 @@
 .tm2 .equipe h3{font-size:var(--s3);margin-bottom:var(--e2)}
 .tm2 .equipe ul{list-style:none;display:flex;flex-wrap:wrap;gap:12px}
 .tm2 .equipe li{padding:12px 22px;border-radius:999px;font-family:var(--titulo);font-weight:600;font-size:var(--s1);color:var(--areia);background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid rgb(var(--ouro-claro-rgb) / .4)}
+
+/* texto de abertura e citação */
+.tm2 .pg-hero h1{max-width:16em}
+.tm2 .manifesto{display:grid;gap:var(--e2);margin-top:var(--e3);max-width:36em}
+.tm2 .manifesto p{font-size:var(--s2);line-height:1.55;margin:0;max-width:none;color:rgb(var(--areia-rgb) / .9)}
+.tm2 .manifesto p:last-child{color:var(--ouro-claro)}
+.tm2 .citacao{position:relative;margin-top:var(--e3);padding:var(--e3) var(--e3) var(--e3) 64px;border-radius:20px;background:linear-gradient(145deg,var(--floresta),var(--pinheiro));color:var(--areia)}
+.tm2 .citacao::before{content:"\201C";position:absolute;left:18px;top:6px;font-family:var(--titulo);font-weight:800;font-size:5rem;line-height:1;color:var(--ouro-claro)}
+.tm2 .citacao p{font-family:var(--titulo);font-weight:600;font-size:var(--s3);line-height:1.3;max-width:26em;letter-spacing:-.01em}
+.tm2 .citacao footer{margin-top:var(--e2);font-family:var(--titulo);font-size:.88rem;font-weight:600;color:var(--ouro-claro);letter-spacing:.04em}
+.tm2 .citacao footer::before{content:"— "}
+@media (max-width:640px){.tm2 .citacao{padding-left:24px;padding-top:60px}.tm2 .citacao::before{left:20px;top:8px}.tm2 .citacao p{font-size:1.25rem}}
